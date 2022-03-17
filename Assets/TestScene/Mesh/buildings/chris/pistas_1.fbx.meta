@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 35781b759b479a54bade807485f8ef6b
+guid: 016bb037d8deff740be9fcf411276675
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: defaultMat
-    second: {fileID: 2100000, guid: fac784bdf2d27094aa3670101c6db72a, type: 2}
+      name: Materiaglobopl.003
+    second: {fileID: 2100000, guid: e09668005c9432b409ff19c1216d04e0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: ee7465bb5ec8bdc44a49235d37726b4b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
