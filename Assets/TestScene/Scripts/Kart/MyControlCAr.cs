@@ -16,10 +16,19 @@ public class MyControlCAr : MonoBehaviour
 
     [Tooltip("How quickly the kart slows down when the brake is applied.")]
     public float Braking;
-    
-    Rigidbody rigidbody;
 
-    private bool isDrifting = false;
+    [SerializeField] private bool canBrutllyStop;
+
+    [Tooltip("How quickly the kart slows down when no keys are being pressed.")]
+    public float Stopping = 2f;
+
+    [Tooltip("How many degrees the wheels can turn in the Y Axis.")]
+    [SerializeField] private float TurningDegrees;
+
+    Rigidbody rigidbody;
+    private float baseDragValue;
+    private float currentDrift;
+    private float currentActiveBoostDrift;
 
     IInput[] m_Inputs;
     public WheelCollider wheelColliderFE;
@@ -32,56 +41,82 @@ public class MyControlCAr : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        baseDragValue = rigidbody.drag;
         m_Inputs = GetComponents<IInput>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        //if (Input.Drift)
+        //{
+        //    currentDrift += .02f;
+        //}
+        //else
+        //{
+        //
+        //}
 
         GatherInputs();
         if (Input.Accelerate)
         {
-            wheelColliderFE.motorTorque = 1000;
-            wheelColliderFD.motorTorque = 1000;
-        }
-        else
-        {
-            wheelColliderFE.motorTorque = 000;
-            wheelColliderFD.motorTorque = 000;
+            if (wheelColliderFE.motorTorque < TopSpeed && wheelColliderFD.motorTorque < TopSpeed)
+            {
+                if (canBrutllyStop) rigidbody.drag = baseDragValue;
+                float addVelocity =  Acceleration;
+                wheelColliderFE.motorTorque += addVelocity;
+                wheelColliderFD.motorTorque += addVelocity;
+            }
+            else
+            {
+                wheelColliderFE.motorTorque = TopSpeed;
+                wheelColliderFD.motorTorque = TopSpeed;
+            }
         }
         if (Input.Brake)
         {
-            
-            wheelColliderFE.brakeTorque = 300;
-            wheelColliderFD.brakeTorque = 300;
-            wheelColliderTD.brakeTorque = 900;
-            wheelColliderTE.brakeTorque = 900;
+            if (Mathf.Abs(wheelColliderFE.motorTorque) < ReverseSpeed && Mathf.Abs(wheelColliderFD.motorTorque) <  ReverseSpeed)
+            {
+                if (canBrutllyStop) rigidbody.drag = baseDragValue;
+                float addVelocity = Braking;
+                wheelColliderFE.motorTorque -= addVelocity;
+                wheelColliderFD.motorTorque -= addVelocity;
+            }
+            else
+            {
+                wheelColliderFE.motorTorque = -1*ReverseSpeed;
+                wheelColliderFD.motorTorque = -1*ReverseSpeed;
+            }
         }
-        else
+        if (!Input.Accelerate && !Input.Brake)
         {
-            wheelColliderFE.brakeTorque = 00;
-            wheelColliderFD.brakeTorque = 00;
-            wheelColliderTD.brakeTorque = 00;
-            wheelColliderTE.brakeTorque = 00;
+            wheelColliderFE.motorTorque = 0;
+            wheelColliderFD.motorTorque = 0;
+            wheelColliderTE.motorTorque = 0;
+            wheelColliderTD.motorTorque = 0;
+            if (canBrutllyStop) rigidbody.drag = Stopping;
         }
-
-        wheelColliderFD.steerAngle = Input.TurnInput * 30;
-        wheelColliderFE.steerAngle = Input.TurnInput * 30;
+        
+        wheelColliderFD.steerAngle = Input.TurnInput * TurningDegrees;
+        wheelColliderFE.steerAngle = Input.TurnInput * TurningDegrees;
     }
 
+    //IEnumerator DriftBoost()
+    //{
+    //    this.TopSpeed
+    //}
     void GatherInputs()
     {
         // reset input
 
         Input = new InputData();
-       
+
 
         // gather nonzero input from our sources
         for (int i = 0; i < m_Inputs.Length; i++)
         {
             Input = m_Inputs[i].GenerateInput();
-           
+
         }
     }
 }

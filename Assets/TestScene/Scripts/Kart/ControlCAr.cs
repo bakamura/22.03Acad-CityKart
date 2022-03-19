@@ -39,8 +39,8 @@ public class ControlCAr : MonoBehaviour
         GatherInputs();
         if (Input.Accelerate)
         {
-            wheelColliderFE.motorTorque = 1000;
-            wheelColliderFD.motorTorque = 1000;
+            wheelColliderFE.motorTorque = 100;
+            wheelColliderFD.motorTorque = 100;
         }
         else
         {
