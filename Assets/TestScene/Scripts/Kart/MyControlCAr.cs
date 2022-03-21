@@ -60,42 +60,46 @@ public class MyControlCAr : MonoBehaviour
         GatherInputs();
         if (Input.Accelerate)
         {
-            if (wheelColliderFE.motorTorque < TopSpeed && wheelColliderFD.motorTorque < TopSpeed)
-            {
-                if (canBrutllyStop) rigidbody.drag = baseDragValue;
-                float addVelocity =  Acceleration;
-                wheelColliderFE.motorTorque += addVelocity;
-                wheelColliderFD.motorTorque += addVelocity;
-            }
-            else
-            {
-                wheelColliderFE.motorTorque = TopSpeed;
-                wheelColliderFD.motorTorque = TopSpeed;
-            }
+            wheelColliderFE.motorTorque = UnityEngine.Input.GetAxis("Vertical") * Acceleration;
+            wheelColliderFD.motorTorque = UnityEngine.Input.GetAxis("Vertical") * Acceleration;
+            //if (wheelColliderFE.motorTorque < TopSpeed && wheelColliderFD.motorTorque < TopSpeed)
+            //{
+            //    if (canBrutllyStop) rigidbody.drag = baseDragValue;
+            //    float addVelocity =  Acceleration;
+            //    wheelColliderFE.motorTorque += addVelocity;
+            //    wheelColliderFD.motorTorque += addVelocity;
+            //}
+            //else
+            //{
+            //    wheelColliderFE.motorTorque = TopSpeed;
+            //    wheelColliderFD.motorTorque = TopSpeed;
+            //}
         }
         if (Input.Brake)
         {
-            if (Mathf.Abs(wheelColliderFE.motorTorque) < ReverseSpeed && Mathf.Abs(wheelColliderFD.motorTorque) <  ReverseSpeed)
-            {
-                if (canBrutllyStop) rigidbody.drag = baseDragValue;
-                float addVelocity = Braking;
-                wheelColliderFE.motorTorque -= addVelocity;
-                wheelColliderFD.motorTorque -= addVelocity;
-            }
-            else
-            {
-                wheelColliderFE.motorTorque = -1*ReverseSpeed;
-                wheelColliderFD.motorTorque = -1*ReverseSpeed;
-            }
+            wheelColliderFE.motorTorque = Mathf.Abs(UnityEngine.Input.GetAxis("Vertical")) * -ReverseSpeed;
+            wheelColliderFD.motorTorque = Mathf.Abs(UnityEngine.Input.GetAxis("Vertical")) * -ReverseSpeed;
+            //    if (Mathf.Abs(wheelColliderFE.motorTorque) < ReverseSpeed && Mathf.Abs(wheelColliderFD.motorTorque) <  ReverseSpeed)
+            //    {
+            //        if (canBrutllyStop) rigidbody.drag = baseDragValue;
+            //        float addVelocity = Braking;
+            //        wheelColliderFE.motorTorque -= addVelocity;
+            //        wheelColliderFD.motorTorque -= addVelocity;
+            //    }
+            //    else
+            //    {
+            //        wheelColliderFE.motorTorque = -1*ReverseSpeed;
+            //        wheelColliderFD.motorTorque = -1*ReverseSpeed;
+            //    }
         }
-        if (!Input.Accelerate && !Input.Brake)
-        {
-            wheelColliderFE.motorTorque = 0;
-            wheelColliderFD.motorTorque = 0;
-            wheelColliderTE.motorTorque = 0;
-            wheelColliderTD.motorTorque = 0;
-            if (canBrutllyStop) rigidbody.drag = Stopping;
-        }
+        //if (!Input.Accelerate && !Input.Brake)
+        //{
+        //    wheelColliderFE.motorTorque = 0;
+        //    wheelColliderFD.motorTorque = 0;
+        //    wheelColliderTE.motorTorque = 0;
+        //    wheelColliderTD.motorTorque = 0;
+        //    if (canBrutllyStop) rigidbody.drag = Stopping;
+        //}
         
         wheelColliderFD.steerAngle = Input.TurnInput * TurningDegrees;
         wheelColliderFE.steerAngle = Input.TurnInput * TurningDegrees;
