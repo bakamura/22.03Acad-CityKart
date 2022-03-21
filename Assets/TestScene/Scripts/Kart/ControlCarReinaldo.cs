@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using KartGame.KartSystems;
-public class ControlCAr : MonoBehaviour
+public class ControlCarReinaldo : MonoBehaviour
 {
     [Header("Movement Settings")]
     [Min(0.001f), Tooltip("Top speed attainable when moving forward.")]
