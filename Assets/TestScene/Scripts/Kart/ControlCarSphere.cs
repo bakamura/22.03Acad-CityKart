@@ -4,20 +4,27 @@ using UnityEngine;
 
 public class ControlCarSphere : MonoBehaviour
 {
-    [SerializeField] private Rigidbody sphereRB;
-    [SerializeField] private SphereCollider sphereCollider;
+    [Min(1f)]
     [SerializeField] private float fowardAccleration;
+    [Min(1f)]
     [SerializeField] private float backAcceleration;
+    [Min(30f), Tooltip("How many degrees the wheel will turn.")]
     [SerializeField] private float turningStrength;
+    [Min(0f), Tooltip("How many degrees the car can turn in the X Axis.")]
+    [SerializeField] private float maxXVehicleTurn;
+    [Min(0f), Tooltip("How many degrees the car can turn in the Z Axis.")]
+    [SerializeField] private float maxZVehicleTurn;
+    [Min(0f), Tooltip("The force multiplier pushing down the car.")]
+    [SerializeField] private float gravityForce;
+    [Min(0f), Tooltip("How much the air makes the car lose momentum.")]
+    [SerializeField] private float airDrag;
+    [Header("Base Values")]
+    [SerializeField] private SphereCollider sphereCollider;
     [SerializeField] private Transform[] turningWheels;
+    [SerializeField] private Rigidbody sphereRB;
+    private float baseDragValue;
     private float currentMovment;
     private bool onGround;
-    [SerializeField] private float maxXVehicleTurn;
-    [SerializeField] private float maxZVehicleTurn;
-    [SerializeField] private float gravityForce;
-    [SerializeField] private float airDrag;
-    [SerializeField] private LayerMask groundLayer;
-    private float baseDragValue;
     private void Awake()
     {
         sphereRB.transform.parent = null;
