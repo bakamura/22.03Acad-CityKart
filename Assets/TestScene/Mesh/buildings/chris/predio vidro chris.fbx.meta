@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2d3f54955613efd4c85f45e6743b9ac2
+guid: a58c5c2dda994784ea899f52a862515d
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,43 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.007
-    second: {fileID: 2100000, guid: 6d5781a3db07d6244878ef2f1baf49df, type: 2}
+      name: Materiaglobopl.003
+    second: {fileID: 2100000, guid: e09668005c9432b409ff19c1216d04e0, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.008
-    second: {fileID: 2100000, guid: 03af88a9e0a29c94983ff6a6d18323b9, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.009
-    second: {fileID: 2100000, guid: 77e4356d4cd4b424bb5ceb2235f3d297, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.010
-    second: {fileID: 2100000, guid: e1fb33424bd399e4f9050b7d3ddf90ca, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.011
-    second: {fileID: 2100000, guid: 3138aea9d7ad2244d9877dfd71879134, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.012
-    second: {fileID: 2100000, guid: 7f29bd2f30fbdda43b0b997d43b4f10f, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.013
-    second: {fileID: 2100000, guid: 51413cdda4d0686438b9297538a9888f, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.014
-    second: {fileID: 2100000, guid: a93aaf2bd82d46641b60046d47dabcfe, type: 2}
+      name: Material.003
+    second: {fileID: 2100000, guid: ee7465bb5ec8bdc44a49235d37726b4b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -79,10 +49,10 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
-    importVisibility: 0
+    importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
