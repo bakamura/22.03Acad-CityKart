@@ -49,21 +49,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bed692e80494264088adead9b24a2cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sphereRB: {fileID: 4949244351070050391}
-  sphereCollider: {fileID: 4949244351070050390}
   fowardAccleration: 100
   backAcceleration: 30
   turningStrength: 90
-  turningWheels:
-  - {fileID: 4838421802688756245}
-  - {fileID: 4838421804419644642}
   maxXVehicleTurn: 0
   maxZVehicleTurn: 0
   gravityForce: 10
   airDrag: 0.1
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 512
+  sphereCollider: {fileID: 4949244351070050390}
+  turningWheels:
+  - {fileID: 4838421802688756245}
+  - {fileID: 4838421804419644642}
+  sphereRB: {fileID: 4949244351070050391}
 --- !u!1 &4949244351070050388
 GameObject:
   m_ObjectHideFlags: 0
@@ -77,7 +74,7 @@ GameObject:
   - component: {fileID: 4949244351070050391}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -435,6 +432,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: carro
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 37f91f1d6aed58849a726f870fd85c40,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 37f91f1d6aed58849a726f870fd85c40,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -5754084199372789682, guid: 37f91f1d6aed58849a726f870fd85c40, type: 3}
