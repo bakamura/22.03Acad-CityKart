@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class ControlCarSphere : MonoBehaviour
 {
+    [Header("Vehicle Handling")]
     [Min(1f)]
-    [SerializeField] private float fowardAccleration;
+    [SerializeField] private float fowardVelocity;
     [Min(1f)]
-    [SerializeField] private float backAcceleration;
+    [SerializeField] private float reversVelocity;
     [Min(30f), Tooltip("How many degrees the wheel will turn.")]
-    [SerializeField] private float turningStrength;
-    [Min(0f), Tooltip("How many degrees the car can turn in the X Axis.")]
-    [SerializeField] private float maxXVehicleTurn;
-    [Min(0f), Tooltip("How many degrees the car can turn in the Z Axis.")]
-    [SerializeField] private float maxZVehicleTurn;
+    [SerializeField] private float turningAngles;
     [Min(0f), Tooltip("The force multiplier pushing down the car.")]
     [SerializeField] private float gravityForce;
     [Min(0f), Tooltip("How much the air makes the car lose momentum.")]
     [SerializeField] private float airDrag;
+    [Header("Visuals")]
+    [Min(0f), Tooltip("How many degrees the car Mesh can turn in the X Axis.")]
+    [SerializeField] private float maxXMeshTurn;
+    [Min(0f), Tooltip("How many degrees the car Mesh can turn in the Z Axis.")]
+    [SerializeField] private float maxZMeshTurn;
     [Header("Base Values")]
     [SerializeField] private SphereCollider sphereCollider;
     [SerializeField] private Transform[] turningWheels;
@@ -46,7 +48,7 @@ public class ControlCarSphere : MonoBehaviour
     { 
         foreach(Transform wheel in turningWheels)
         {
-            wheel.rotation = Quaternion.Euler(0, horzMov * turningStrength, 0);
+            wheel.rotation = Quaternion.Euler(0, horzMov * turningAngles, 0);
         }
     }
     void RotateCar()
@@ -57,8 +59,8 @@ public class ControlCarSphere : MonoBehaviour
         {
             onGround = true;
             Quaternion rot = Quaternion.FromToRotation(transform.up, currentSurface.normal) * transform.rotation;
-            if (rot.x < -maxXVehicleTurn || rot.x > maxXVehicleTurn) rot.x = maxXVehicleTurn * Mathf.Sign(rot.x);
-            if (rot.z < -maxZVehicleTurn || rot.x > maxZVehicleTurn) rot.z = maxZVehicleTurn * Mathf.Sign(rot.z);
+            if (rot.x < -maxXMeshTurn || rot.x > maxXMeshTurn) rot.x = maxXMeshTurn * Mathf.Sign(rot.x);
+            if (rot.z < -maxZMeshTurn || rot.x > maxZMeshTurn) rot.z = maxZMeshTurn * Mathf.Sign(rot.z);
             transform.rotation = rot;//rotates the GameObject related to the current surface
         }
     }
@@ -81,9 +83,9 @@ public class ControlCarSphere : MonoBehaviour
         float vertcMov = Input.GetAxis("Vertical");
         if (onGround)
         {
-            if (horzMov != 0 && vertcMov != 0) transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, horzMov * turningStrength * Time.deltaTime, 0f));
-            if (vertcMov > 0) currentMovment = fowardAccleration * vertcMov;
-            else if (vertcMov < 0) currentMovment = backAcceleration * vertcMov;
+            if (horzMov != 0 && vertcMov != 0) transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, horzMov * turningAngles * Time.deltaTime, 0f));
+            if (vertcMov > 0) currentMovment = fowardVelocity * vertcMov;
+            else if (vertcMov < 0) currentMovment = reversVelocity * vertcMov;
             RotateWheels(horzMov);
         }
     }
