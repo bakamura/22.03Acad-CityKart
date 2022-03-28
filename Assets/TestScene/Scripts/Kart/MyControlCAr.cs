@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using KartGame.KartSystems;
+using Cinemachine;
 public class MyControlCAr : MonoBehaviour
 {
     [Header("Movement Settings")]
@@ -18,7 +19,7 @@ public class MyControlCAr : MonoBehaviour
     [Tooltip("For how long needs to be drifting to gain a boost, in seconds.")]
     [SerializeField] private float[] DriftBoostTime = new float[3];
 
-    [Tooltip("the amount of force applied to the vehicle at each level of boost.")]
+    [Tooltip("the velocity of the vehicle at each level of boost.")]
     [SerializeField] private float[] DriftBoostAmount = new float[3];
 
     [Tooltip("For how long the drift boost will last, in seconds.")]
@@ -30,27 +31,34 @@ public class MyControlCAr : MonoBehaviour
     [Tooltip("how much the drift angle will change each FixedDeltaTime.")]
     [SerializeField] private float DriftAngleAmount;
 
-    Rigidbody rigidbody;
-    private float currentDriftAmount;
-    private float newVehicleDriftRotation = 0;
-    private Coroutine driftBoostCoroutine = null;
-    private float currentDriftBoostDuration;
-    private bool isInBoostEffect = false;
-
-    IInput[] m_Inputs;
-
     [Header("Components")]
     [SerializeField] private Transform vehicleTransform;
     [Min(1), Tooltip("the amount of wheels that will turn, needs to be the firts elements of the WheelsScript array")]
     [SerializeField] private int turningWheels;
     [SerializeField] private WheelSinc[] WheelsScript;
 
+    [Header("Visuals")]
+    [SerializeField] private CinemachineVirtualCamera cm;
+    [Tooltip("How wide the FOV will be when in boost effects")]
+    [SerializeField] private int FOVinBoost;
+    [SerializeField] private CanvasGroup UI;
+    [SerializeField] private PostProcessControler PPcontroler;
+
+    Rigidbody rigidbody;
+    private float currentDriftAmount;
+    private float newVehicleDriftRotation = 0;
+    private Coroutine driftBoostCoroutine = null;
+    private float currentDriftBoostDuration;
+    private bool isInBoostEffect = false;
+    private float baseFOV;
+    IInput[] m_Inputs;
     public InputData Input { get; private set; }
     // Start is called before the first frame update
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
         m_Inputs = GetComponents<IInput>();
+        baseFOV = cm.m_Lens.FieldOfView;
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -73,7 +81,7 @@ public class MyControlCAr : MonoBehaviour
             if (Mathf.Abs(WheelsScript[0].wheelCollider.steerAngle) >= .01f)
             {
                 currentDriftAmount += Time.fixedDeltaTime;
-                foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null) wheel.TrailEffect(true, currentDriftAmount, DriftBoostTime);
+                foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null) wheel.TrailEffect(true, currentDriftAmount, DriftBoostTime);                    
             }
         }
         else if (currentDriftAmount != 0)
@@ -83,6 +91,12 @@ public class MyControlCAr : MonoBehaviour
             currentDriftAmount = 0;
         }
         RotateVehicleDrift();
+    }
+    bool CheckGround()
+    {
+        int i = 0;
+        foreach(WheelSinc wheels in WheelsScript) if (wheels.wheelCollider.isGrounded) i++;
+        return i == WheelsScript.Length ? true : false;
     }
     void DriftBoost()
     {
@@ -106,14 +120,31 @@ public class MyControlCAr : MonoBehaviour
                 Debug.Log("boost 3");
                 break;
         }
+        BoostVisualEffects(true);
         currentDriftBoostDuration = DriftBoostDuration[boostType];
         if (driftBoostCoroutine == null) driftBoostCoroutine = StartCoroutine(StopDriftBoost());
     }
     IEnumerator StopDriftBoost()
     {
         yield return new WaitForSeconds(currentDriftBoostDuration);
+        BoostVisualEffects(false);
         isInBoostEffect = false;
         driftBoostCoroutine = null;
+    }
+    void BoostVisualEffects(bool isActive)
+    {
+        if (isActive)
+        {
+            PPcontroler.Activate_deactivateDepthOfField(true);
+            UI.alpha = 1;
+            cm.m_Lens.FieldOfView = FOVinBoost;
+        }
+        else
+        {
+            PPcontroler.Activate_deactivateDepthOfField(false);
+            UI.alpha = 0;
+            cm.m_Lens.FieldOfView = baseFOV;
+        }
     }
     void RotateVehicleDrift()
     {
