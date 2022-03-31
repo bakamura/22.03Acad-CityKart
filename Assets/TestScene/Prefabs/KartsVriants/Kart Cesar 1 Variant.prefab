@@ -25,22 +25,22 @@ PrefabInstance:
     - target: {fileID: 1958926530237442709, guid: dbe3f8514d8b3ed48bf9580dd32ec7e7,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000017311539
+      value: 0.00000001731154
       objectReference: {fileID: 0}
     - target: {fileID: 1958926530237442709, guid: dbe3f8514d8b3ed48bf9580dd32ec7e7,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 9.979704e-10
+      value: -9.979705e-10
       objectReference: {fileID: 0}
     - target: {fileID: 3645645501568209585, guid: dbe3f8514d8b3ed48bf9580dd32ec7e7,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000017311539
+      value: 0.00000001731154
       objectReference: {fileID: 0}
     - target: {fileID: 3645645501568209585, guid: dbe3f8514d8b3ed48bf9580dd32ec7e7,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 9.979704e-10
+      value: -9.979705e-10
       objectReference: {fileID: 0}
     - target: {fileID: 4014597371132368474, guid: dbe3f8514d8b3ed48bf9580dd32ec7e7,
         type: 3}
@@ -185,7 +185,7 @@ PrefabInstance:
     - target: {fileID: 7228351888273584572, guid: dbe3f8514d8b3ed48bf9580dd32ec7e7,
         type: 3}
       propertyPath: m_Name
-      value: Kart Cesar 1
+      value: Kart Cesar 1 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7228351889140444756, guid: dbe3f8514d8b3ed48bf9580dd32ec7e7,
         type: 3}
@@ -216,7 +216,7 @@ PrefabInstance:
         type: 3}
       propertyPath: UI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1141755714943724106}
     - target: {fileID: 7624562075820144975, guid: dbe3f8514d8b3ed48bf9580dd32ec7e7,
         type: 3}
       propertyPath: Velocity
@@ -234,3 +234,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbe3f8514d8b3ed48bf9580dd32ec7e7, type: 3}
+--- !u!225 &1141755714943724106 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 4905629052702303343, guid: dbe3f8514d8b3ed48bf9580dd32ec7e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 5461774979082620453}
+  m_PrefabAsset: {fileID: 0}

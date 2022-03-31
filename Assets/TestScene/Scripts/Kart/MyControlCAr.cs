@@ -43,6 +43,10 @@ public class MyControlCAr : MonoBehaviour
     [SerializeField] private int FOVinBoost;
     [SerializeField] private CanvasGroup UI;
     [SerializeField] private PostProcessControler PPcontroler;
+    [Min(.01f), Tooltip("How long the transition will take, in seconds")]
+    [SerializeField] private float FOVTransitionDuration;
+    [Range(.01f, 1f), Tooltip("How much the FOV will change per tick, in percentage")]
+    [SerializeField] private float FOVPercentageIncrease;
 
     Rigidbody rigidbody;
     private float currentDriftAmount;
@@ -51,6 +55,7 @@ public class MyControlCAr : MonoBehaviour
     private float currentDriftBoostDuration;
     private bool isInBoostEffect = false;
     private float baseFOV;
+    private Coroutine FOVTransition = null;
     IInput[] m_Inputs;
     public InputData Input { get; private set; }
     // Start is called before the first frame update
@@ -63,6 +68,7 @@ public class MyControlCAr : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        LockRotation();
         GatherInputs();
         MovmentInputs();
         Drift();
@@ -76,12 +82,12 @@ public class MyControlCAr : MonoBehaviour
     }
     void Drift()
     {
-        if (Input.Drift)
+        if (Input.Drift && Input.Accelerate)
         {
-            if (Mathf.Abs(WheelsScript[0].wheelCollider.steerAngle) >= .01f)
+            if (Mathf.Abs(WheelsScript[0].wheelCollider.steerAngle) >= .01f && CheckGround())
             {
                 currentDriftAmount += Time.fixedDeltaTime;
-                foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null) wheel.TrailEffect(true, currentDriftAmount, DriftBoostTime);                    
+                foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null) wheel.TrailEffect(true, currentDriftAmount, DriftBoostTime);
             }
         }
         else if (currentDriftAmount != 0)
@@ -94,9 +100,13 @@ public class MyControlCAr : MonoBehaviour
     }
     bool CheckGround()
     {
-        int i = 0;
-        foreach(WheelSinc wheels in WheelsScript) if (wheels.wheelCollider.isGrounded) i++;
-        return i == WheelsScript.Length ? true : false;
+        foreach (WheelSinc wheels in WheelsScript) if (wheels.wheelCollider.isGrounded) return true;
+        return false;
+    }
+    void LockRotation()
+    {
+        if (!CheckGround()) rigidbody.freezeRotation = true;
+        else rigidbody.freezeRotation = false;
     }
     void DriftBoost()
     {
@@ -107,17 +117,14 @@ public class MyControlCAr : MonoBehaviour
             case float f when f <= DriftBoostTime[0]:
                 boostType = 0;
                 foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = DriftBoostAmount[boostType];
-                Debug.Log("boost 1");
                 break;
             case float f when f <= DriftBoostTime[1]:
                 boostType = 1;
                 foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = DriftBoostAmount[boostType];
-                Debug.Log("boost 2");
                 break;
             case float f when f <= DriftBoostTime[2]:
                 boostType = 2;
                 foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = DriftBoostAmount[boostType];
-                Debug.Log("boost 3");
                 break;
         }
         BoostVisualEffects(true);
@@ -137,14 +144,40 @@ public class MyControlCAr : MonoBehaviour
         {
             PPcontroler.Activate_deactivateDepthOfField(true);
             UI.alpha = 1;
-            cm.m_Lens.FieldOfView = FOVinBoost;
+            if (FOVTransition != null) StopCoroutine(FOVTransition);
+            FOVTransition = StartCoroutine(FOVEffect(true));
         }
         else
         {
             PPcontroler.Activate_deactivateDepthOfField(false);
             UI.alpha = 0;
-            cm.m_Lens.FieldOfView = baseFOV;
+            if (FOVTransition != null) StopCoroutine(FOVTransition);
+            FOVTransition = StartCoroutine(FOVEffect(false));
         }
+    }
+    IEnumerator FOVEffect(bool isActive)
+    {
+        float time = FOVTransitionDuration * FOVPercentageIncrease;
+        float increment = (FOVinBoost - baseFOV) * FOVPercentageIncrease;
+        //float time = FOVTransitionDuration / FOVFrameAmount;
+        //float increment = (FOVinBoost - baseFOV) * time;
+        if (isActive)
+        {
+            while (cm.m_Lens.FieldOfView < FOVinBoost)
+            {
+                cm.m_Lens.FieldOfView += increment;
+                yield return new WaitForSeconds(time);
+            }
+        }
+        else
+        {
+            while (cm.m_Lens.FieldOfView > baseFOV)
+            {
+                cm.m_Lens.FieldOfView -= increment;
+                yield return new WaitForSeconds(time);
+            }
+        }
+        FOVTransition = null;
     }
     void RotateVehicleDrift()
     {

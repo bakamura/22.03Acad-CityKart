@@ -11,7 +11,7 @@ PrefabInstance:
         type: 3}
       propertyPath: UI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4905629052702303343}
     - target: {fileID: 3994895746586230932, guid: 595403fbea000d7418b2bc49dd7ce60b,
         type: 3}
       propertyPath: Velocity
@@ -195,12 +195,18 @@ PrefabInstance:
     - target: {fileID: 7793678231615843178, guid: 595403fbea000d7418b2bc49dd7ce60b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000017311539
+      value: 0.00000001731154
       objectReference: {fileID: 0}
     - target: {fileID: 7793678231615843178, guid: 595403fbea000d7418b2bc49dd7ce60b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 9.979704e-10
+      value: -9.979705e-10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 595403fbea000d7418b2bc49dd7ce60b, type: 3}
+--- !u!225 &4905629052702303343 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 1921649364585504180, guid: 595403fbea000d7418b2bc49dd7ce60b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6827274841252526555}
+  m_PrefabAsset: {fileID: 0}
