@@ -116,17 +116,15 @@ public class MyControlCAr : MonoBehaviour
         {
             case float f when f <= DriftBoostTime[0]:
                 boostType = 0;
-                foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = DriftBoostAmount[boostType];
                 break;
             case float f when f <= DriftBoostTime[1]:
                 boostType = 1;
-                foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = DriftBoostAmount[boostType];
                 break;
             case float f when f <= DriftBoostTime[2]:
                 boostType = 2;
-                foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = DriftBoostAmount[boostType];
                 break;
         }
+        rigidbody.velocity *= DriftBoostAmount[boostType];
         BoostVisualEffects(true);
         currentDriftBoostDuration = DriftBoostDuration[boostType];
         if (driftBoostCoroutine == null) driftBoostCoroutine = StartCoroutine(StopDriftBoost());
