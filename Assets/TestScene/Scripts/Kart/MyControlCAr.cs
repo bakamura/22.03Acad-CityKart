@@ -39,6 +39,7 @@ public class MyControlCAr : MonoBehaviour
 
     [Header("Visuals")]
     [SerializeField] private CinemachineVirtualCamera cm;
+    [SerializeField] private GameObject BoostParticle;
     [Tooltip("How wide the FOV will be when in boost effects")]
     [SerializeField] private int FOVinBoost;
     [SerializeField] private CanvasGroup UI;
@@ -53,7 +54,6 @@ public class MyControlCAr : MonoBehaviour
     private float newVehicleDriftRotation = 0;
     private Coroutine driftBoostCoroutine = null;
     private float currentDriftBoostDuration;
-    private bool isInBoostEffect = false;
     private float baseFOV;
     private Coroutine FOVTransition = null;
     IInput[] m_Inputs;
@@ -75,7 +75,7 @@ public class MyControlCAr : MonoBehaviour
     }
     void MovmentInputs()
     {
-        if (Input.Accelerate && !isInBoostEffect) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = UnityEngine.Input.GetAxis("Vertical") * Velocity;
+        if (Input.Accelerate) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = UnityEngine.Input.GetAxis("Vertical") * Velocity;
         if (Input.Brake) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = Mathf.Abs(UnityEngine.Input.GetAxis("Vertical")) * -ReverseVelocity;
         if (!Input.Accelerate && !Input.Brake) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = UnityEngine.Input.GetAxis("Vertical") * Velocity;
         for (int i = 0; i < turningWheels; i++) WheelsScript[i].wheelCollider.steerAngle = Input.TurnInput * TurningDegrees;//turning the vehicle
@@ -110,7 +110,6 @@ public class MyControlCAr : MonoBehaviour
     }
     void DriftBoost()
     {
-        isInBoostEffect = true;
         int boostType = 0;
         switch (currentDriftAmount)
         {
@@ -133,7 +132,6 @@ public class MyControlCAr : MonoBehaviour
     {
         yield return new WaitForSeconds(currentDriftBoostDuration);
         BoostVisualEffects(false);
-        isInBoostEffect = false;
         driftBoostCoroutine = null;
     }
     void BoostVisualEffects(bool isActive)
@@ -142,6 +140,7 @@ public class MyControlCAr : MonoBehaviour
         {
             PPcontroler.Activate_deactivateDepthOfField(true);
             UI.alpha = 1;
+            BoostParticle.SetActive(true);
             if (FOVTransition != null) StopCoroutine(FOVTransition);
             FOVTransition = StartCoroutine(FOVEffect(true));
         }
@@ -149,6 +148,7 @@ public class MyControlCAr : MonoBehaviour
         {
             PPcontroler.Activate_deactivateDepthOfField(false);
             UI.alpha = 0;
+            BoostParticle.SetActive(false);
             if (FOVTransition != null) StopCoroutine(FOVTransition);
             FOVTransition = StartCoroutine(FOVEffect(false));
         }
