@@ -49,6 +49,9 @@ public class MyControlCAr : MonoBehaviour
     [Range(.01f, 1f), Tooltip("How much the FOV will change per tick, in percentage")]
     [SerializeField] private float FOVPercentageIncrease;
 
+    [Header("ItemBoost")]
+    [System.NonSerialized] public int currentItem = 0; // 0 = nothing
+
     Rigidbody rigidbody;
     private float currentDriftAmount;
     private float newVehicleDriftRotation = 0;
@@ -57,7 +60,7 @@ public class MyControlCAr : MonoBehaviour
     private float baseFOV;
     private Coroutine FOVTransition = null;
     IInput[] m_Inputs;
-    public InputData Input { get; private set; }
+    public InputData Inputs { get; private set; }
     // Start is called before the first frame update
     void Awake()
     {
@@ -66,23 +69,54 @@ public class MyControlCAr : MonoBehaviour
         baseFOV = cm.m_Lens.FieldOfView;
     }
     // Update is called once per frame
+    void Update() {
+        MovementInputs();
+    }
+
     void FixedUpdate()
     {
         LockRotation();
         GatherInputs();
-        MovmentInputs();
         Drift();
     }
-    void MovmentInputs()
+    void MovementInputs()
     {
-        if (Input.Accelerate) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = UnityEngine.Input.GetAxis("Vertical") * Velocity;
-        if (Input.Brake) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = Mathf.Abs(UnityEngine.Input.GetAxis("Vertical")) * -ReverseVelocity;
-        if (!Input.Accelerate && !Input.Brake) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = UnityEngine.Input.GetAxis("Vertical") * Velocity;
-        for (int i = 0; i < turningWheels; i++) WheelsScript[i].wheelCollider.steerAngle = Input.TurnInput * TurningDegrees;//turning the vehicle
+        if (Inputs.Accelerate) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = UnityEngine.Input.GetAxis("Vertical") * Velocity;
+        if (Inputs.Brake) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = Mathf.Abs(UnityEngine.Input.GetAxis("Vertical")) * -ReverseVelocity;
+        if (!Inputs.Accelerate && !Inputs.Brake) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = UnityEngine.Input.GetAxis("Vertical") * Velocity;
+        for (int i = 0; i < turningWheels; i++) WheelsScript[i].wheelCollider.steerAngle = Inputs.TurnInput * TurningDegrees;//turning the vehicle
+        if (Input.GetKeyDown(KeyCode.F)) UseItem();
     }
-    void Drift()
+
+    void UseItem() {
+        switch (currentItem) {
+            case 0:
+                // Speed boost
+                rigidbody.velocity = rigidbody.velocity * 1.5f;
+                Debug.Log("Used Item " + currentItem);
+                return;
+            case 1:
+                // ???
+                Debug.Log("Used Item " + currentItem);
+                return;
+            case 2:
+                // ???
+                Debug.Log("Used Item " + currentItem);
+                return;
+            case 3:
+                // ???
+                Debug.Log("Used Item " + currentItem);
+                return;
+            default:
+                Debug.Log("Error generating item");
+                return;
+        }
+        currentItem = 0;
+    }
+
+        void Drift()
     {
-        if (Input.Drift && Input.Accelerate)
+        if (Inputs.Drift && Inputs.Accelerate)
         {
             if (Mathf.Abs(WheelsScript[0].wheelCollider.steerAngle) >= .01f && CheckGround())
             {
@@ -195,13 +229,13 @@ public class MyControlCAr : MonoBehaviour
     {
         // reset input
 
-        Input = new InputData();
+        Inputs = new InputData();
 
 
         // gather nonzero input from our sources
         for (int i = 0; i < m_Inputs.Length; i++)
         {
-            Input = m_Inputs[i].GenerateInput();
+            Inputs = m_Inputs[i].GenerateInput();
 
         }
     }
