@@ -50,7 +50,7 @@ public class MyControlCAr : MonoBehaviour
     [SerializeField] private float FOVPercentageIncrease;
 
     [Header("ItemBoost")]
-    [System.NonSerialized] public int currentItem = 0; // 0 = nothing
+    [System.NonSerialized] public int currentItem = -1; // -1 = nothing
 
     Rigidbody rigidbody;
     private float currentDriftAmount;
@@ -94,24 +94,24 @@ public class MyControlCAr : MonoBehaviour
                 // Speed boost
                 rigidbody.velocity = rigidbody.velocity * 1.5f;
                 Debug.Log("Used Item " + currentItem);
-                return;
+                break;
             case 1:
                 // ???
                 Debug.Log("Used Item " + currentItem);
-                return;
+                break;
             case 2:
                 // ???
                 Debug.Log("Used Item " + currentItem);
-                return;
+                break;
             case 3:
                 // ???
                 Debug.Log("Used Item " + currentItem);
-                return;
+                break;
             default:
                 Debug.Log("Error generating item");
-                return;
+                break;
         }
-        currentItem = 0;
+        currentItem = -1;
     }
 
         void Drift()

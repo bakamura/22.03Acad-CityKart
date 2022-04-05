@@ -17,7 +17,7 @@ public class RandomItemBox : MonoBehaviour {
 
         yield return new WaitForSeconds(10);
 
-        GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<MeshRenderer>().enabled = true;
         GetComponent<Collider>().enabled = true;
     }
 
