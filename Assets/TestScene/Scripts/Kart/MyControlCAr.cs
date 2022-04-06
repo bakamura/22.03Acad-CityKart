@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using KartGame.KartSystems;
 using Cinemachine;
-public class MyControlCAr : MonoBehaviour
-{
+public class MyControlCAr : MonoBehaviour {
+
     [Header("Movement Settings")]
 
     [Tooltip("How quickly the kart reaches top speed.")]
@@ -52,7 +52,7 @@ public class MyControlCAr : MonoBehaviour
     [Header("ItemBoost")]
     [System.NonSerialized] public int currentItem = -1; // -1 = nothing
 
-    Rigidbody rigidbody;
+    Rigidbody rbCar;
     private float currentDriftAmount;
     private float newVehicleDriftRotation = 0;
     private Coroutine driftBoostCoroutine = null;
@@ -61,26 +61,25 @@ public class MyControlCAr : MonoBehaviour
     private Coroutine FOVTransition = null;
     IInput[] m_Inputs;
     public InputData Inputs { get; private set; }
-    // Start is called before the first frame update
-    void Awake()
-    {
-        rigidbody = GetComponent<Rigidbody>();
+
+
+    void Awake() {
+        rbCar = GetComponent<Rigidbody>();
         m_Inputs = GetComponents<IInput>();
         baseFOV = cm.m_Lens.FieldOfView;
     }
-    // Update is called once per frame
+
     void Update() {
         MovementInputs();
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         LockRotation();
         GatherInputs();
         Drift();
     }
-    void MovementInputs()
-    {
+
+    void MovementInputs() {
         if (Inputs.Accelerate) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = UnityEngine.Input.GetAxis("Vertical") * Velocity;
         if (Inputs.Brake) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = Mathf.Abs(UnityEngine.Input.GetAxis("Vertical")) * -ReverseVelocity;
         if (!Inputs.Accelerate && !Inputs.Brake) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = UnityEngine.Input.GetAxis("Vertical") * Velocity;
@@ -92,12 +91,12 @@ public class MyControlCAr : MonoBehaviour
         switch (currentItem) {
             case 0:
                 // Speed boost
-                rigidbody.velocity = rigidbody.velocity * 1.5f;
-                Debug.Log("Used Item " + currentItem);
+                Debug.Log("Item 0: Velocity changed from " + rbCar.velocity.magnitude + " to " +  (rbCar.velocity * 1.5f).magnitude);
+                rbCar.velocity = rbCar.velocity * 1.75f;
                 break;
             case 1:
-                // ???
-                Debug.Log("Used Item " + currentItem);
+                Debug.Log("Item 1: Velocity Y changed from " + rbCar.velocity.y + " to " + 15);
+                rbCar.velocity = new Vector3(rbCar.velocity.x, 15, rbCar.velocity.z); // Jump??
                 break;
             case 2:
                 // ???
@@ -114,39 +113,34 @@ public class MyControlCAr : MonoBehaviour
         currentItem = -1;
     }
 
-        void Drift()
-    {
-        if (Inputs.Drift && Inputs.Accelerate)
-        {
-            if (Mathf.Abs(WheelsScript[0].wheelCollider.steerAngle) >= .01f && CheckGround())
-            {
+    void Drift() {
+        if (Inputs.Drift && Inputs.Accelerate) {
+            if (Mathf.Abs(WheelsScript[0].wheelCollider.steerAngle) >= .01f && CheckGround()) {
                 currentDriftAmount += Time.fixedDeltaTime;
                 foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null) wheel.TrailEffect(true, currentDriftAmount, DriftBoostTime);
             }
         }
-        else if (currentDriftAmount != 0)
-        {
+        else if (currentDriftAmount != 0) {
             if (currentDriftAmount >= DriftBoostTime[0] / 2f) DriftBoost();
             foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null) wheel.TrailEffect(false, currentDriftAmount, DriftBoostTime);
             currentDriftAmount = 0;
         }
         RotateVehicleDrift();
     }
-    bool CheckGround()
-    {
+
+    bool CheckGround() {
         foreach (WheelSinc wheels in WheelsScript) if (wheels.wheelCollider.isGrounded) return true;
         return false;
     }
-    void LockRotation()
-    {
-        if (!CheckGround()) rigidbody.freezeRotation = true;
-        else rigidbody.freezeRotation = false;
+
+    void LockRotation() {
+        if (!CheckGround()) rbCar.freezeRotation = true;
+        else rbCar.freezeRotation = false;
     }
-    void DriftBoost()
-    {
+
+    void DriftBoost() {
         int boostType = 0;
-        switch (currentDriftAmount)
-        {
+        switch (currentDriftAmount) {
             case float f when f <= DriftBoostTime[0]:
                 boostType = 0;
                 break;
@@ -157,29 +151,27 @@ public class MyControlCAr : MonoBehaviour
                 boostType = 2;
                 break;
         }
-        rigidbody.velocity *= DriftBoostAmount[boostType];
+        rbCar.velocity *= DriftBoostAmount[boostType];
         BoostVisualEffects(true);
         currentDriftBoostDuration = DriftBoostDuration[boostType];
         if (driftBoostCoroutine == null) driftBoostCoroutine = StartCoroutine(StopDriftBoost());
     }
-    IEnumerator StopDriftBoost()
-    {
+
+    IEnumerator StopDriftBoost() {
         yield return new WaitForSeconds(currentDriftBoostDuration);
         BoostVisualEffects(false);
         driftBoostCoroutine = null;
     }
-    void BoostVisualEffects(bool isActive)
-    {
-        if (isActive)
-        {
+
+    void BoostVisualEffects(bool isActive) {
+        if (isActive) {
             PPcontroler.Activate_deactivateDepthOfField(true);
             UI.alpha = 1;
             BoostParticle.SetActive(true);
             if (FOVTransition != null) StopCoroutine(FOVTransition);
             FOVTransition = StartCoroutine(FOVEffect(true));
         }
-        else
-        {
+        else {
             PPcontroler.Activate_deactivateDepthOfField(false);
             UI.alpha = 0;
             BoostParticle.SetActive(false);
@@ -187,54 +179,46 @@ public class MyControlCAr : MonoBehaviour
             FOVTransition = StartCoroutine(FOVEffect(false));
         }
     }
-    IEnumerator FOVEffect(bool isActive)
-    {
+
+    IEnumerator FOVEffect(bool isActive) {
         float time = FOVTransitionDuration * FOVPercentageIncrease;
         float increment = (FOVinBoost - baseFOV) * FOVPercentageIncrease;
         //float time = FOVTransitionDuration / FOVFrameAmount;
         //float increment = (FOVinBoost - baseFOV) * time;
-        if (isActive)
-        {
-            while (cm.m_Lens.FieldOfView < FOVinBoost)
-            {
+        if (isActive) {
+            while (cm.m_Lens.FieldOfView < FOVinBoost) {
                 cm.m_Lens.FieldOfView += increment;
                 yield return new WaitForSeconds(time);
             }
         }
-        else
-        {
-            while (cm.m_Lens.FieldOfView > baseFOV)
-            {
+        else {
+            while (cm.m_Lens.FieldOfView > baseFOV) {
                 cm.m_Lens.FieldOfView -= increment;
                 yield return new WaitForSeconds(time);
             }
         }
         FOVTransition = null;
     }
-    void RotateVehicleDrift()
-    {
-        if (Mathf.Abs(newVehicleDriftRotation) < DriftAngle && currentDriftAmount != 0)
-        {
+
+    void RotateVehicleDrift() {
+        if (Mathf.Abs(newVehicleDriftRotation) < DriftAngle && currentDriftAmount != 0) {
             float direction = Mathf.Sign(UnityEngine.Input.GetAxis("Horizontal"));
             newVehicleDriftRotation += direction * DriftAngleAmount;
             vehicleTransform.localRotation = Quaternion.Euler(0, newVehicleDriftRotation, 0);
         }
-        else if (Mathf.Abs(newVehicleDriftRotation) > 0 && currentDriftAmount == 0)
-        {
+        else if (Mathf.Abs(newVehicleDriftRotation) > 0 && currentDriftAmount == 0) {
             newVehicleDriftRotation += -Mathf.Sign(newVehicleDriftRotation) * DriftAngleAmount;
             vehicleTransform.localRotation = Quaternion.Euler(0, newVehicleDriftRotation, 0);
         }
     }
-    void GatherInputs()
-    {
+
+    void GatherInputs() {
         // reset input
 
         Inputs = new InputData();
 
-
         // gather nonzero input from our sources
-        for (int i = 0; i < m_Inputs.Length; i++)
-        {
+        for (int i = 0; i < m_Inputs.Length; i++) {
             Inputs = m_Inputs[i].GenerateInput();
 
         }
