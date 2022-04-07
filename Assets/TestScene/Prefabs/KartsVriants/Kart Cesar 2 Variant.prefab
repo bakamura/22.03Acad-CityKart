@@ -100,7 +100,7 @@ PrefabInstance:
     - target: {fileID: 3198279078245430836, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}
       propertyPath: Velocity
-      value: 300
+      value: 820
       objectReference: {fileID: 0}
     - target: {fileID: 3198279078245430836, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}
@@ -110,7 +110,7 @@ PrefabInstance:
     - target: {fileID: 3198279078245430836, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}
       propertyPath: ReverseVelocity
-      value: 100
+      value: 410
       objectReference: {fileID: 0}
     - target: {fileID: 6810272093715391982, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}

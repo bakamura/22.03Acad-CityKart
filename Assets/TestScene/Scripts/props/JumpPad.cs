@@ -10,7 +10,7 @@ public class JumpPad : MonoBehaviour
         if (other.tag == "Player")
         {
             Debug.Log("a");
-            other.GetComponent<Rigidbody>().AddForce(transform.up * JumpForce, ForceMode.VelocityChange);
+            other.GetComponent<Rigidbody>().AddForce(Vector3.up * JumpForce, ForceMode.VelocityChange);
         }
     }
 }

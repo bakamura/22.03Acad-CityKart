@@ -373,12 +373,12 @@ MonoBehaviour:
   - 5.5
   DriftBoostAmount:
   - 1.2
-  - 1.5
-  - 1.8
-  DriftBoostDuration:
-  - 1.5
+  - 1.7
   - 2
-  - 2.5
+  DriftBoostDuration:
+  - 1.4
+  - 1.9
+  - 2.3
   DriftAngle: 15
   DriftAngleAmount: 2
   vehicleTransform: {fileID: 3947966847691902495}
@@ -395,6 +395,12 @@ MonoBehaviour:
   PPcontroler: {fileID: 6265270050145899506}
   FOVTransitionDuration: 0.2
   FOVPercentageIncrease: 0.1
+  itemImage: {fileID: 0}
+  powerUpImages: []
+  teleportRange: 2
+  teleportParticles: {fileID: 0}
+  invertControlsParticles: {fileID: 0}
+  drillPrefab: {fileID: 0}
 --- !u!1 &981680752396251327
 GameObject:
   m_ObjectHideFlags: 0
