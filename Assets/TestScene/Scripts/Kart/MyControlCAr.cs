@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using KartGame.KartSystems;
 using Cinemachine;
+
 public class MyControlCAr : MonoBehaviour {
 
     [Header("Movement Settings")]
@@ -51,6 +53,12 @@ public class MyControlCAr : MonoBehaviour {
 
     [Header("ItemBoost")]
     [System.NonSerialized] public int currentItem = -1; // -1 = nothing
+    [SerializeField] private Image itemImage;
+    [SerializeField] private Sprite[] powerUpImages;
+    [SerializeField] private float teleportRange = 2;
+    [SerializeField] private ParticleSystem teleportParticles;
+    [SerializeField] private ParticleSystem invertControlsParticles;
+    [SerializeField] private GameObject drillPrefab;
 
     Rigidbody rbCar;
     private float currentDriftAmount;
@@ -71,6 +79,7 @@ public class MyControlCAr : MonoBehaviour {
 
     void Update() {
         MovementInputs();
+        ChangeUi();
     }
 
     void FixedUpdate() {
@@ -88,29 +97,50 @@ public class MyControlCAr : MonoBehaviour {
     }
 
     void UseItem() {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         switch (currentItem) {
             case 0:
-                // Speed boost
-                Debug.Log("Item 0: Velocity changed from " + rbCar.velocity.magnitude + " to " +  (rbCar.velocity * 1.5f).magnitude);
                 rbCar.velocity = rbCar.velocity * 1.75f;
+                Debug.Log(gameObject.name + "boosted speed");
                 break;
             case 1:
-                Debug.Log("Item 1: Velocity Y changed from " + rbCar.velocity.y + " to " + 15);
-                rbCar.velocity = new Vector3(rbCar.velocity.x, 15, rbCar.velocity.z); // Jump??
+                rbCar.velocity = new Vector3(rbCar.velocity.x, 15, rbCar.velocity.z);
+                Debug.Log(gameObject.name + "Jumped");
                 break;
             case 2:
-                // ???
-                Debug.Log("Used Item " + currentItem);
+                foreach (GameObject player in players) if (player != this.gameObject) StartCoroutine(InvertControl(player.GetComponent<MyControlCAr>()));
+                Debug.Log(gameObject.name + "inverted other player's control");
                 break;
             case 3:
-                // ???
-                Debug.Log("Used Item " + currentItem);
+                // Teleport In Front of Other
+                foreach (GameObject player in players) if (player != this.gameObject) transform.position = player.transform.position + (teleportRange * player.transform.forward);
+                Debug.Log(gameObject.name + "teleported in front of the other player");
                 break;
+            case 4:
+                // Missile
+                GameObject missile = Instantiate(drillPrefab, transform.position + (transform.forward * 2), transform.rotation);
+                missile.GetComponent<Rigidbody>().velocity = transform.forward * 5;
+                break;
+                Debug.Log(gameObject.name + "Missile'd");
             default:
                 Debug.Log("Error generating item");
                 break;
         }
         currentItem = -1;
+    }
+
+    void ChangeUi() {
+        itemImage.sprite = powerUpImages[currentItem + 1];
+    }
+
+    IEnumerator InvertControl(MyControlCAr target) {
+        target.Velocity *= -1;
+        target.ReverseVelocity *= -1;
+
+        yield return new WaitForSeconds(3);
+
+        target.Velocity *= -1;
+        target.ReverseVelocity *= -1;
     }
 
     void Drift() {
