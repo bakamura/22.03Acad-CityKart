@@ -4121,12 +4121,12 @@ PrefabInstance:
     - target: {fileID: 6582025748007997066, guid: 2afb79b9e73dceb459d2fc4b8ece62af,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000017311539
+      value: -0.00000001731154
       objectReference: {fileID: 0}
     - target: {fileID: 6582025748007997066, guid: 2afb79b9e73dceb459d2fc4b8ece62af,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -9.979704e-10
+      value: 9.979705e-10
       objectReference: {fileID: 0}
     - target: {fileID: 8277725530378253998, guid: 2afb79b9e73dceb459d2fc4b8ece62af,
         type: 3}
@@ -4156,12 +4156,12 @@ PrefabInstance:
     - target: {fileID: 8277725530378253998, guid: 2afb79b9e73dceb459d2fc4b8ece62af,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000001731154
+      value: -0.000000017311539
       objectReference: {fileID: 0}
     - target: {fileID: 8277725530378253998, guid: 2afb79b9e73dceb459d2fc4b8ece62af,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -9.979705e-10
+      value: 9.979704e-10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2afb79b9e73dceb459d2fc4b8ece62af, type: 3}
@@ -5186,6 +5186,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Kart Cesar 1 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5828676251219535024, guid: 434cab39e6263a54c941576ea0c597cc,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.000000017311539
+      objectReference: {fileID: 0}
+    - target: {fileID: 5828676251219535024, guid: 434cab39e6263a54c941576ea0c597cc,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 9.979704e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8744847136575675540, guid: 434cab39e6263a54c941576ea0c597cc,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.000000017311539
+      objectReference: {fileID: 0}
+    - target: {fileID: 8744847136575675540, guid: 434cab39e6263a54c941576ea0c597cc,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 9.979704e-10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 434cab39e6263a54c941576ea0c597cc, type: 3}
