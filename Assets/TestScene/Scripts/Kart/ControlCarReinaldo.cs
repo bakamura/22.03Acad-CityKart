@@ -25,7 +25,7 @@ public class ControlCarReinaldo : MonoBehaviour
     public WheelCollider wheelColliderTD;
     public WheelCollider wheelColliderTE;
 
-    public InputData Input { get; private set; }
+    public KartGame.KartSystems.InputData Input { get; private set; }
     // Start is called before the first frame update
     void Start()
     {
@@ -71,7 +71,7 @@ public class ControlCarReinaldo : MonoBehaviour
     {
         // reset input
 
-        Input = new InputData();
+        Input = new KartGame.KartSystems.InputData();
        
 
         // gather nonzero input from our sources
