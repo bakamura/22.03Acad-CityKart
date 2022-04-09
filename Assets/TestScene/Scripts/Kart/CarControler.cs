@@ -72,7 +72,7 @@ public class CarControler : MonoBehaviour
     private float baseFOV;
     private Coroutine FOVTransition = null;
     // NOTE: if dosent work errase all lines with /**/ and turn on all with /***/
-    [System.NonSerialized] public InputCar inputManager; /**/
+    [System.NonSerialized] public InputCar inputManager = null; /**/
     IInput[] m_Inputs;
     public KartGame.KartSystems.InputData Inputs { get; private set; }
 
@@ -87,9 +87,13 @@ public class CarControler : MonoBehaviour
 
     void Update()
     {
-        GatherInputs();
-        MovementInputs();
-        Drift();
+        //GatherInputs();/***/
+        if (inputManager.inputData != null)
+        {
+            MovementInputs();
+            Drift();
+        }
+        else Debug.LogWarning("No Active Controler Found For Car: " + this.gameObject.name);
         ChangeUi();
     }
 
@@ -100,7 +104,7 @@ public class CarControler : MonoBehaviour
 
     void MovementInputs()
     {
-        if (inputManager.VertMov() != 0) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = inputManager.VertMov() > 0 ? inputManager.VertMov() * Velocity : inputManager.VertMov() * ReverseVelocity; /**/
+        if (inputManager.VertMov() != 0) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = inputManager.VertMov() > 0 ?  inputManager.VertMov() * Velocity : inputManager.VertMov() * ReverseVelocity; /**/
         else foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = 0; /**/
         for (int i = 0; i < turningWheels; i++) WheelsScript[i].wheelCollider.steerAngle = inputManager.HorzMov() * TurningDegrees * isControlInverted;//turning the vehicle /**/
         if (inputManager.UseItem()) UseItem();
