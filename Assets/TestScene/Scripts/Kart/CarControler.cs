@@ -60,6 +60,9 @@ public class CarControler : MonoBehaviour
     [SerializeField] private ParticleSystem teleportParticles;
     [SerializeField] private ParticleSystem invertControlsParticles;
     [SerializeField] private GameObject drillPrefab;
+    public float isControlInverted = 1;
+    public bool isShielded = false;
+    [SerializeField] private GameObject oilPrefab;
 
     Rigidbody rbCar;
     private float currentDriftAmount;
@@ -99,7 +102,7 @@ public class CarControler : MonoBehaviour
     {
         if (inputManager.VertMov() != 0) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = inputManager.VertMov() > 0 ? inputManager.VertMov() * Velocity : inputManager.VertMov() * ReverseVelocity; /**/
         else foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = 0; /**/
-        for (int i = 0; i < turningWheels; i++) WheelsScript[i].wheelCollider.steerAngle = inputManager.HorzMov() * TurningDegrees;//turning the vehicle /**/
+        for (int i = 0; i < turningWheels; i++) WheelsScript[i].wheelCollider.steerAngle = inputManager.HorzMov() * TurningDegrees * isControlInverted;//turning the vehicle /**/
         if (inputManager.UseItem()) UseItem();
         //if (Input.GetKeyDown(KeyCode.F)) UseItem(); /***/
         //if (Inputs.Accelerate) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = UnityEngine.Input.GetAxis("Vertical") * Velocity; /***/
@@ -133,10 +136,22 @@ public class CarControler : MonoBehaviour
                 break;
             case 4:
                 // Missile
-                GameObject missile = Instantiate(drillPrefab, transform.position + (transform.forward * 2), transform.rotation);
-                missile.GetComponent<Rigidbody>().velocity = transform.forward * 5;
+                GameObject missile = Instantiate(drillPrefab, transform.position + (transform.forward * 4), transform.rotation);
+                missile.GetComponent<Rigidbody>().velocity = transform.forward * 25;
                 break;
                 Debug.Log(gameObject.name + "Missile'd");
+            case 5:
+                isShielded = true;
+                // Activate shield animation
+                break;
+            case 6:
+                // Break oponent
+                foreach (GameObject player in players) if (player != this.gameObject) StartCoroutine(BreakWheels(player.GetComponent<CarControler>()));
+                break;
+            case 7:
+                // SpawnOil
+                Instantiate(oilPrefab, transform.position - (transform.forward * 4), transform.rotation);
+                break;
             default:
                 Debug.Log("Error generating item");
                 break;
@@ -151,13 +166,20 @@ public class CarControler : MonoBehaviour
 
     IEnumerator InvertControl(CarControler target)
     {
-        target.Velocity *= -1;
-        target.ReverseVelocity *= -1;
+        target.isControlInverted *= -1;
 
         yield return new WaitForSeconds(3);
 
-        target.Velocity *= -1;
-        target.ReverseVelocity *= -1;
+        target.isControlInverted *= -1;
+    }
+
+    IEnumerator BreakWheels(CarControler target) {
+        float normalSpeed = target.Velocity;
+        target.Velocity = 0;
+
+        yield return new WaitForSeconds(3);
+
+        target.Velocity = normalSpeed;
     }
 
     void Drift()
