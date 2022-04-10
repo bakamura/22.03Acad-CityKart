@@ -190,19 +190,19 @@ public class CarControler : MonoBehaviour
     {
         //if (Inputs.Drift && Inputs.Accelerate && Inputs.TurnInput != 0)/***/
         //{/***/
-        if (inputManager.Drift() && inputManager.VertMov() > 0 && inputManager.HorzMov() != 0)/**/
+        if (inputManager.Drift() && inputManager.VertMov() > 0 && inputManager.HorzMov() != 0 && rbCar.velocity.magnitude > 1f)/**/
         {/**/
             if (Mathf.Abs(WheelsScript[0].wheelCollider.steerAngle) >= .01f && CheckGround())
             {
-                currentDriftAmount += Time.fixedDeltaTime;
-                foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null) wheel.TrailEffect(true, currentDriftAmount, DriftBoostTime);
+                currentDriftAmount += Time.deltaTime;
+                foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null && wheel.driftParticle != null) wheel.TrailEffect(true, currentDriftAmount, DriftBoostTime);
             }
         }/**/
         //}/***/
         else if (currentDriftAmount != 0)
         {
             if (currentDriftAmount >= DriftBoostTime[0] / 2f) DriftBoost();
-            foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null) wheel.TrailEffect(false, currentDriftAmount, DriftBoostTime);
+            foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null && wheel.driftParticle != null) wheel.TrailEffect(false, currentDriftAmount, DriftBoostTime);
             currentDriftAmount = 0;
         }
         RotateVehicleDrift();
@@ -235,7 +235,7 @@ public class CarControler : MonoBehaviour
                 boostType = 2;
                 break;
         }
-        rbCar.velocity *= DriftBoostAmount[boostType];
+        rbCar.velocity = rbCar.velocity * DriftBoostAmount[boostType] + (transform.forward * 10);
         BoostVisualEffects(true);
         currentDriftBoostDuration = DriftBoostDuration[boostType];
         if (driftBoostCoroutine == null) driftBoostCoroutine = StartCoroutine(StopDriftBoost());
@@ -293,12 +293,13 @@ public class CarControler : MonoBehaviour
 
     void RotateVehicleDrift()
     {
+        //turns the car depending on the player input
         if (Mathf.Abs(newVehicleDriftRotation) < DriftAngle && currentDriftAmount != 0)
         {
-            float direction = Mathf.Sign(UnityEngine.Input.GetAxis("Horizontal"));
-            newVehicleDriftRotation += direction * DriftAngleAmount;
+            newVehicleDriftRotation += Mathf.Sign(inputManager.HorzMov()) * DriftAngleAmount;
             vehicleTransform.localRotation = Quaternion.Euler(0, newVehicleDriftRotation, 0);
         }
+        //returs back the car from the drift rotation
         else if (Mathf.Abs(newVehicleDriftRotation) > 0 && currentDriftAmount == 0)
         {
             newVehicleDriftRotation += -Mathf.Sign(newVehicleDriftRotation) * DriftAngleAmount;

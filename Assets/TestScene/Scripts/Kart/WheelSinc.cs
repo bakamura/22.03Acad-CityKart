@@ -6,7 +6,7 @@ public class WheelSinc : MonoBehaviour
 {
     public WheelCollider wheelCollider;
     [SerializeField] private Transform wtransform;
-    [SerializeField] private ParticleSystem driftParticle;
+    public ParticleSystem driftParticle;
     public TrailRenderer trail;
     [SerializeField] private Color[] particleColors = new Color[3];
     [SerializeField] private List<Color> baseParticleColors;

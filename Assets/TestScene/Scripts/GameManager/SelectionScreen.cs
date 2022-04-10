@@ -4,12 +4,13 @@ using UnityEngine;
 using System;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SelectionScreen : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private TMP_Text currentPlayerText;
-    [SerializeField] private CanvasGroup[] Screens;
+    [SerializeField] private CanvasGroup[] allSelectionScreeens;
 
     [Header("Players Info")]
     private int playerAmount;
@@ -20,20 +21,24 @@ public class SelectionScreen : MonoBehaviour
     private CanvasGroup currentScreen;
     private string LevelSelected;
 
+    AsyncOperation loadingSceneOperation;
+
     public void ChangeScreen(CanvasGroup screen)
     {
-        if (currentSelectingPlayer == playerAmount)
+        ChangeCurrentSelectingPlayer();
+        if (currentSelectingPlayer == playerAmount || currentSelectionScreen == 0 || currentSelectionScreen >= 3)
         {
-            currentSelectingPlayer = 1;
+            currentSelectingPlayer = 0;
             if (currentScreen == null)
             {
-                foreach (CanvasGroup canvas in Screens)
+                foreach (CanvasGroup canvas in allSelectionScreeens)
                 {
                     if (canvas.alpha != 0)
                     {
                         canvas.alpha = 0;
                         canvas.interactable = false;
                         canvas.blocksRaycasts = false;
+                        break;
                     }
                 }
             }
@@ -49,40 +54,65 @@ public class SelectionScreen : MonoBehaviour
             currentScreen = screen;
             currentSelectionScreen++;
         }
-        else
-        {
-            ChangeCurrentSelectingPlayer();
-        }
+        UpdateCurrentPlayerText();
     }
+
     public void SetPlayerAmount(int players)
     {
         playerAmount = players;
-        currentSelectingPlayer = 1;
     }
+
     private void ChangeCurrentSelectingPlayer()
+    { 
+        currentSelectingPlayer++;
+    }
+
+    private void UpdateCurrentPlayerText()
     {
-        if (playerAmount > 1) currentSelectingPlayer++;
-        if (currentSelectionScreen == 2)
+        //in track seletion screen
+        if (currentSelectionScreen == allSelectionScreeens.Length - 3)
         {
             currentPlayerText.text = "Select Track";
             return;
         }
-        currentPlayerText.text = "Player" + currentSelectingPlayer.ToString() + "Select";
+        //in start game screen/loading screen
+        else if (currentSelectionScreen > 3)
+        {
+            currentPlayerText.text = "";
+            return;
+        }
+        currentPlayerText.text = "Player " + (currentSelectingPlayer + 1).ToString() + " Select";
     }
+
     public void SetPlayerCar(GameObject carPrefab)
     {
         GameSelectionManager.playerCars.Add(carPrefab);
     }
+
     public void SetPlayerControls(InputData controlInfo)
     {
         GameSelectionManager.playerInputs.Add(controlInfo);
     }
+
     public void SetTrack(string sceneName)
     {
-        LevelSelected = sceneName;
+        LevelSelected = sceneName;        
     }
+
     public void StartGame()
     {
-        SceneManager.LoadScene(LevelSelected);
+        StartCoroutine(LoadingScene());
+    }
+    IEnumerator LoadingScene()
+    {
+        loadingSceneOperation = SceneManager.LoadSceneAsync(LevelSelected);
+        while (!loadingSceneOperation.isDone) yield return null;
+    }
+
+    public void DeactivateButton(GameObject button)
+    {
+        button.GetComponent<Button>().enabled = false;
+        Image btnImage = button.GetComponent<Image>();
+        btnImage.color = new Color(btnImage.color.r, btnImage.color.g, btnImage.color.b, .25f);
     }
 }

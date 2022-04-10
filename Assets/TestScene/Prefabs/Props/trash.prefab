@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4742414810708879387}
   - component: {fileID: 8863925366901013906}
   - component: {fileID: 4300509733178611663}
-  m_Layer: 17
+  m_Layer: 19
   m_Name: trash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,10 +136,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1539869938316331463}
     m_Modifications:
+    - target: {fileID: 59335997523925052, guid: 53313bb75eeac3c489dbacfe472f7c3f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 391881810992953127, guid: 53313bb75eeac3c489dbacfe472f7c3f,
         type: 3}
       propertyPath: m_Name
       value: SparkParticleDestruction
+      objectReference: {fileID: 0}
+    - target: {fileID: 391881810992953127, guid: 53313bb75eeac3c489dbacfe472f7c3f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 2158254294985875215, guid: 53313bb75eeac3c489dbacfe472f7c3f,
         type: 3}

@@ -397,11 +397,26 @@ MonoBehaviour:
   FOVTransitionDuration: 0.2
   FOVPercentageIncrease: 0.1
   itemImage: {fileID: 0}
-  powerUpImages: []
+  powerUpImages:
+  - {fileID: 0}
+  - {fileID: 21300000, guid: de2cdf3b33d26ab4e9d821ada8bca2e5, type: 3}
+  - {fileID: 21300000, guid: 04595cbe7b2b60d468b3042c2c9bb59e, type: 3}
+  - {fileID: 21300000, guid: 27c1ff98ba446fe42938d3af9e305c15, type: 3}
+  - {fileID: 21300000, guid: 30d16e69e4cb2bd45bd52364047fe5f9, type: 3}
+  - {fileID: 21300000, guid: fae75882a5217c34f9a441506dae1a49, type: 3}
+  - {fileID: 21300000, guid: 03192bb52347d004092064ff36cb223d, type: 3}
+  - {fileID: 21300000, guid: 710dcda5753e9094e810afd4e408d4d8, type: 3}
   teleportRange: 2
-  teleportParticles: {fileID: 0}
-  invertControlsParticles: {fileID: 0}
-  drillPrefab: {fileID: 0}
+  teleportParticles: {fileID: 354399207678255019, guid: cee4e4ee79f9743409946a6acfbb0d26,
+    type: 3}
+  invertControlsParticles: {fileID: 4344367361867962137, guid: c05fc8a84c83a7c4fbd6befde3cdb13e,
+    type: 3}
+  drillPrefab: {fileID: 999361724997246761, guid: 1b18ac7923f487241b4c275a9e89dcb7,
+    type: 3}
+  isControlInverted: 1
+  isShielded: 0
+  oilPrefab: {fileID: 2221498993497561413, guid: 93b1c9c4b80c1ba4ca23f2d9e55aa381,
+    type: 3}
 --- !u!114 &2938666837023501639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,6 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb48d302b85096f4aa46da97bd5d8799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputData: {fileID: 0}
 --- !u!1 &981680752396251327
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,7 +819,7 @@ GameObject:
   - component: {fileID: 7517604789362486235}
   - component: {fileID: 6366640328935847669}
   - component: {fileID: 5038669530148323176}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -874,7 +890,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6563982421769772451}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!114 &6366640328935847669
 MonoBehaviour:
   m_ObjectHideFlags: 0
