@@ -5,8 +5,7 @@ using UnityEngine.UI;
 using KartGame.KartSystems;
 using Cinemachine;
 
-public class CarControler : MonoBehaviour
-{
+public class CarControler : MonoBehaviour {
 
     [Header("Movement Settings")]
 
@@ -63,6 +62,7 @@ public class CarControler : MonoBehaviour
     public float isControlInverted = 1;
     public bool isShielded = false;
     [SerializeField] private GameObject oilPrefab;
+    [SerializeField] private CanvasGroup breakImage;
 
     Rigidbody rbCar;
     private float currentDriftAmount;
@@ -77,34 +77,30 @@ public class CarControler : MonoBehaviour
     public KartGame.KartSystems.InputData Inputs { get; private set; }
 
 
-    void Awake()
-    {
+    void Awake() {
         rbCar = GetComponent<Rigidbody>();
         m_Inputs = GetComponents<IInput>();
         inputManager = GetComponent<InputCar>();/**/
         baseFOV = cm.m_Lens.FieldOfView;
     }
 
-    void Update()
-    {
+    void Update() {
         //GatherInputs();/***/
-        if (inputManager.inputData != null)
-        {
+        if (inputManager.inputData != null) {
             MovementInputs();
             Drift();
         }
         else Debug.LogWarning("No Active Controler Found For Car: " + this.gameObject.name);
         ChangeUi();
+        if (isShielded) ; // colocar animacao
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         LockRotation();
     }
 
-    void MovementInputs()
-    {
-        if (inputManager.VertMov() != 0) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = inputManager.VertMov() > 0 ?  inputManager.VertMov() * Velocity : inputManager.VertMov() * ReverseVelocity; /**/
+    void MovementInputs() {
+        if (inputManager.VertMov() != 0) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = inputManager.VertMov() > 0 ? inputManager.VertMov() * Velocity : inputManager.VertMov() * ReverseVelocity; /**/
         else foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = 0; /**/
         for (int i = 0; i < turningWheels; i++) WheelsScript[i].wheelCollider.steerAngle = inputManager.HorzMov() * TurningDegrees * isControlInverted;//turning the vehicle /**/
         if (inputManager.UseItem()) UseItem();
@@ -116,11 +112,9 @@ public class CarControler : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.F)) UseItem() /***/
     }
 
-    void UseItem()
-    {
+    void UseItem() {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        switch (currentItem)
-        {
+        switch (currentItem) {
             case 0:
                 rbCar.velocity = rbCar.velocity * 1.75f;
                 Debug.Log(gameObject.name + "boosted speed");
@@ -130,12 +124,18 @@ public class CarControler : MonoBehaviour
                 Debug.Log(gameObject.name + "Jumped");
                 break;
             case 2:
-                foreach (GameObject player in players) if (player != this.gameObject) StartCoroutine(InvertControl(player.GetComponent<CarControler>()));
+                foreach (GameObject player in players) if (player != this.gameObject) {
+                        if (player.GetComponent<CarControler>().isShielded) player.GetComponent<CarControler>().isShielded = false;
+                        else StartCoroutine(InvertControl(player.GetComponent<CarControler>()));
+                    }
                 Debug.Log(gameObject.name + "inverted other player's control");
                 break;
             case 3:
                 // Teleport In Front of Other
-                foreach (GameObject player in players) if (player != this.gameObject) transform.position = player.transform.position + (teleportRange * player.transform.forward);
+                foreach (GameObject player in players) if (player != this.gameObject) {
+                        if (player.GetComponent<CarControler>().isShielded) player.GetComponent<CarControler>().isShielded = false;
+                        else transform.position = player.transform.position + (teleportRange * player.transform.forward);
+                    }
                 Debug.Log(gameObject.name + "teleported in front of the other player");
                 break;
             case 4:
@@ -163,14 +163,13 @@ public class CarControler : MonoBehaviour
         currentItem = -1;
     }
 
-    void ChangeUi()
-    {
+    void ChangeUi() {
         itemImage.sprite = powerUpImages[currentItem + 1];
     }
 
-    IEnumerator InvertControl(CarControler target)
-    {
+    IEnumerator InvertControl(CarControler target) {
         target.isControlInverted *= -1;
+        target.invertControlsParticles.Play(); // 
 
         yield return new WaitForSeconds(3);
 
@@ -180,18 +179,23 @@ public class CarControler : MonoBehaviour
     IEnumerator BreakWheels(CarControler target) {
         float normalSpeed = target.Velocity;
         target.Velocity = 0;
+        target.breakImage.alpha = 1;
 
         yield return new WaitForSeconds(3);
 
         target.Velocity = normalSpeed;
+        target.breakImage.alpha = 0;
     }
 
-    void Drift()
-    {
+
+
+    void Drift() {
         //if (Inputs.Drift && Inputs.Accelerate && Inputs.TurnInput != 0)/***/
         //{/***/
         if (inputManager.Drift() && inputManager.VertMov() > 0 && inputManager.HorzMov() != 0 && rbCar.velocity.magnitude > 1f)/**/
         {/**/
+            if (Mathf.Abs(WheelsScript[0].wheelCollider.steerAngle) >= .01f && CheckGround()) {
+                foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null) wheel.TrailEffect(true, currentDriftAmount, DriftBoostTime);
             if (Mathf.Abs(WheelsScript[0].wheelCollider.steerAngle) >= .01f && CheckGround())
             {
                 currentDriftAmount += Time.deltaTime;
@@ -199,8 +203,7 @@ public class CarControler : MonoBehaviour
             }
         }/**/
         //}/***/
-        else if (currentDriftAmount != 0)
-        {
+        else if (currentDriftAmount != 0) {
             if (currentDriftAmount >= DriftBoostTime[0] / 2f) DriftBoost();
             foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null && wheel.driftParticle != null) wheel.TrailEffect(false, currentDriftAmount, DriftBoostTime);
             currentDriftAmount = 0;
@@ -208,23 +211,19 @@ public class CarControler : MonoBehaviour
         RotateVehicleDrift();
     }
 
-    bool CheckGround()
-    {
+    bool CheckGround() {
         foreach (WheelSinc wheels in WheelsScript) if (wheels.wheelCollider.isGrounded) return true;
         return false;
     }
 
-    void LockRotation()
-    {
+    void LockRotation() {
         if (!CheckGround()) rbCar.freezeRotation = true;
         else rbCar.freezeRotation = false;
     }
 
-    void DriftBoost()
-    {
+    void DriftBoost() {
         int boostType = 0;
-        switch (currentDriftAmount)
-        {
+        switch (currentDriftAmount) {
             case float f when f <= DriftBoostTime[0]:
                 boostType = 0;
                 break;
@@ -241,25 +240,21 @@ public class CarControler : MonoBehaviour
         if (driftBoostCoroutine == null) driftBoostCoroutine = StartCoroutine(StopDriftBoost());
     }
 
-    IEnumerator StopDriftBoost()
-    {
+    IEnumerator StopDriftBoost() {
         yield return new WaitForSeconds(currentDriftBoostDuration);
         BoostVisualEffects(false);
         driftBoostCoroutine = null;
     }
 
-    void BoostVisualEffects(bool isActive)
-    {
-        if (isActive)
-        {
+    void BoostVisualEffects(bool isActive) {
+        if (isActive) {
             PPcontroler.Activate_deactivateDepthOfField(true);
             UI.alpha = 1;
             BoostParticle.SetActive(true);
             if (FOVTransition != null) StopCoroutine(FOVTransition);
             FOVTransition = StartCoroutine(FOVEffect(true));
         }
-        else
-        {
+        else {
             PPcontroler.Activate_deactivateDepthOfField(false);
             UI.alpha = 0;
             BoostParticle.SetActive(false);
@@ -268,22 +263,17 @@ public class CarControler : MonoBehaviour
         }
     }
 
-    IEnumerator FOVEffect(bool isActive)
-    {
+    IEnumerator FOVEffect(bool isActive) {
         float time = FOVTransitionDuration * FOVPercentageIncrease;
         float increment = (FOVinBoost - baseFOV) * FOVPercentageIncrease;
-        if (isActive)
-        {
-            while (cm.m_Lens.FieldOfView < FOVinBoost)
-            {
+        if (isActive) {
+            while (cm.m_Lens.FieldOfView < FOVinBoost) {
                 cm.m_Lens.FieldOfView += increment;
                 yield return new WaitForSeconds(time);
             }
         }
-        else
-        {
-            while (cm.m_Lens.FieldOfView > baseFOV)
-            {
+        else {
+            while (cm.m_Lens.FieldOfView > baseFOV) {
                 cm.m_Lens.FieldOfView -= increment;
                 yield return new WaitForSeconds(time);
             }
@@ -307,15 +297,13 @@ public class CarControler : MonoBehaviour
         }
     }
 
-    void GatherInputs()
-    {
+    void GatherInputs() {
         // reset input
 
         Inputs = new KartGame.KartSystems.InputData();
 
         // gather nonzero input from our sources
-        for (int i = 0; i < m_Inputs.Length; i++)
-        {
+        for (int i = 0; i < m_Inputs.Length; i++) {
             Inputs = m_Inputs[i].GenerateInput();
 
         }
