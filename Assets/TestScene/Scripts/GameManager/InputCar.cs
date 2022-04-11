@@ -8,38 +8,38 @@ public class InputCar : MonoBehaviour
     public InputData inputData;
     public float HorzMov()
     {
-        float result = 0;
-        if (Input.GetKey(inputData.keys[(int)InputData.inputTypes.RightMovment]))
-        {
-            result = 1;
-        }
-        else if (Input.GetKey(inputData.keys[(int)InputData.inputTypes.LeftMovment]))
-        {
-            result = -1;
-        }
-        return result;
+        return Input.GetAxis(inputData.HorizontalMovment);
     }
     public float VertMov()
     {
-        float result = 0;
-        if (Input.GetKey(inputData.keys[(int)InputData.inputTypes.FowardMovment]))
-        {
-            result = 1;
-        }
-        if (Input.GetKey(inputData.keys[(int)InputData.inputTypes.BackwardMovment]))
-        {
-            result = -1;
-        }
-        return result;
+        return Input.GetAxis(inputData.VerticalMovment);
     }
     public bool Drift()
     {
-        if (Input.GetKey(inputData.keys[(int)InputData.inputTypes.Drift])) return true;
-        else return false;
+        switch (inputData.inputType)
+        {
+            case InputData.inputTypes.Keyboard:
+                return Input.GetButton(inputData.Drift);
+            case InputData.inputTypes.Controller:
+               return Input.GetAxis(inputData.Drift) > 0 ? true: false;
+            default:
+                return false;
+        }
     }
     public bool UseItem()
     {
-        if (Input.GetKey(inputData.keys[(int)InputData.inputTypes.UseItem])) return true;
-        else return false;
+        switch (inputData.inputType)
+        {
+            case InputData.inputTypes.Keyboard:
+                return Input.GetButton(inputData.UseItem);
+            case InputData.inputTypes.Controller:
+                return Input.GetAxis(inputData.UseItem) > 0 ? true : false;
+            default:
+                return false;
+        }
+    }
+    public bool Pause()
+    {
+        return Input.GetButton(inputData.Pause);
     }
 }

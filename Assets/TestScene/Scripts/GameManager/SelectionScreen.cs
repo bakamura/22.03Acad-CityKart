@@ -12,12 +12,16 @@ public class SelectionScreen : MonoBehaviour
     [SerializeField] private TMP_Text currentPlayerText;
     [SerializeField] private CanvasGroup[] allSelectionScreeens;
 
+    [SerializeField] private InputData[] controlerInputs;
+
     [Header("Players Info")]
     private int playerAmount;
 
     [Header("Current Selection Info")]
-    private static int currentSelectingPlayer = 0;
-    private static int currentSelectionScreen = 0;
+    private int currentSelectingPlayer = 0;
+    private int currentSelectionScreen = 0;
+    //used when there is more than 1 controler user
+    private int currentSelectingControlerInput = 0;
     private CanvasGroup currentScreen;
     private string LevelSelected;
 
@@ -89,9 +93,15 @@ public class SelectionScreen : MonoBehaviour
         GameSelectionManager.playerCars.Add(carPrefab);
     }
 
-    public void SetPlayerControls(InputData controlInfo)
+    public void SetPlayerKeyboardControls(InputData controlInfo)
     {
         GameSelectionManager.playerInputs.Add(controlInfo);
+    }
+
+    public void SetPlayerControlerControls()
+    {
+        GameSelectionManager.playerInputs.Add(controlerInputs[currentSelectingControlerInput]);
+        currentSelectingControlerInput++;
     }
 
     public void SetTrack(string sceneName)

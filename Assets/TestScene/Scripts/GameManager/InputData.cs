@@ -7,14 +7,13 @@ public class InputData : ScriptableObject
 {
     public enum inputTypes
     {
-        FowardMovment,
-        BackwardMovment,
-        LeftMovment,
-        RightMovment,
-        Drift,
-        UseItem,
-        Pause
+        Keyboard,
+        Controller,
     };
-    public inputTypes[] inputType = new inputTypes[7];
-    public KeyCode[] keys = new KeyCode[7];        
+    public inputTypes inputType;
+    public string VerticalMovment;
+    public string HorizontalMovment;
+    public string Drift;
+    public string UseItem;
+    public string Pause;
 }
