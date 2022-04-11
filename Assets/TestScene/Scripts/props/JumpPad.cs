@@ -8,7 +8,9 @@ public class JumpPad : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
 
         if (other.tag == "Player") {
-            other.GetComponent<Rigidbody>().velocity = new Vector3(0, JumpForce, JumpForce / 4);
+            foreach (Animation anim in GetComponentsInChildren<Animation>()) anim.Play();
+            other.GetComponent<Rigidbody>().AddForce(Vector3.up * JumpForce, ForceMode.VelocityChange);
+            //new Vector3(0, JumpForce, JumpForce / 4)
         }
     }
 }

@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 7699525250839499555}
   - component: {fileID: 4091253462462801824}
   - component: {fileID: 9190131365798279853}
+  - component: {fileID: 8240295150676540625}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -119,7 +120,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 144498220e035414695a8e286c4245f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -141,6 +142,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!111 &8240295150676540625
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4773803904345791234}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: -37669189202538297, guid: 139e6cebbe91bb5469b7501cf176e26f,
+    type: 3}
+  m_Animations:
+  - {fileID: -359618272553315812, guid: 139e6cebbe91bb5469b7501cf176e26f, type: 3}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &8247857682213717442
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,6 +170,7 @@ GameObject:
   - component: {fileID: 3606178182813473919}
   - component: {fileID: 2873362775428152914}
   - component: {fileID: 6996433845839603651}
+  - component: {fileID: 2235120581257146806}
   m_Layer: 0
   m_Name: Cube.001
   m_TagString: Untagged
@@ -167,7 +186,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8247857682213717442}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 2.1915193, z: 0}
+  m_LocalPosition: {x: -0, y: 6.29, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 21.495802}
   m_Children: []
   m_Father: {fileID: 948724772315423289}
@@ -200,7 +219,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 75c9788d35729e54092306d99a3ea467, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -222,3 +241,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!111 &2235120581257146806
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8247857682213717442}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 413061771419733512, guid: 139e6cebbe91bb5469b7501cf176e26f,
+    type: 3}
+  m_Animations:
+  - {fileID: -37669189202538297, guid: 139e6cebbe91bb5469b7501cf176e26f, type: 3}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
