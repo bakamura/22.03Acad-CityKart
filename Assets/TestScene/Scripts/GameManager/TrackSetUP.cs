@@ -9,16 +9,17 @@ public class TrackSetUP : MonoBehaviour
     [SerializeField] private LayerMask[] playerCameraLayers = new LayerMask[4];
     private void Awake()
     {
-        for (int i = 0; i < GameSelectionManager.playerCars.Count; i++)
+        for (int i = 0; i < GameManager.playerCars.Count; i++)
         {
-            CarControler script = Instantiate(GameSelectionManager.playerCars[i], playerPositions[i].position, Quaternion.identity, null).GetComponent<CarControler>();
-            script.inputManager.inputData = GameSelectionManager.playerInputs[i];
-            SetCameraLens(script.gameObject.GetComponentInChildren<Camera>(), script.gameObject.GetComponentInChildren<CinemachineVirtualCamera>().gameObject, i);
+            PlayerData Data = Instantiate(GameManager.playerCars[i], playerPositions[i].position, Quaternion.identity, null).GetComponent<PlayerData>();
+            Data.inputManager.inputData = GameManager.playerInputs[i];
+            Data.CarID = i;
+            SetCameraLens(Data.gameObject.GetComponentInChildren<Camera>(), Data.gameObject.GetComponentInChildren<CinemachineVirtualCamera>().gameObject, i);
         }
     }
     private void SetCameraLens(Camera camera, GameObject cinemachine, int currentPlayer)
     {
-        switch (GameSelectionManager.playerCars.Count)
+        switch (GameManager.playerCars.Count)
         {
             default:
                 return;

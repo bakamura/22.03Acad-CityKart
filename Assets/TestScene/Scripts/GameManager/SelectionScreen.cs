@@ -90,17 +90,17 @@ public class SelectionScreen : MonoBehaviour
 
     public void SetPlayerCar(GameObject carPrefab)
     {
-        GameSelectionManager.playerCars.Add(carPrefab);
+        GameManager.playerCars.Add(carPrefab);
     }
 
     public void SetPlayerKeyboardControls(InputData controlInfo)
     {
-        GameSelectionManager.playerInputs.Add(controlInfo);
+        GameManager.playerInputs.Add(controlInfo);
     }
 
     public void SetPlayerControlerControls()
     {
-        GameSelectionManager.playerInputs.Add(controlerInputs[currentSelectingControlerInput]);
+        GameManager.playerInputs.Add(controlerInputs[currentSelectingControlerInput]);
         currentSelectingControlerInput++;
     }
 

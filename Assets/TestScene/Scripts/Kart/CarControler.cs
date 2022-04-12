@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using KartGame.KartSystems;
 using Cinemachine;
 
 public class CarControler : MonoBehaviour
@@ -39,6 +38,10 @@ public class CarControler : MonoBehaviour
     [Min(1), Tooltip("the amount of wheels that will turn, needs to be the firts elements of the WheelsScript array")]
     [SerializeField] private int turningWheels;
     [SerializeField] private WheelSinc[] WheelsScript;
+    private float currentDriftAmount;
+    private Coroutine driftBoostCoroutine = null;
+    private float currentDriftBoostDuration;
+    private Rigidbody rbCar;
 
     [Header("Visuals")]
     [SerializeField] private CinemachineVirtualCamera cm;
@@ -51,10 +54,13 @@ public class CarControler : MonoBehaviour
     [SerializeField] private float FOVTransitionDuration;
     [Range(.01f, 1f), Tooltip("How much the FOV will change per tick, in percentage")]
     [SerializeField] private float FOVPercentageIncrease;
+    private float baseFOV;
+    private float newVehicleDriftRotation = 0;
+    private Coroutine FOVTransition = null;
 
     [Header("ItemBoost")]
-    [System.NonSerialized] public int currentItem = -1; // -1 = nothing
     [SerializeField] private Image itemImage;
+    [System.NonSerialized] public int currentItem = -1; // -1 = nothing
     [SerializeField] private Sprite[] powerUpImages;
     [SerializeField] private float teleportRange = 2;
     [SerializeField] private ParticleSystem teleportParticles;
@@ -65,32 +71,20 @@ public class CarControler : MonoBehaviour
     [SerializeField] private GameObject oilPrefab;
     [SerializeField] private CanvasGroup breakImage;
 
-    Rigidbody rbCar;
-    private float currentDriftAmount;
-    private float newVehicleDriftRotation = 0;
-    private Coroutine driftBoostCoroutine = null;
-    private float currentDriftBoostDuration;
-    private float baseFOV;
-    private Coroutine FOVTransition = null;
-    // NOTE: if dosent work errase all lines with /**/ and turn on all with /***/
-    [System.NonSerialized] public InputCar inputManager = null; /**/
-    IInput[] m_Inputs;
-    public KartGame.KartSystems.InputData Inputs { get; private set; }
-
+    private PlayerData data;
 
     void Awake()
     {
         rbCar = GetComponent<Rigidbody>();
-        m_Inputs = GetComponents<IInput>();
-        inputManager = GetComponent<InputCar>();/**/
+        data = GetComponent<PlayerData>();
+        data.inputManager = GetComponent<InputCar>();/**/
         baseFOV = cm.m_Lens.FieldOfView;
     }
 
     void Update()
     {
-        //GatherInputs();/***/
-        if (inputManager.Drift())Debug.Log("drift");
-        if (inputManager.inputData != null)
+        if (data.inputManager.Drift())Debug.Log("drift");
+        if (data.inputManager.inputData != null)
         {
             MovementInputs();
             Drift();
@@ -107,16 +101,9 @@ public class CarControler : MonoBehaviour
 
     void MovementInputs()
     {
-        foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = inputManager.VertMov() > 0 ? inputManager.VertMov() * Velocity : inputManager.VertMov() * ReverseVelocity; /**/
-        for (int i = 0; i < turningWheels; i++) WheelsScript[i].wheelCollider.steerAngle = inputManager.HorzMov() * TurningDegrees * isControlInverted;//turning the vehicle /**/
-        if (inputManager.UseItem()) UseItem();
-
-        //if (Input.GetKeyDown(KeyCode.F)) UseItem(); /***/
-        //if (Inputs.Accelerate) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = UnityEngine.Input.GetAxis("Vertical") * Velocity; /***/
-        //if (Inputs.Brake) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = Mathf.Abs(UnityEngine.Input.GetAxis("Vertical")) * -ReverseVelocity; /***/
-        //if (!Inputs.Accelerate && !Inputs.Brake) foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = UnityEngine.Input.GetAxis("Vertical") * Velocity; /***/
-        //for (int i = 0; i < turningWheels; i++) WheelsScript[i].wheelCollider.steerAngle = Inputs.TurnInput * TurningDegrees;//turning the vehicle /***/
-        //if (Input.GetKeyDown(KeyCode.F)) UseItem() /***/
+        foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = data.inputManager.VertMov() > 0 ? data.inputManager.VertMov() * Velocity : data.inputManager.VertMov() * ReverseVelocity; /**/
+        for (int i = 0; i < turningWheels; i++) WheelsScript[i].wheelCollider.steerAngle = data.inputManager.HorzMov() * TurningDegrees * isControlInverted;//turning the vehicle /**/
+        if (data.inputManager.UseItem()) UseItem();
     }
 
     void UseItem()
@@ -205,11 +192,8 @@ public class CarControler : MonoBehaviour
 
     void Drift()
     {
-        //if (Inputs.Drift && Inputs.Accelerate && Inputs.TurnInput != 0)/***/
-        //{/***/
-        if (inputManager.Drift() && inputManager.VertMov() > 0 && inputManager.HorzMov() != 0 && rbCar.velocity.magnitude > 1f)/**/
-        {/**/
-            Debug.Log(inputManager.Drift());
+        if (data.inputManager.Drift() && data.inputManager.VertMov() > 0 && data.inputManager.HorzMov() != 0 && rbCar.velocity.magnitude > 1f)/**/
+        {
             if (Mathf.Abs(WheelsScript[0].wheelCollider.steerAngle) >= .01f && CheckGround())
             {
                 foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null) wheel.TrailEffect(true, currentDriftAmount, DriftBoostTime);
@@ -218,8 +202,7 @@ public class CarControler : MonoBehaviour
                     currentDriftAmount += Time.deltaTime;
                     foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null && wheel.driftParticle != null) wheel.TrailEffect(true, currentDriftAmount, DriftBoostTime);
                 }
-            }/**/
-            //}/***/
+            }
         }
         else if (currentDriftAmount != 0)
         {
@@ -319,7 +302,7 @@ public class CarControler : MonoBehaviour
         //turns the car depending on the player input
         if (Mathf.Abs(newVehicleDriftRotation) < DriftAngle && currentDriftAmount != 0)
         {
-            newVehicleDriftRotation += Mathf.Sign(inputManager.HorzMov()) * DriftAngleAmount;
+            newVehicleDriftRotation += Mathf.Sign(data.inputManager.HorzMov()) * DriftAngleAmount;
             vehicleTransform.localRotation = Quaternion.Euler(0, newVehicleDriftRotation, 0);
         }
         //returs back the car from the drift rotation
@@ -327,20 +310,6 @@ public class CarControler : MonoBehaviour
         {
             newVehicleDriftRotation += -Mathf.Sign(newVehicleDriftRotation) * DriftAngleAmount;
             vehicleTransform.localRotation = Quaternion.Euler(0, newVehicleDriftRotation, 0);
-        }
-    }
-
-    void GatherInputs()
-    {
-        // reset input
-
-        Inputs = new KartGame.KartSystems.InputData();
-
-        // gather nonzero input from our sources
-        for (int i = 0; i < m_Inputs.Length; i++)
-        {
-            Inputs = m_Inputs[i].GenerateInput();
-
         }
     }
 }
