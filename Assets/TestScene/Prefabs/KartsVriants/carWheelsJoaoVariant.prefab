@@ -12,20 +12,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 124192648077863700}
     - target: {fileID: 1822958964, guid: 2afb79b9e73dceb459d2fc4b8ece62af, type: 3}
-      propertyPath: Velocity
-      value: 3000
+      propertyPath: itemImage
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822958964, guid: 2afb79b9e73dceb459d2fc4b8ece62af, type: 3}
+      propertyPath: oilPrefab
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1822958964, guid: 2afb79b9e73dceb459d2fc4b8ece62af, type: 3}
       propertyPath: DriftAngle
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1822958964, guid: 2afb79b9e73dceb459d2fc4b8ece62af, type: 3}
-      propertyPath: TurningDegrees
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 1822958964, guid: 2afb79b9e73dceb459d2fc4b8ece62af, type: 3}
-      propertyPath: ReverseVelocity
-      value: 1000
+      propertyPath: shieldParent
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 981680751045776240, guid: 2afb79b9e73dceb459d2fc4b8ece62af,
         type: 3}

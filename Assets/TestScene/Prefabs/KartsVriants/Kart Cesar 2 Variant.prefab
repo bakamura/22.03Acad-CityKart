@@ -99,18 +99,18 @@ PrefabInstance:
       objectReference: {fileID: 1921649364585504180}
     - target: {fileID: 3198279078245430836, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}
-      propertyPath: Velocity
-      value: 820
+      propertyPath: itemImage
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3198279078245430836, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}
-      propertyPath: TurningDegrees
-      value: 30
+      propertyPath: oilPrefab
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3198279078245430836, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}
-      propertyPath: ReverseVelocity
-      value: 410
+      propertyPath: shieldParent
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6810272093715391982, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}

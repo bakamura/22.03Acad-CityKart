@@ -4235,12 +4235,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c69756f4774827d4190f936ab3831803, type: 3}
---- !u!225 &653732978 stripped
-CanvasGroup:
-  m_CorrespondingSourceObject: {fileID: 653732978, guid: 434cab39e6263a54c941576ea0c597cc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1121130549}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &674223592
 GameObject:
   m_ObjectHideFlags: 0
@@ -4992,6 +4986,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 383baf8558389914fabe79e2389013ed,
     type: 3}
   m_PrefabInstance: {fileID: 851184362}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &852091242 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8737718832553521333, guid: 434cab39e6263a54c941576ea0c597cc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1121130549}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &865660317
 GameObject:
@@ -7579,25 +7579,9 @@ PrefabInstance:
       objectReference: {fileID: 8056899420536964111}
     - target: {fileID: 2451081522069550954, guid: 434cab39e6263a54c941576ea0c597cc,
         type: 3}
-      propertyPath: breakImage
+      propertyPath: shieldParent
       value: 
-      objectReference: {fileID: 653732978}
-    - target: {fileID: 2451081522069550954, guid: 434cab39e6263a54c941576ea0c597cc,
-        type: 3}
-      propertyPath: drillPrefab
-      value: 
-      objectReference: {fileID: 869981422650249072, guid: 1dca6eea48c03584caf7fb70acb98f28,
-        type: 3}
-    - target: {fileID: 2451081522069550954, guid: 434cab39e6263a54c941576ea0c597cc,
-        type: 3}
-      propertyPath: teleportParticles
-      value: 
-      objectReference: {fileID: 1121130551}
-    - target: {fileID: 2451081522069550954, guid: 434cab39e6263a54c941576ea0c597cc,
-        type: 3}
-      propertyPath: invertControlsParticles
-      value: 
-      objectReference: {fileID: 1121130550}
+      objectReference: {fileID: 852091242}
     - target: {fileID: 3430719105026768773, guid: 434cab39e6263a54c941576ea0c597cc,
         type: 3}
       propertyPath: m_RootOrder
@@ -7775,18 +7759,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 434cab39e6263a54c941576ea0c597cc, type: 3}
---- !u!198 &1121130550 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4344367361520139357, guid: 434cab39e6263a54c941576ea0c597cc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1121130549}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &1121130551 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 354399207438553187, guid: 434cab39e6263a54c941576ea0c597cc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1121130549}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1121291684 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8174328231516011744, guid: 8d049496a5ca987489ad08d50195735d,
@@ -8936,18 +8908,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db1ff7f62cc68ca4dac85a1d1faf3075, type: 3}
---- !u!114 &1345882571 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1466428984, guid: 434cab39e6263a54c941576ea0c597cc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1121130549}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1351491660
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10572,7 +10532,7 @@ PrefabInstance:
         type: 3}
       propertyPath: UI
       value: 
-      objectReference: {fileID: 1846337399}
+      objectReference: {fileID: 0}
     - target: {fileID: 3994895746586230932, guid: 595403fbea000d7418b2bc49dd7ce60b,
         type: 3}
       propertyPath: cm
@@ -10587,7 +10547,7 @@ PrefabInstance:
         type: 3}
       propertyPath: itemImage
       value: 
-      objectReference: {fileID: 1345882571}
+      objectReference: {fileID: 0}
     - target: {fileID: 3994895746586230932, guid: 595403fbea000d7418b2bc49dd7ce60b,
         type: 3}
       propertyPath: PPcontroler
@@ -10622,7 +10582,7 @@ PrefabInstance:
         type: 3}
       propertyPath: teleportParticles
       value: 
-      objectReference: {fileID: 1955239934}
+      objectReference: {fileID: 0}
     - target: {fileID: 3994895746586230932, guid: 595403fbea000d7418b2bc49dd7ce60b,
         type: 3}
       propertyPath: invertControlsParticles
@@ -12459,12 +12419,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1831911462}
   m_PrefabAsset: {fileID: 0}
---- !u!225 &1846337399 stripped
-CanvasGroup:
-  m_CorrespondingSourceObject: {fileID: 8563718374680983824, guid: 434cab39e6263a54c941576ea0c597cc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1121130549}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1846908193 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 667086550830086704, guid: 3796997fde0c29b4180a4ec756403b34,
@@ -13314,12 +13268,6 @@ Transform:
   m_Father: {fileID: 1605509992}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 4.38, y: 0, z: 0}
---- !u!198 &1955239934 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5755016300207037806, guid: 434cab39e6263a54c941576ea0c597cc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1121130549}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1958211661 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c9b7c00a1180b8b41b910bb0a55bbf9a,

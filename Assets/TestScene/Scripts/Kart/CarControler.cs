@@ -70,6 +70,8 @@ public class CarControler : MonoBehaviour
     public bool isShielded = false;
     [SerializeField] private GameObject oilPrefab;
     [SerializeField] private CanvasGroup breakImage;
+    [SerializeField] private MeshRenderer[] shieldMesh = new MeshRenderer[4];
+    [SerializeField] private GameObject shieldParent;
 
     private PlayerData data;
 
@@ -91,7 +93,8 @@ public class CarControler : MonoBehaviour
         }
         else Debug.LogWarning("No Active Controler Found For Car: " + this.gameObject.name);
         ChangeUi();
-        if (isShielded) ; // colocar animacao
+        for(int i = 0; i < 4; i++) shieldMesh[i].enabled = isShielded;
+        if (isShielded) shieldParent.transform.Rotate(0, 0, 90 * Time.deltaTime, Space.Self);
     }
 
     void FixedUpdate()
