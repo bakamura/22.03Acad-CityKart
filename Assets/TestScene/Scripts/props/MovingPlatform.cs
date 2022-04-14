@@ -20,7 +20,7 @@ public class MovingPlatform : MonoBehaviour
         Mathf.Abs(transform.localPosition.z) >= Mathf.Abs(movePoints[i].localPosition.z))
         {
             i++;
-            if (i >= movePoints.Length) i = 0;
+            if (i >= movePoints.Length) i = 0;            
         }
     }
 }
