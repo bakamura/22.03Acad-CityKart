@@ -16,7 +16,7 @@ public class CarControler : MonoBehaviour
     public float ReverseVelocity;
 
     [Tooltip("How many degrees the wheels can turn in the Y Axis.")]
-    [SerializeField] private float TurningDegrees;
+    public float TurningDegrees;
 
     [Tooltip("For how long needs to be drifting to gain a boost, in seconds.")]
     [SerializeField] private float[] DriftBoostTime = new float[3];
@@ -28,7 +28,7 @@ public class CarControler : MonoBehaviour
     [SerializeField] private float[] DriftBoostDuration = new float[3];
 
     [Tooltip("the angle that the vehicle will turn when drifting.")]
-    [SerializeField] private float DriftAngle;
+    public float DriftAngle;
 
     [Tooltip("how much the drift angle will change each FixedDeltaTime.")]
     [SerializeField] private float DriftAngleAmount;
@@ -81,6 +81,7 @@ public class CarControler : MonoBehaviour
         data = GetComponent<PlayerData>();
         data.inputManager = GetComponent<InputCar>();/**/
         baseFOV = cm.m_Lens.FieldOfView;
+        CarStatusManager.CheckCarStatus(this);
     }
 
     void Update()
