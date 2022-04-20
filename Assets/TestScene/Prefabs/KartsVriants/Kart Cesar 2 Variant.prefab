@@ -92,45 +92,35 @@ PrefabInstance:
       propertyPath: m_SidewaysFriction.m_Stiffness
       value: 1.1
       objectReference: {fileID: 0}
-    - target: {fileID: 3198279078245430836, guid: 502e1928d19f5414fb74342c485d2ee9,
+    - target: {fileID: 6810272093715391982, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}
-      propertyPath: UI
-      value: 
-      objectReference: {fileID: 1921649364585504180}
-    - target: {fileID: 3198279078245430836, guid: 502e1928d19f5414fb74342c485d2ee9,
-        type: 3}
-      propertyPath: itemImage
-      value: 
+      propertyPath: m_LocalPosition.x
+      value: -111.17512
       objectReference: {fileID: 0}
-    - target: {fileID: 3198279078245430836, guid: 502e1928d19f5414fb74342c485d2ee9,
+    - target: {fileID: 6810272093715391982, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}
-      propertyPath: oilPrefab
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3198279078245430836, guid: 502e1928d19f5414fb74342c485d2ee9,
-        type: 3}
-      propertyPath: shieldParent
-      value: 
+      propertyPath: m_LocalPosition.y
+      value: 13.160426
       objectReference: {fileID: 0}
     - target: {fileID: 6810272093715391982, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -53.880005
+      value: -65.94299
       objectReference: {fileID: 0}
     - target: {fileID: 6810272093715391982, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.057552148
+      value: 0.05755215
       objectReference: {fileID: 0}
     - target: {fileID: 6810272093715391982, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000001731154
+      value: -0.000000017177861
       objectReference: {fileID: 0}
     - target: {fileID: 6810272093715391982, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -9.979705e-10
+      value: 9.902641e-10
       objectReference: {fileID: 0}
     - target: {fileID: 8222381212195526945, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}
@@ -185,18 +175,12 @@ PrefabInstance:
     - target: {fileID: 8591351223741062602, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000001731154
+      value: -0.000000017311539
       objectReference: {fileID: 0}
     - target: {fileID: 8591351223741062602, guid: 502e1928d19f5414fb74342c485d2ee9,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -9.979705e-10
+      value: 9.979704e-10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 502e1928d19f5414fb74342c485d2ee9, type: 3}
---- !u!225 &1921649364585504180 stripped
-CanvasGroup:
-  m_CorrespondingSourceObject: {fileID: 124192648077863700, guid: 502e1928d19f5414fb74342c485d2ee9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1950667099665610400}
-  m_PrefabAsset: {fileID: 0}

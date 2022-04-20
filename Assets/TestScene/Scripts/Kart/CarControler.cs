@@ -107,7 +107,7 @@ public class CarControler : MonoBehaviour
     {
         foreach (WheelSinc wheel in WheelsScript) wheel.wheelCollider.motorTorque = data.inputManager.VertMov() > 0 ? data.inputManager.VertMov() * Velocity : data.inputManager.VertMov() * ReverseVelocity; /**/
         for (int i = 0; i < turningWheels; i++) WheelsScript[i].wheelCollider.steerAngle = data.inputManager.HorzMov() * TurningDegrees * isControlInverted;//turning the vehicle /**/
-        if (data.inputManager.UseItem()) UseItem();
+        if (data.inputManager.UseItem() && currentItem != -1) UseItem();
     }
 
     void UseItem()
@@ -167,7 +167,12 @@ public class CarControler : MonoBehaviour
 
     void ChangeUi()
     {
-        itemImage.sprite = powerUpImages[currentItem + 1];
+        if (currentItem + 1 == 0) itemImage.enabled = false;
+        else
+        {
+            itemImage.sprite = powerUpImages[currentItem + 1];
+            itemImage.enabled = true;
+        }
     }
 
     IEnumerator InvertControl(CarControler target)

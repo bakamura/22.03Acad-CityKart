@@ -33,14 +33,12 @@ public class propLauncher : MonoBehaviour
         if (other.tag == "Player" && spawnCoroutine == null)
         {
             spawnCoroutine = StartCoroutine(this.CreateObjects());
-            Debug.Log("COMECA");
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player" && spawnCoroutine != null)
         {
-            Debug.Log("para");
             StopCoroutine(spawnCoroutine);
             spawnCoroutine = null;
         }

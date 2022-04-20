@@ -8,10 +8,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1822958964, guid: 2afb79b9e73dceb459d2fc4b8ece62af, type: 3}
-      propertyPath: UI
-      value: 
-      objectReference: {fileID: 5705496184737874450}
-    - target: {fileID: 1822958964, guid: 2afb79b9e73dceb459d2fc4b8ece62af, type: 3}
       propertyPath: Velocity
       value: 1000
       objectReference: {fileID: 0}
@@ -270,9 +266,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2afb79b9e73dceb459d2fc4b8ece62af, type: 3}
---- !u!225 &5705496184737874450 stripped
-CanvasGroup:
-  m_CorrespondingSourceObject: {fileID: 3304421041579538516, guid: 2afb79b9e73dceb459d2fc4b8ece62af,
-    type: 3}
-  m_PrefabInstance: {fileID: 7130983692675676742}
-  m_PrefabAsset: {fileID: 0}
