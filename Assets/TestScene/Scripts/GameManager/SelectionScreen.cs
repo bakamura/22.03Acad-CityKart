@@ -113,6 +113,7 @@ public class SelectionScreen : MonoBehaviour
     {
         StartCoroutine(LoadingScene());
     }
+
     IEnumerator LoadingScene()
     {
         loadingSceneOperation = SceneManager.LoadSceneAsync(LevelSelected);

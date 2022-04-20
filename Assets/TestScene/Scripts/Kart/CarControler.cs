@@ -38,6 +38,8 @@ public class CarControler : MonoBehaviour
     [Min(1), Tooltip("the amount of wheels that will turn, needs to be the firts elements of the WheelsScript array")]
     [SerializeField] private int turningWheels;
     [SerializeField] private WheelSinc[] WheelsScript;
+    [SerializeField] private GameObject masterCanvas;
+    [SerializeField] private GameObject mainCam;
     private float currentDriftAmount;
     private Coroutine driftBoostCoroutine = null;
     private float currentDriftBoostDuration;
@@ -144,8 +146,8 @@ public class CarControler : MonoBehaviour
                 // Missile
                 GameObject missile = Instantiate(drillPrefab, transform.position + (transform.forward * 4), transform.rotation);
                 missile.GetComponent<Rigidbody>().velocity = transform.forward * 25;
-                break;
                 Debug.Log(gameObject.name + "Missile'd");
+                break;
             case 5:
                 isShielded = true;
                 // Activate shield animation
@@ -320,5 +322,15 @@ public class CarControler : MonoBehaviour
             newVehicleDriftRotation += -Mathf.Sign(newVehicleDriftRotation) * DriftAngleAmount;
             vehicleTransform.localRotation = Quaternion.Euler(0, newVehicleDriftRotation, 0);
         }
+    }
+
+    public void PodiumSetUp()
+    {
+        rbCar.useGravity = false;
+        cm.gameObject.SetActive(false);
+        mainCam.SetActive(false);
+        masterCanvas.SetActive(false);
+        foreach (WheelSinc wheel in WheelsScript) wheel.enabled = false;
+        this.enabled = false;
     }
 }

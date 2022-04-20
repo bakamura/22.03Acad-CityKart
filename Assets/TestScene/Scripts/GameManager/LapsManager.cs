@@ -38,7 +38,11 @@ public class LapsManager : MonoBehaviour
         if (other.tag == "Player")
         {
             int playerID = other.GetComponent<PlayerData>().CarID;
-            if (finalScore[playerID] >= chekpointsList.Count * NumberOfLaps) FinishGame();
+            if (finalScore[playerID] >= chekpointsList.Count * NumberOfLaps) 
+            {
+                FinishGame();
+                return;
+            }
             else foreach (Checkpoint checkpoint in chekpointsList) checkpoint.playerPassedCheckpoint[playerID] = false;
         }
     }
@@ -59,6 +63,6 @@ public class LapsManager : MonoBehaviour
         }
         GameManager.finalResults = new GameObject[GameManager.playerCars.Count];
         GameManager.finalResults = podiumPositions;
-        for (int i = 0; i < GameManager.finalResults.Length; i++) Debug.Log(i+1 + " Place " + GameManager.finalResults[i].name);
+        EndGameTransition.Instance.StartEffect();
     }
 }
