@@ -24,7 +24,7 @@ public class Checkpoint : MonoBehaviour
             int playerID = other.GetComponent<PlayerData>().CarID;
             playerPassedCheckpoint[playerID] = true;
             TeleportManager.Instance.curentPoint[playerID] = teleportPoint;
-            LapsManager.Instance.UpdateScore(playerID);
+            LapsManager.Instance.UpdateScore(other.gameObject.GetComponent<PlayerData>());
         }
     }
 }

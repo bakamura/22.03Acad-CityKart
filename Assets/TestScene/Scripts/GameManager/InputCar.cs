@@ -6,13 +6,15 @@ using UnityEngine;
 public class InputCar : MonoBehaviour
 {
     public InputData inputData;
+    [NonSerialized] public int invertControls = 1;
+
     public float HorzMov()
     {
-        return Input.GetAxis(inputData.HorizontalMovment);
+        return Input.GetAxis(inputData.HorizontalMovment) * invertControls;
     }
     public float VertMov()
     {
-        return Input.GetAxis(inputData.VerticalMovment);
+        return Input.GetAxis(inputData.VerticalMovment) * invertControls;
     }
     public bool Drift()
     {

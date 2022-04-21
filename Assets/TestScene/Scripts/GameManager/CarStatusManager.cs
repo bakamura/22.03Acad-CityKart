@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class CarStatusManager
 {
-    public const float MaxVelocity = 1500f;
+    public const float MaxVelocity = 2500f;
     public const float MinVelocity = 100f;
     //in degrees
     public const float MaxHandling = 90f;

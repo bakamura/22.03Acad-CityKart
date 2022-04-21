@@ -23,19 +23,22 @@ public class ControlCarSphere : MonoBehaviour
     [Header("Base Values")]
     [SerializeField] private SphereCollider sphereCollider;
     [SerializeField] private Transform[] turningWheels;
-    [SerializeField] private Rigidbody sphereRB;
+    [SerializeField] private Rigidbody rbCar;
     private float baseDragValue;
     private float currentMovment;
     private bool onGround;
+    private PlayerData data;
     private void Awake()
     {
-        sphereRB.transform.parent = null;
-        baseDragValue = sphereRB.drag;
+        data = GetComponent<PlayerData>();
+        data.inputManager = GetComponent<InputCar>();
+        rbCar.transform.parent = null;
+        baseDragValue = rbCar.drag;
     }
     private void Update()
     {        
         InputCheck();        
-        transform.position = sphereRB.position;//keeps the model with the sphere
+        transform.position = rbCar.position;//keeps the model with the sphere
     }
     private void FixedUpdate()
     {
@@ -68,13 +71,13 @@ public class ControlCarSphere : MonoBehaviour
     {
         if (onGround)
         {
-            sphereRB.drag = baseDragValue;
-            if (Mathf.Abs(currentMovment) > 0) sphereRB.AddForce(transform.forward * currentMovment);
+            rbCar.drag = baseDragValue;
+            if (Mathf.Abs(currentMovment) > 0) rbCar.AddForce(transform.forward * currentMovment);
         }
         else
         {
-            sphereRB.drag = airDrag;
-            sphereRB.AddForce(Vector3.up * -gravityForce);//pulls the car back to ground
+            rbCar.drag = airDrag;
+            rbCar.AddForce(Vector3.up * -gravityForce);//pulls the car back to ground
         }
     }
     void InputCheck()

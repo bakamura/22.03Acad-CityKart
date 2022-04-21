@@ -11,10 +11,15 @@ public class EndGameTransition : MonoBehaviour
     [SerializeField] private Image fadeOutImage;
     private float aplha;
     private AsyncOperation loadingSceneOperation;
+    private FinalResultsManager podimsetup;
 
     private void Awake()
     {
-        if (Instance == null)Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            podimsetup = GetComponent<FinalResultsManager>();
+        }
         else if (Instance != this) Destroy(gameObject);
     }
 
@@ -28,7 +33,13 @@ public class EndGameTransition : MonoBehaviour
         float value = 1f / 255f;
         aplha += value;
         fadeOutImage.color = new Color(fadeOutImage.color.r, fadeOutImage.color.g, fadeOutImage.color.b, aplha);
-        if (aplha >= 1f) StartCoroutine(LoadingScene());
+        if (aplha >= 1f)
+        {
+            CancelInvoke();
+            foreach (GameObject player in LapsManager.Instance.players) Destroy(player);
+            podimsetup.SetPodium();
+        }
+        //StartCoroutine(LoadingScene());
     }
 
     IEnumerator LoadingScene()

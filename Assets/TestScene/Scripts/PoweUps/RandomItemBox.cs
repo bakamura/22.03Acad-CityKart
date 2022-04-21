@@ -6,7 +6,7 @@ public class RandomItemBox : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Player") {
-            other.GetComponent<CarControler>().currentItem = Random.Range(0, 8);
+            other.GetComponent<ItemCarUse>().GenerateNewItem();
             StartCoroutine(Respawn());
         }
     }

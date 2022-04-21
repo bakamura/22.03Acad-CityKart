@@ -11,6 +11,7 @@ public class Oil : MonoBehaviour {
     }
 
     IEnumerator Spin(GameObject kart) {
+        if (kart.GetComponent<ItemCarUse>().isShielded) yield break;
         GetComponent<Collider>().enabled = false;
         GetComponent<MeshRenderer>().enabled = false;
         float height = kart.transform.position.y + 0.2f;

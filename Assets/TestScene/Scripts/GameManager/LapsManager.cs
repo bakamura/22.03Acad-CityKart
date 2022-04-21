@@ -7,26 +7,76 @@ public class LapsManager : MonoBehaviour
 {
     public static LapsManager Instance { get; private set; }
     [SerializeField] private int NumberOfLaps;
-    private int[] finalScore;
-    private int[] playersScore;
     private List<Checkpoint> chekpointsList;
+    [NonSerialized] public GameObject[] players;
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            playersScore = new int[GameManager.playerCars.Count];
-            finalScore = new int[GameManager.playerCars.Count];
             chekpointsList = new List<Checkpoint>();
         }
         else if (Instance != this) Destroy(gameObject);
     }
 
-    public void UpdateScore(int playerID)
+    private void Start()
     {
-        playersScore[playerID]++;
-        finalScore[playerID]++;
+        players = GameObject.FindGameObjectsWithTag("Player");
+    }
+
+    public void UpdateScore(PlayerData data)
+    {
+        data.PlayerScore++;
+    }
+
+    public int[] GetCurrentPlayerPodiumPossitions()
+    {
+        int[] currentPlayerPodiumPossition = new int[players.Length];
+        for (int i = 0; i < currentPlayerPodiumPossition.Length; i++)
+        {
+            currentPlayerPodiumPossition[i] = players[i].GetComponent<PlayerData>().PlayerScore;
+        }
+        Array.Reverse(currentPlayerPodiumPossition);
+        return currentPlayerPodiumPossition;
+    }
+
+    public GameObject GetMySuccessorPlayer(PlayerData myData)
+    {
+        int[] temp = GetCurrentPlayerPodiumPossitions();
+        for (int i = 0; i < temp.Length; i++)
+        {
+            if (temp[i] == myData.PlayerScore)
+            {
+                if (i == 0)return null;                
+                else
+                {
+                    foreach (GameObject player in players)
+                    {
+                        if (player.GetComponent<PlayerData>().PlayerScore == temp[i - 1])
+                        {
+                            return player;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public GameObject GetPlayerInFirst(PlayerData myData)
+    {
+        int[] temp = GetCurrentPlayerPodiumPossitions();
+        int score = Mathf.Max(temp);
+        if (myData.PlayerScore == score) return null;
+        foreach (GameObject player in players)
+        {
+            if (player.GetComponent<PlayerData>().PlayerScore == score)
+            {
+                return player;
+            }
+        }
+        return null;
     }
 
     public void AddCheckpointInList(Checkpoint script)
@@ -37,24 +87,27 @@ public class LapsManager : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            int playerID = other.GetComponent<PlayerData>().CarID;
-            if (finalScore[playerID] >= chekpointsList.Count * NumberOfLaps) 
+            if (other.GetComponent<PlayerData>().PlayerScore >= chekpointsList.Count * NumberOfLaps)
             {
                 FinishGame();
                 return;
             }
-            else foreach (Checkpoint checkpoint in chekpointsList) checkpoint.playerPassedCheckpoint[playerID] = false;
+            else
+            {
+                int playerID = other.GetComponent<PlayerData>().CarID;
+                foreach (Checkpoint checkpoint in chekpointsList) checkpoint.playerPassedCheckpoint[playerID] = false;
+            }
         }
     }
     private void FinishGame()
     {
-        GameObject[] podiumPositions = new GameObject[playersScore.Length];
-        Array.Reverse(finalScore);
+        GameObject[] podiumPositions = new GameObject[players.Length];
+        int[] finalScore = GetCurrentPlayerPodiumPossitions();
         for (int i = 0; i < podiumPositions.Length; i++)
         {
-            for (int a = 0; a < playersScore.Length; a++)
+            for (int a = 0; a < players.Length; a++)
             {
-                if (finalScore[i] == playersScore[a])
+                if (finalScore[i] == players[a].GetComponent<PlayerData>().PlayerScore)
                 {
                     podiumPositions[i] = GameManager.playerCars[a];
                     break;

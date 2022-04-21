@@ -13,6 +13,7 @@ public class SelectionScreen : MonoBehaviour
     [SerializeField] private CanvasGroup[] allSelectionScreeens;
 
     [SerializeField] private InputData[] controlerInputs;
+    [SerializeField] private Sprite deactivateBtnImage;
 
     [Header("Players Info")]
     private int playerAmount;
@@ -122,8 +123,6 @@ public class SelectionScreen : MonoBehaviour
 
     public void DeactivateButton(GameObject button)
     {
-        button.GetComponent<Button>().enabled = false;
-        Image btnImage = button.GetComponent<Image>();
-        btnImage.color = new Color(btnImage.color.r, btnImage.color.g, btnImage.color.b, .25f);
+        button.GetComponent<Image>().sprite = deactivateBtnImage;
     }
 }

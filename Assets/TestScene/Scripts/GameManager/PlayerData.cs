@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerData : MonoBehaviour
 {
     [Header("ManagerVariables")]
-    [System.NonSerialized] public InputCar inputManager = null;
-    [System.NonSerialized] public int CarID;
+    [NonSerialized] public InputCar inputManager = null;
+    [NonSerialized] public int CarID;
+    [NonSerialized] public int PlayerScore;
 }
