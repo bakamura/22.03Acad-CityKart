@@ -117,6 +117,7 @@ public class CarControler : MonoBehaviour
     bool CheckGround()
     {
         foreach (WheelSinc wheels in WheelsScript) if (wheels.wheelCollider.isGrounded) return true;
+        if (Mathf.Abs(transform.rotation.eulerAngles.x) >= 10f || Mathf.Abs(transform.rotation.eulerAngles.z) >= 10f) transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
         return false;
     }
 

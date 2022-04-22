@@ -22,6 +22,7 @@ public class TeleportManager : MonoBehaviour
         if (other.tag == "Player" && curentPoint[other.GetComponent<PlayerData>().CarID] != null)
         {
             other.transform.position = curentPoint[other.GetComponent<PlayerData>().CarID].position;
+            other.transform.rotation = Quaternion.Euler(0f, curentPoint[other.GetComponent<PlayerData>().CarID].eulerAngles.y, 0f);
         }
     }
 }

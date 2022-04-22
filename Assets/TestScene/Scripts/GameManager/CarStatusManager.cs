@@ -13,6 +13,9 @@ public static class CarStatusManager
     public const float MaxDrift = 45f;
     public const float MinDrift = 15f;
 
+    public const float MaxWeight = 1000f;
+    public const float MinWeight = 100f;
+
     public static void CheckCarStatus(CarControler status)
     {
         if (status.Velocity > MaxVelocity) status.Velocity = MaxVelocity;
@@ -24,5 +27,7 @@ public static class CarStatusManager
         if (status.DriftAngle > MaxDrift) status.DriftAngle = MaxDrift;
         else if (status.DriftAngle < MinDrift) status.DriftAngle = MinDrift;
 
+        if (status.GetComponent<Rigidbody>().mass > MaxWeight) status.GetComponent<Rigidbody>().mass = MaxWeight;
+        else if (status.GetComponent<Rigidbody>().mass < MinWeight) status.GetComponent<Rigidbody>().mass = MinWeight;
     }
 }

@@ -22,5 +22,6 @@ public class CarStatusUIManager : MonoBehaviour
         sliders[0].fillAmount = 1f / CarStatusManager.MaxVelocity * carStatus.Velocity;
         sliders[1].fillAmount = 1f / CarStatusManager.MaxHandling * carStatus.TurningDegrees;
         sliders[2].fillAmount = 1f / CarStatusManager.MaxDrift * carStatus.DriftAngle;
+        sliders[3].fillAmount = 1f / CarStatusManager.MaxWeight * carStatus.GetComponent<Rigidbody>().mass;
     }
 }

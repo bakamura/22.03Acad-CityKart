@@ -11,14 +11,13 @@ public class EndGameTransition : MonoBehaviour
     [SerializeField] private Image fadeOutImage;
     private float aplha;
     private AsyncOperation loadingSceneOperation;
-    private FinalResultsManager podimsetup;
+    [SerializeField] private FinalResultsManager podimsetup;
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            podimsetup = GetComponent<FinalResultsManager>();
         }
         else if (Instance != this) Destroy(gameObject);
     }
