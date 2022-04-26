@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/TestScene/Scenes/Track1Data/Track1.unity
     guid: 42ff0c05da43e0f48849914fb1c21387
-  - enabled: 1
+  - enabled: 0
     path: Assets/TestScene/Scenes/Track2.unity
     guid: adae035998838a341b351c9f343af916
   - enabled: 0
