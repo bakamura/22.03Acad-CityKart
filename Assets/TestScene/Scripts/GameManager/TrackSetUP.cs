@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.UI;
 
 public class TrackSetUP : MonoBehaviour
 {
@@ -14,23 +15,26 @@ public class TrackSetUP : MonoBehaviour
             PlayerData Data = Instantiate(GameManager.playerCars[i], playerPositions[i].position, Quaternion.identity, null).GetComponent<PlayerData>();
             Data.inputManager.inputData = GameManager.playerInputs[i];
             Data.CarID = i;
-            SetCameraLens(Data.gameObject.GetComponentInChildren<Camera>(), Data.gameObject.GetComponentInChildren<CinemachineVirtualCamera>().gameObject, i);
+            SetCameraLensAndUISize(Data.gameObject.GetComponent<CarControler>().cameras, Data.gameObject.GetComponent<CarControler>().screenSize, Data.gameObject.GetComponentInChildren<CinemachineVirtualCamera>().gameObject, i);
         }
     }
-    private void SetCameraLens(Camera camera, GameObject cinemachine, int currentPlayer)
+    private void SetCameraLensAndUISize(Camera[] camera, RectTransform screenSize, GameObject cinemachine, int currentPlayer)
     {
         switch (GameManager.playerCars.Count)
         {
             default:
+                screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height * 2);
                 return;
             case 2:
                 switch (currentPlayer)
                 {
                     case 0:
-                        camera.rect = new Rect(0, 0, 1, 1);
+                        foreach(var cam in camera) cam.rect = new Rect(0, .5f, 1, .5f);
+                        screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height);
                         break;
                     case 1:
-                        camera.rect = new Rect(0, .5f, 1, 1);
+                        foreach (var cam in camera) cam.rect = new Rect(0, -.5f, 1, 1);
+                        screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height);
                         break;
                 }
                 break;
@@ -39,24 +43,28 @@ public class TrackSetUP : MonoBehaviour
                 {
                     case 0:
                         //upper left
-                        camera.rect = new Rect(-.5f, .5f, 1, 1);
+                        foreach (var cam in camera) cam.rect = new Rect(0, .5f, .5f, .5f);
+                        screenSize.sizeDelta = new Vector2(Screen.currentResolution.width *2, Screen.currentResolution.height * 2);
                         break;
                     case 1:
                         //upper right
-                        camera.rect = new Rect(.5f, .5f, 1, 1);
+                        foreach (var cam in camera) cam.rect = new Rect(.5f, .5f, .5f, .5f);
+                        screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height * 2);
                         break;
                     case 2:
                         //bottom left
-                        camera.rect = new Rect(-.5f, -.5f, 1, 1);
+                        foreach (var cam in camera) cam.rect = new Rect(0, 0, .5f, .5f);
+                        screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height * 2);
                         break;
                     case 3:
                         //bottom right
-                        camera.rect = new Rect(.5f, -.5f, 1, 1);
+                        foreach (var cam in camera) cam.rect = new Rect(.5f, 0, .5f, .5f);
+                        screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height * 2);
                         break;
                 }
                 break;
         }
-        SetCameraTags(camera, cinemachine, currentPlayer);
+        SetCameraTags(camera[0], cinemachine, currentPlayer);
     }
     private void SetCameraTags(Camera camera, GameObject cinemachine, int currentPlayer)
     {

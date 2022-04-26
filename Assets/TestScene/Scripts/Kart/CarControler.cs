@@ -37,8 +37,6 @@ public class CarControler : MonoBehaviour
     [Min(1), Tooltip("the amount of wheels that will turn, needs to be the firts elements of the WheelsScript array")]
     [SerializeField] private int turningWheels;
     [SerializeField] private WheelSinc[] WheelsScript;
-    [SerializeField] private GameObject masterCanvas;
-    [SerializeField] private GameObject mainCam;
     private float currentDriftAmount;
     private Coroutine driftBoostCoroutine = null;
     private float currentDriftBoostDuration;
@@ -50,6 +48,8 @@ public class CarControler : MonoBehaviour
     [Tooltip("How wide the FOV will be when in boost effects")]
     [SerializeField] private int FOVinBoost;
     [SerializeField] private CanvasGroup UI;
+    public Camera[] cameras = new Camera[2];
+    public RectTransform screenSize;
     [SerializeField] private PostProcessControler PPcontroler;
     [Min(.01f), Tooltip("How long the transition will take, in seconds")]
     [SerializeField] private float FOVTransitionDuration;
@@ -218,8 +218,8 @@ public class CarControler : MonoBehaviour
     {
         rbCar.useGravity = false;
         cm.gameObject.SetActive(false);
-        mainCam.SetActive(false);
-        masterCanvas.SetActive(false);
+        foreach(Camera cm in cameras) cm.gameObject.SetActive(false);
+        UI.gameObject.SetActive(false);
         foreach (WheelSinc wheel in WheelsScript) wheel.enabled = false;
         this.enabled = false;
     }

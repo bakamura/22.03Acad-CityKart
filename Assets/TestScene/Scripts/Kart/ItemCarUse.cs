@@ -16,6 +16,8 @@ public class ItemCarUse : MonoBehaviour
     [SerializeField] private CanvasGroup breakImage;
     [SerializeField] private MeshRenderer[] shieldMesh = new MeshRenderer[4];
     [SerializeField] private GameObject shieldParent;
+    [SerializeField] private Transform oilParent;
+    [SerializeField] private Transform drillParent;
 
     [Header("Status")]
     [SerializeField] private float teleportRange = 2;
@@ -25,6 +27,7 @@ public class ItemCarUse : MonoBehaviour
     [SerializeField] private float invertControlsDistance;
     [Tooltip("The amount of time the effect lasts")]
     [SerializeField] private float breakEffectDuration;
+    [SerializeField] private float drillSpeed = 40;
 
     [System.NonSerialized] public bool isShielded = false;
     private Rigidbody rbCar;
@@ -71,8 +74,10 @@ public class ItemCarUse : MonoBehaviour
                 }
                 break;
             case 4://missle
-                GameObject missile = Instantiate(drillPrefab, transform.position + (transform.forward * 4), transform.rotation);
-                missile.GetComponent<Rigidbody>().velocity = transform.forward * 25;
+                GameObject missile = Instantiate(drillPrefab, drillParent.position, transform.rotation);
+                missile.GetComponent<DrillPowerup>().speed = drillSpeed;
+                missile.GetComponent<DrillPowerup>().StartMovment();
+                //missile.GetComponent<Rigidbody>().velocity = transform.forward * drillSpeed;
                 break;
             case 5://shield
                 isShielded = true;
@@ -85,7 +90,7 @@ public class ItemCarUse : MonoBehaviour
                 if (targetPlayer != null) StartCoroutine(targetPlayer.GetComponent<ItemCarUse>().BreakWheels());
                 break;
             case 7://oil
-                Instantiate(oilPrefab, transform.position - (transform.forward * 4), transform.rotation);
+                Instantiate(oilPrefab, oilParent.position, oilPrefab.transform.rotation);
                 break;
             default:
                 Debug.Log("Error generating item");

@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/TestScene/Scenes/GameSelection.unity
     guid: 4219968077c3a7546aa05c59d0e7d96c
   - enabled: 1
-    path: Assets/TestScene/Scenes/Track1.unity
+    path: Assets/TestScene/Scenes/Track1Data/Track1.unity
     guid: 42ff0c05da43e0f48849914fb1c21387
   - enabled: 1
     path: Assets/TestScene/Scenes/Track2.unity

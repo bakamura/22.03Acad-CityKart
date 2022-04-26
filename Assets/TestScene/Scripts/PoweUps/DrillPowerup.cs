@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DrillPowerup : MonoBehaviour {
 
+    [System.NonSerialized] public float speed;
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Player") StartCoroutine(Spin(other.gameObject));
     }
@@ -26,5 +27,14 @@ public class DrillPowerup : MonoBehaviour {
         GetComponent<Collider>().enabled = true;
         GetComponent<MeshRenderer>().enabled = true;
         Destroy(gameObject);
+    }
+    public void StartMovment()
+    {
+        InvokeRepeating("Movment", 0f, .05f);
+    }
+
+    private void Movment()
+    {
+        transform.position += speed * transform.forward;
     }
 }

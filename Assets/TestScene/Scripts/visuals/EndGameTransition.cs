@@ -36,6 +36,7 @@ public class EndGameTransition : MonoBehaviour
         {
             CancelInvoke();
             foreach (GameObject player in LapsManager.Instance.players) Destroy(player);
+            fadeOutImage.enabled = false;
             podimsetup.SetPodium();
         }
         //StartCoroutine(LoadingScene());

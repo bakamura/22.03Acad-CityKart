@@ -124,5 +124,6 @@ public class SelectionScreen : MonoBehaviour
     public void DeactivateButton(GameObject button)
     {
         button.GetComponent<Image>().sprite = deactivateBtnImage;
+        button.GetComponent<Button>().enabled = false;
     }
 }
