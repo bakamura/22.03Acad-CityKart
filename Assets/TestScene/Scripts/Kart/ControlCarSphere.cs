@@ -16,7 +16,7 @@ public class ControlCarSphere : MonoBehaviour
     [SerializeField] private float maxZMeshTurn;
     [Header("Base Values")]
     [SerializeField] private SphereCollider sphereCollider;
-    [SerializeField] private Transform[] turningWheels;
+    //[SerializeField] private Transform[] turningWheels;
     [SerializeField] private Rigidbody rbCar;
     private float baseDragValue;
     private float currentMovment;
@@ -41,13 +41,13 @@ public class ControlCarSphere : MonoBehaviour
         MovmentCar();
 
     }
-    private void RotateWheels(float horzMov)
-    { 
-        foreach(Transform wheel in turningWheels)
-        {
-            wheel.rotation = Quaternion.Euler(0, horzMov * data.TurningDegrees, 0);
-        }
-    }
+    //private void RotateWheels(float horzMov)
+    //{ 
+    //    foreach(Transform wheel in turningWheels)
+    //    {
+    //        wheel.rotation = Quaternion.Euler(0, horzMov * data.TurningDegrees, 0);
+    //    }
+    //}
     void RotateCar()
     {
         RaycastHit currentSurface;

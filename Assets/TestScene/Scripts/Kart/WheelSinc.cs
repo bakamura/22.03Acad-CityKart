@@ -9,7 +9,7 @@ public class WheelSinc : MonoBehaviour
     public ParticleSystem driftParticle;
     public TrailRenderer trail;
     [SerializeField] private Color[] particleColors = new Color[3];
-    [SerializeField] private List<Color> baseParticleColors;
+    private List<Color> baseParticleColors;
     private List<ParticleSystem> allParticles;
 
     private void Awake()
