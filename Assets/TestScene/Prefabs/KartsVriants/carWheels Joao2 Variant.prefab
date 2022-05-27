@@ -159,6 +159,21 @@ PrefabInstance:
       propertyPath: m_SidewaysFriction.m_Stiffness
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2854864028339177500, guid: 2afb79b9e73dceb459d2fc4b8ece62af,
+        type: 3}
+      propertyPath: Velocity
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2854864028339177500, guid: 2afb79b9e73dceb459d2fc4b8ece62af,
+        type: 3}
+      propertyPath: TurningDegrees
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2854864028339177500, guid: 2afb79b9e73dceb459d2fc4b8ece62af,
+        type: 3}
+      propertyPath: ReverseVelocity
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 6582025748007997066, guid: 2afb79b9e73dceb459d2fc4b8ece62af,
         type: 3}
       propertyPath: m_LocalPosition.y

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class ChangeCarStatusUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private CarControler carStatus;
+    [SerializeField] private PlayerData carStatus;
 
     public void OnPointerEnter(PointerEventData eventData)
     {

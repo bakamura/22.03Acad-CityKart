@@ -17,11 +17,11 @@ public class CarStatusUIManager : MonoBehaviour
         foreach(Image image in sliders) image.fillAmount = 0f;
     }
 
-    public void FillSliders(CarControler carStatus)
+    public void FillSliders(PlayerData carStatus)
     {
-        sliders[0].fillAmount = 1f / CarStatusManager.MaxVelocity * carStatus.Velocity;
-        sliders[1].fillAmount = 1f / CarStatusManager.MaxHandling * carStatus.TurningDegrees;
-        sliders[2].fillAmount = 1f / CarStatusManager.MaxDrift * carStatus.DriftAngle;
-        sliders[3].fillAmount = 1f / CarStatusManager.MaxWeight * carStatus.GetComponent<Rigidbody>().mass;
+        sliders[0].fillAmount = 1f / GameManager.MaxVelocity * carStatus.Velocity;
+        sliders[1].fillAmount = 1f / GameManager.MaxHandling * carStatus.TurningDegrees;
+        sliders[2].fillAmount = 1f / GameManager.MaxDrift * carStatus.DriftAngle;
+        sliders[3].fillAmount = 1f / GameManager.MaxWeight * carStatus.rb.mass;
     }
 }

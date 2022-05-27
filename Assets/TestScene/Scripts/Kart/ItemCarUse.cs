@@ -19,15 +19,15 @@ public class ItemCarUse : MonoBehaviour
     [SerializeField] private Transform oilParent;
     [SerializeField] private Transform drillParent;
 
-    [Header("Status")]
-    [SerializeField] private float teleportRange = 2;
-    [SerializeField] private float shieldAnimSpeed;
-    [Tooltip("The amount of time the effect lasts")]
-    [SerializeField] private float invertControlsEffectDuration;
-    [SerializeField] private float invertControlsDistance;
-    [Tooltip("The amount of time the effect lasts")]
-    [SerializeField] private float breakEffectDuration;
-    [SerializeField] private float drillSpeed = 40;
+    //[Header("Status")]
+    //[SerializeField] private float teleportRange = 2;
+    //[SerializeField] private float shieldAnimSpeed;
+    //[Tooltip("The amount of time the effect lasts")]
+    //[SerializeField] private float invertControlsEffectDuration;
+    //[SerializeField] private float invertControlsDistance;
+    //[Tooltip("The amount of time the effect lasts")]
+    //[SerializeField] private float breakEffectDuration;
+    //[SerializeField] private float drillSpeed = 40;
 
     [System.NonSerialized] public bool isShielded = false;
     private Rigidbody rbCar;
@@ -39,7 +39,7 @@ public class ItemCarUse : MonoBehaviour
         data = GetComponent<PlayerData>();
         data.inputManager = GetComponent<InputCar>();
         rbCar = GetComponentInChildren<Rigidbody>();
-        invertControlsParticles.gameObject.transform.localScale = new Vector3(invertControlsDistance, 1, invertControlsDistance);
+        invertControlsParticles.gameObject.transform.localScale = new Vector3(GameManager.invertControlsDistance, 1, GameManager.invertControlsDistance);
     }
     private void Update()
     {
@@ -69,13 +69,13 @@ public class ItemCarUse : MonoBehaviour
                 GameObject successorPlayer = LapsManager.Instance.GetMySuccessorPlayer(data);
                 if (successorPlayer != null)
                 {
-                    transform.position = successorPlayer.transform.position + (teleportRange * successorPlayer.transform.forward);
+                    transform.position = successorPlayer.transform.position + (GameManager.teleportRange * successorPlayer.transform.forward);
                     teleportParticles.Play();
                 }
                 break;
             case 4://missle
                 GameObject missile = Instantiate(drillPrefab, drillParent.position, transform.rotation);
-                missile.GetComponent<DrillPowerup>().speed = drillSpeed;
+                missile.GetComponent<DrillPowerup>().speed = GameManager.drillSpeed;
                 missile.GetComponent<DrillPowerup>().StartMovment();
                 //missile.GetComponent<Rigidbody>().velocity = transform.forward * drillSpeed;
                 break;
@@ -115,15 +115,15 @@ public class ItemCarUse : MonoBehaviour
         for (int i = 0; i < shieldMesh.Length; i++) shieldMesh[i].enabled = isShielded;
         while (isShielded)
         {
-            shieldParent.transform.Rotate(0, 0, 90 * shieldAnimSpeed, Space.Self);
-            yield return new WaitForSeconds(shieldAnimSpeed);
+            shieldParent.transform.Rotate(0, 0, 90 * GameManager.shieldAnimSpeed, Space.Self);
+            yield return new WaitForSeconds(GameManager.shieldAnimSpeed);
         }
         for (int i = 0; i < shieldMesh.Length; i++) shieldMesh[i].enabled = isShielded;
     }
 
     void CheckForPlayersInRange()
     {
-        RaycastHit[] hits = Physics.SphereCastAll(transform.position, invertControlsDistance, transform.forward, .1f, carsLayerMask);
+        RaycastHit[] hits = Physics.SphereCastAll(transform.position, GameManager.invertControlsDistance, transform.forward, .1f, carsLayerMask);
         foreach (RaycastHit hit in hits)
         {
             if (hit.collider.gameObject != this.gameObject) StartCoroutine(hit.collider.gameObject.GetComponent<ItemCarUse>().InvertControl());
@@ -135,7 +135,7 @@ public class ItemCarUse : MonoBehaviour
         data.inputManager.invertControls = -1;
         invertControlsParticles.Play();
 
-        yield return new WaitForSeconds(invertControlsEffectDuration);
+        yield return new WaitForSeconds(GameManager.invertControlsEffectDuration);
 
         data.inputManager.invertControls = 1;
     }
@@ -145,13 +145,13 @@ public class ItemCarUse : MonoBehaviour
         rbCar.velocity = Vector3.zero;
         breakImage.alpha = 1;
 
-        yield return new WaitForSeconds(breakEffectDuration);
+        yield return new WaitForSeconds(GameManager.breakEffectDuration);
 
         breakImage.alpha = 0;
     }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, invertControlsDistance);
+        Gizmos.DrawWireSphere(transform.position, GameManager.invertControlsDistance);
     }
 }

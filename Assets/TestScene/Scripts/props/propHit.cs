@@ -14,7 +14,7 @@ public class propHit : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Player") collision.gameObject.GetComponent<Rigidbody>().velocity = -collision.GetContact(0).normal * Mathf.Abs(rb.velocity.z);
+        if (collision.gameObject.CompareTag("Player")) collision.gameObject.GetComponent<PlayerData>().rb.velocity = -collision.GetContact(0).normal * Mathf.Abs(rb.velocity.z);
         rb.velocity = Vector3.zero;
         canBeLaunched = true;
         mesh.enabled = false;

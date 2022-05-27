@@ -15,7 +15,7 @@ public class TrackSetUP : MonoBehaviour
             PlayerData Data = Instantiate(GameManager.playerCars[i], playerPositions[i].position, Quaternion.identity, null).GetComponent<PlayerData>();
             Data.inputManager.inputData = GameManager.playerInputs[i];
             Data.CarID = i;
-            SetCameraLensAndUISize(Data.gameObject.GetComponent<CarControler>().cameras, Data.gameObject.GetComponent<CarControler>().screenSize, Data.gameObject.GetComponentInChildren<CinemachineVirtualCamera>().gameObject, i);
+            SetCameraLensAndUISize(Data.cameras, Data.screenSize, Data.cm.gameObject, i);
         }
     }
     private void SetCameraLensAndUISize(Camera[] camera, RectTransform screenSize, GameObject cinemachine, int currentPlayer)

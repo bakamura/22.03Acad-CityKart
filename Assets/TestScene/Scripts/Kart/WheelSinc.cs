@@ -33,11 +33,14 @@ public class WheelSinc : MonoBehaviour
     }
     void WheelMovmentVisual()
     {
-        Vector3 pos;
-        Quaternion rot;
-        wheelCollider.GetWorldPose(out pos, out rot);
-        wtransform.position = pos;
-        wtransform.rotation = rot;
+        //if (wheelCollider) {
+            Vector3 pos;
+            Quaternion rot;
+            wheelCollider.GetWorldPose(out pos, out rot);
+            wtransform.position = pos;
+            wtransform.rotation = rot;
+        //}
+        //else transform.rotation = Quaternion.Euler(0, horzMov * data.TurningDegrees, 0);
     }
     public void TrailEffect(bool isActive, float currentDriftAmount, float[] trailType)
     {

@@ -13,7 +13,7 @@ public class FinalResultsManager : MonoBehaviour
         for (int i = 0; i < GameManager.finalResults.Length; i++)
         {
             if (i < trophies.Length - 1) trophies[i].enabled = true;
-            Instantiate(GameManager.finalResults[i], playerPlaces[i]).GetComponent<CarControler>().PodiumSetUp();
+            Instantiate(GameManager.finalResults[i], playerPlaces[i]).GetComponent<PlayerData>().PodiumSetUp();
             Podium.SetActive(true);
         }
     }
