@@ -35,7 +35,7 @@ public class LapsManager : MonoBehaviour
         int[] currentPlayerPodiumPossition = new int[players.Length];
         for (int i = 0; i < currentPlayerPodiumPossition.Length; i++)
         {
-            currentPlayerPodiumPossition[i] = players[i].GetComponent<PlayerData>().PlayerScore;
+            currentPlayerPodiumPossition[i] = players[i].GetComponent<ObjectDetectionData>().playerData.PlayerScore;
         }
         Array.Reverse(currentPlayerPodiumPossition);
         return currentPlayerPodiumPossition;
@@ -85,16 +85,16 @@ public class LapsManager : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
-            if (other.GetComponent<PlayerData>().PlayerScore >= chekpointsList.Count * NumberOfLaps)
+            if (other.GetComponent<ObjectDetectionData>().playerData.PlayerScore >= chekpointsList.Count * NumberOfLaps)
             {
                 FinishGame();
                 return;
             }
             else
             {
-                int playerID = other.GetComponent<PlayerData>().CarID;
+                int playerID = other.GetComponent<ObjectDetectionData>().playerData.CarID;
                 foreach (Checkpoint checkpoint in chekpointsList) checkpoint.playerPassedCheckpoint[playerID] = false;
             }
         }

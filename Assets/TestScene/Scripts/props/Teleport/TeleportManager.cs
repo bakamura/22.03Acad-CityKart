@@ -19,10 +19,10 @@ public class TeleportManager : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && curentPoint[other.GetComponent<PlayerData>().CarID] != null)
+        if (other.CompareTag("Player") && curentPoint[other.GetComponent<ObjectDetectionData>().playerData.CarID] != null)
         {
-            other.transform.position = curentPoint[other.GetComponent<PlayerData>().CarID].position;
-            other.transform.rotation = Quaternion.Euler(0f, curentPoint[other.GetComponent<PlayerData>().CarID].eulerAngles.y, 0f);
+            PlayerData plData = other.GetComponent<ObjectDetectionData>().playerData;
+            other.transform.SetPositionAndRotation(curentPoint[plData.CarID].position, Quaternion.Euler(0f, curentPoint[plData.CarID].eulerAngles.y, 0f));
         }
     }
 }

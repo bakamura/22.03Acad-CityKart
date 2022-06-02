@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemCarUse : MonoBehaviour
-{
+public class ItemCarUse : MonoBehaviour {
     [Header("ItemComponents")]
+    [SerializeField] private PlayerData data;
     [SerializeField] private Image itemImage;
     [SerializeField] private Sprite[] powerUpImages;
     [SerializeField] private ParticleSystem teleportParticles;
@@ -14,52 +14,39 @@ public class ItemCarUse : MonoBehaviour
     [SerializeField] private GameObject drillPrefab;
     [SerializeField] private GameObject oilPrefab;
     [SerializeField] private CanvasGroup breakImage;
-    [SerializeField] private MeshRenderer[] shieldMesh = new MeshRenderer[4];
     [SerializeField] private GameObject shieldParent;
     [SerializeField] private Transform oilParent;
     [SerializeField] private Transform drillParent;
+    [SerializeField] private Transform kartPivot;//used to make instantiated objects face the right way
 
-    //[Header("Status")]
-    //[SerializeField] private float teleportRange = 2;
-    //[SerializeField] private float shieldAnimSpeed;
-    //[Tooltip("The amount of time the effect lasts")]
-    //[SerializeField] private float invertControlsEffectDuration;
-    //[SerializeField] private float invertControlsDistance;
-    //[Tooltip("The amount of time the effect lasts")]
-    //[SerializeField] private float breakEffectDuration;
-    //[SerializeField] private float drillSpeed = 40;
+    private MeshRenderer[] shieldMesh = new MeshRenderer[4];
+    [HideInInspector] public bool isShielded = false;
+    [HideInInspector] public int currentItem = -1; // -1 = nothing
+    private List<IObjectPollingManager> oilPoolsList = new List<IObjectPollingManager>();
+    private List<IObjectPollingManager> DrillList = new List<IObjectPollingManager>();
 
-    [System.NonSerialized] public bool isShielded = false;
-    private Rigidbody rbCar;
-    private PlayerData data;
-    [System.NonSerialized] public int currentItem = -1; // -1 = nothing
+    //NOTE: to see stats for each PowerUp Go To GameManager
 
-    private void Awake()
-    {
-        data = GetComponent<PlayerData>();
-        data.inputManager = GetComponent<InputCar>();
-        rbCar = GetComponentInChildren<Rigidbody>();
+    private void Awake() {
+        shieldMesh = shieldParent.GetComponentsInChildren<MeshRenderer>();
         invertControlsParticles.gameObject.transform.localScale = new Vector3(GameManager.invertControlsDistance, 1, GameManager.invertControlsDistance);
+        if (!data) Debug.LogError("the ItemCarUse Script in" + this.gameObject.name + "needs the PlayerData in the inspector");
     }
-    private void Update()
-    {
-        if (data.inputManager.UseItem() && currentItem != -1) UseItem();
+    private void Update() {
+        if (data) if (data.inputManager.UseItem() && currentItem != -1) UseItem();
     }
 
-    public void GenerateNewItem()
-    {
-        currentItem = Random.Range(0, 8);
+    public void GenerateNewItem() {
+        currentItem = Random.Range(0, powerUpImages.Length);
         ChangeUi();
     }
-    void UseItem()
-    {
-        switch (currentItem)
-        {
+    void UseItem() {
+        switch (currentItem) {
             case 0://boost
-                rbCar.velocity = rbCar.velocity * 1.75f;
+                data.rb.velocity *= GameManager.boostForce;
                 break;
             case 1://jump
-                rbCar.velocity = new Vector3(rbCar.velocity.x, 15, rbCar.velocity.z);
+                data.rb.velocity = new Vector3(data.rb.velocity.x, GameManager.jumpForce, data.rb.velocity.z);
                 break;
             case 2://invert controls
                 CheckForPlayersInRange();
@@ -67,17 +54,13 @@ public class ItemCarUse : MonoBehaviour
                 break;
             case 3://teleport
                 GameObject successorPlayer = LapsManager.Instance.GetMySuccessorPlayer(data);
-                if (successorPlayer != null)
-                {
+                if (successorPlayer != null) {
                     transform.position = successorPlayer.transform.position + (GameManager.teleportRange * successorPlayer.transform.forward);
                     teleportParticles.Play();
                 }
                 break;
             case 4://missle
-                GameObject missile = Instantiate(drillPrefab, drillParent.position, transform.rotation);
-                missile.GetComponent<DrillPowerup>().speed = GameManager.drillSpeed;
-                missile.GetComponent<DrillPowerup>().StartMovment();
-                //missile.GetComponent<Rigidbody>().velocity = transform.forward * drillSpeed;
+                ItemPrefabObjPolling(drillPrefab, DrillList, drillParent.position, kartPivot.rotation);
                 break;
             case 5://shield
                 isShielded = true;
@@ -90,7 +73,7 @@ public class ItemCarUse : MonoBehaviour
                 if (targetPlayer != null) StartCoroutine(targetPlayer.GetComponent<ItemCarUse>().BreakWheels());
                 break;
             case 7://oil
-                Instantiate(oilPrefab, oilParent.position, oilPrefab.transform.rotation);
+                ItemPrefabObjPolling(oilPrefab, oilPoolsList, oilParent.position, kartPivot.rotation);
                 break;
             default:
                 Debug.Log("Error generating item");
@@ -99,39 +82,49 @@ public class ItemCarUse : MonoBehaviour
         currentItem = -1;
         ChangeUi();
     }
+    private void ItemPrefabObjPolling(GameObject itemPrefab, List<IObjectPollingManager> listToSearch, Vector3 positionToPlace, Quaternion rotationToInhert) {
+        IObjectPollingManager objDeactivated = null;
+        float[] pos = new float[3];
+        pos.SetValue(positionToPlace.x, 0);
+        pos.SetValue(positionToPlace.y, 1);
+        pos.SetValue(positionToPlace.z, 2);
+        foreach (IObjectPollingManager obj in listToSearch) if (!obj.IsActive) objDeactivated = obj;
+        if (objDeactivated != null) {
+            objDeactivated.Activate(true, 0, pos, kartPivot);
+        }
+        else if (DrillList.Count == GameManager.maxPropsPerPlayer) {
+            GameObject item = Instantiate(itemPrefab, positionToPlace, rotationToInhert);
+            listToSearch.Add(item.GetComponent<IObjectPollingManager>());
+            item.GetComponent<IObjectPollingManager>().Activate(true, 0, pos, kartPivot);
+        }
+        else Debug.Log("max items in scene for" + kartPivot.gameObject.name + "reached");
+    }
 
-    void ChangeUi()
-    {
+    void ChangeUi() {
         if (currentItem + 1 == 0) itemImage.enabled = false;
-        else
-        {
+        else {
             itemImage.sprite = powerUpImages[currentItem];
             itemImage.enabled = true;
         }
     }
 
-    IEnumerator ShieldAnimation()
-    {
+    IEnumerator ShieldAnimation() {
         for (int i = 0; i < shieldMesh.Length; i++) shieldMesh[i].enabled = isShielded;
-        while (isShielded)
-        {
+        while (isShielded) {
             shieldParent.transform.Rotate(0, 0, 90 * GameManager.shieldAnimSpeed, Space.Self);
             yield return new WaitForSeconds(GameManager.shieldAnimSpeed);
         }
         for (int i = 0; i < shieldMesh.Length; i++) shieldMesh[i].enabled = isShielded;
     }
 
-    void CheckForPlayersInRange()
-    {
+    void CheckForPlayersInRange() {
         RaycastHit[] hits = Physics.SphereCastAll(transform.position, GameManager.invertControlsDistance, transform.forward, .1f, carsLayerMask);
-        foreach (RaycastHit hit in hits)
-        {
+        foreach (RaycastHit hit in hits) {
             if (hit.collider.gameObject != this.gameObject) StartCoroutine(hit.collider.gameObject.GetComponent<ItemCarUse>().InvertControl());
         }
     }
 
-    public IEnumerator InvertControl()
-    {
+    public IEnumerator InvertControl() {
         data.inputManager.invertControls = -1;
         invertControlsParticles.Play();
 
@@ -140,17 +133,15 @@ public class ItemCarUse : MonoBehaviour
         data.inputManager.invertControls = 1;
     }
 
-    IEnumerator BreakWheels()
-    {
-        rbCar.velocity = Vector3.zero;
+    IEnumerator BreakWheels() {
+        data.rb.velocity = Vector3.zero;
         breakImage.alpha = 1;
 
         yield return new WaitForSeconds(GameManager.breakEffectDuration);
 
         breakImage.alpha = 0;
     }
-    private void OnDrawGizmosSelected()
-    {
+    private void OnDrawGizmosSelected() {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, GameManager.invertControlsDistance);
     }

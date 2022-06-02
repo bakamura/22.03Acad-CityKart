@@ -5,67 +5,11 @@ using Cinemachine;
 
 public class ControlCarWheel : MonoBehaviour
 {
-
-    //[Header("Movement Settings")]
-
-    //[Tooltip("How quickly the kart reaches top speed.")]
-    //public float Velocity;
-
-    //[Min(0.001f), Tooltip("Top speed attainable when moving backward.")]
-    //public float ReverseVelocity;
-
-    //[Tooltip("How many degrees the wheels can turn in the Y Axis.")]
-    //public float TurningDegrees;
-
-    //[Tooltip("For how long needs to be drifting to gain a boost, in seconds.")]
-    //[SerializeField] private float[] DriftBoostTime = new float[3];
-
-    //[Tooltip("the velocity of the vehicle at each level of boost.")]
-    //[SerializeField] private float[] DriftBoostAmount = new float[3];
-
-    //[Tooltip("For how long the drift boost will last, in seconds.")]
-    //[SerializeField] private float[] DriftBoostDuration = new float[3];
-
-    //[Tooltip("the angle that the vehicle will turn when drifting.")]
-    //public float DriftAngle;
-
-    //[Tooltip("how much the drift angle will change each FixedDeltaTime.")]
-    //[SerializeField] private float DriftAngleAmount;
-
     [Header("Components")]
-    //[SerializeField] private Transform vehicleTransform;
-    //[Min(1), Tooltip("the amount of wheels that will turn, needs to be the firts elements of the WheelsScript array")]
-    //[SerializeField] private int turningWheels;
-    //public WheelSinc[] WheelsScript;
-    //private float currentDriftAmount;
-    //private Coroutine driftBoostCoroutine = null;
-    //private float currentDriftBoostDuration;
     private PlayerData data;
-
-    //[Header("Visuals")]
-    //[SerializeField] private CinemachineVirtualCamera cm;
-    //[SerializeField] private GameObject BoostParticle;
-    //[Tooltip("How wide the FOV will be when in boost effects")]
-    //[SerializeField] private int FOVinBoost;
-    //[SerializeField] private CanvasGroup UI;
-    //public Camera[] cameras = new Camera[2];
-    //public RectTransform screenSize;
-    //[SerializeField] private PostProcessControler PPcontroler;
-    //[Min(.01f), Tooltip("How long the transition will take, in seconds")]
-    //[SerializeField] private float FOVTransitionDuration;
-    //[Range(.01f, 1f), Tooltip("How much the FOV will change per tick, in percentage")]
-    //[SerializeField] private float FOVPercentageIncrease;
-    //private float baseFOV;
-    //private float newVehicleDriftRotation = 0;
-    //private Coroutine FOVTransition = null;
-
-
     void Awake()
     {
-        data = GetComponent<PlayerData>();
-        data.inputManager = GetComponent<InputCar>();
-        data.rb = GetComponent<Rigidbody>();
-        //baseFOV = cm.m_Lens.FieldOfView;        
+        data = GetComponent<PlayerData>();   
     }
 
     void Update()
@@ -83,9 +27,11 @@ public class ControlCarWheel : MonoBehaviour
     void MovementInputs()
     {
         foreach (WheelSinc wheel in data.WheelsScript) wheel.wheelCollider.motorTorque = data.inputManager.VertMov() > 0 ? data.inputManager.VertMov() * data.Velocity : data.inputManager.VertMov() * data.ReverseVelocity;
-        for (int i = 0; i < data.turningWheels; i++) data.WheelsScript[i].wheelCollider.steerAngle = data.inputManager.HorzMov() * data.TurningDegrees;//turning the vehicle
+        for (int i = 0; i < data.turningWheels; i++) {
+            data.WheelsScript[i].wheelCollider.steerAngle = data.inputManager.HorzMov() * data.TurningDegrees;//turning the vehicle
+            data.WheelsScript[i].WheelMovmentVisual();
+        }
     }
-
 
     public bool CheckGround()
     {
@@ -99,113 +45,4 @@ public class ControlCarWheel : MonoBehaviour
         if (!data.isGrounded) data.rb.freezeRotation = true;
         else data.rb.freezeRotation = false;
     }
-    /*void Drift()
-    {
-        if (data.inputManager.Drift() && data.inputManager.VertMov() > 0 && data.inputManager.HorzMov() != 0 && data.rb.velocity.magnitude > 1f)
-        {
-            if (Mathf.Abs(WheelsScript[0].wheelCollider.steerAngle) >= .01f && CheckGround())
-            {
-                foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null) wheel.TrailEffect(true, currentDriftAmount, DriftBoostTime);
-                if (Mathf.Abs(WheelsScript[0].wheelCollider.steerAngle) >= .01f && CheckGround())
-                {
-                    currentDriftAmount += Time.deltaTime;
-                    foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null && wheel.driftParticle != null) wheel.TrailEffect(true, currentDriftAmount, DriftBoostTime);
-                }
-            }
-        }
-        else if (currentDriftAmount != 0)
-        {
-            if (currentDriftAmount >= DriftBoostTime[0] / 2f) DriftBoost();
-            foreach (WheelSinc wheel in WheelsScript) if (wheel.trail != null && wheel.driftParticle != null) wheel.TrailEffect(false, currentDriftAmount, DriftBoostTime);
-            currentDriftAmount = 0;
-        }
-        RotateVehicleDrift();
-    }
-
-    void DriftBoost()
-    {
-        int boostType = 0;
-        switch (currentDriftAmount)
-        {
-            case float f when f <= DriftBoostTime[0]:
-                boostType = 0;
-                break;
-            case float f when f <= DriftBoostTime[1]:
-                boostType = 1;
-                break;
-            case float f when f <= DriftBoostTime[2]:
-                boostType = 2;
-                break;
-        }
-        data.rb.velocity = data.rb.velocity * DriftBoostAmount[boostType] + (transform.forward * 10);
-        BoostVisualEffects(true);
-        currentDriftBoostDuration = DriftBoostDuration[boostType];
-        if (driftBoostCoroutine == null) driftBoostCoroutine = StartCoroutine(StopDriftBoost());
-    }
-
-    IEnumerator StopDriftBoost()
-    {
-        yield return new WaitForSeconds(currentDriftBoostDuration);
-        BoostVisualEffects(false);
-        driftBoostCoroutine = null;
-    }
-
-    void BoostVisualEffects(bool isActive)
-    {
-        if (isActive)
-        {
-            PPcontroler.Activate_deactivateDepthOfField(true);
-            UI.alpha = 1;
-            BoostParticle.SetActive(true);
-            if (FOVTransition != null) StopCoroutine(FOVTransition);
-            FOVTransition = StartCoroutine(FOVEffect(true));
-        }
-        else
-        {
-            PPcontroler.Activate_deactivateDepthOfField(false);
-            UI.alpha = 0;
-            BoostParticle.SetActive(false);
-            if (FOVTransition != null) StopCoroutine(FOVTransition);
-            FOVTransition = StartCoroutine(FOVEffect(false));
-        }
-    }
-
-    IEnumerator FOVEffect(bool isActive)
-    {
-        float time = FOVTransitionDuration * FOVPercentageIncrease;
-        float increment = (FOVinBoost - baseFOV) * FOVPercentageIncrease;
-        if (isActive)
-        {
-            while (cm.m_Lens.FieldOfView < FOVinBoost)
-            {
-                cm.m_Lens.FieldOfView += increment;
-                yield return new WaitForSeconds(time);
-            }
-        }
-        else
-        {
-            while (cm.m_Lens.FieldOfView > baseFOV)
-            {
-                cm.m_Lens.FieldOfView -= increment;
-                yield return new WaitForSeconds(time);
-            }
-        }
-        FOVTransition = null;
-    }
-
-    void RotateVehicleDrift()
-    {
-        //turns the car depending on the player input
-        if (Mathf.Abs(newVehicleDriftRotation) < DriftAngle && currentDriftAmount != 0)
-        {
-            newVehicleDriftRotation += Mathf.Sign(data.inputManager.HorzMov()) * DriftAngleAmount;
-            vehicleTransform.localRotation = Quaternion.Euler(0, newVehicleDriftRotation, 0);
-        }
-        //returs back the car from the drift rotation
-        else if (Mathf.Abs(newVehicleDriftRotation) > 0 && currentDriftAmount == 0)
-        {
-            newVehicleDriftRotation += -Mathf.Sign(newVehicleDriftRotation) * DriftAngleAmount;
-            vehicleTransform.localRotation = Quaternion.Euler(0, newVehicleDriftRotation, 0);
-        }
-    }*/
 }

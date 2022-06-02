@@ -3,22 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RandomItemBox : MonoBehaviour {
-
+    private MeshRenderer mesh;
+    private Collider objCollider;
+    private void Awake() {
+        mesh = GetComponent<MeshRenderer>();
+        objCollider = GetComponent<Collider>();
+    }
     private void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player") {
+        if (other.CompareTag("Player")) {
             other.GetComponent<ItemCarUse>().GenerateNewItem();
             StartCoroutine(Respawn());
         }
     }
 
     IEnumerator Respawn() {
-        GetComponent<MeshRenderer>().enabled = false;
-        GetComponent<Collider>().enabled = false;
+        mesh.enabled = false;
+        objCollider.enabled = false;
 
         yield return new WaitForSeconds(10);
 
-        GetComponent<MeshRenderer>().enabled = true;
-        GetComponent<Collider>().enabled = true;
+        mesh.enabled = true;
+        objCollider.enabled = true;
     }
 
 }

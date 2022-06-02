@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -421,7 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5dbc5a5b013bf24ab691d29ebf76f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carStatus: {fileID: 3994895746586230932, guid: 595403fbea000d7418b2bc49dd7ce60b,
+  carStatus: {fileID: 1219977631481949692, guid: 595403fbea000d7418b2bc49dd7ce60b,
     type: 3}
 --- !u!114 &59436571
 MonoBehaviour:
@@ -949,7 +949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5dbc5a5b013bf24ab691d29ebf76f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carStatus: {fileID: 7130983694094917426, guid: 05891f862eb5bf044b3bc34e39f32886,
+  carStatus: {fileID: 5001480853339763290, guid: 05891f862eb5bf044b3bc34e39f32886,
     type: 3}
 --- !u!114 &266970852
 MonoBehaviour:
@@ -2002,7 +2002,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -155, y: -19.150024}
+  m_AnchoredPosition: {x: -155, y: 2.199997}
   m_SizeDelta: {x: 250, y: -151.49998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &456149899
@@ -3410,6 +3410,82 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -35}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &808739737
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 808739738}
+  - component: {fileID: 808739740}
+  - component: {fileID: 808739739}
+  m_Layer: 5
+  m_Name: Btn7
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &808739738
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808739737}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1838983013}
+  m_Father: {fileID: 1800890397}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &808739739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808739737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: c065c802fb2136c4e993e1836ce9c6ce, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &808739740
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808739737}
+  m_CullTransparentMesh: 1
 --- !u!1 &817145830
 GameObject:
   m_ObjectHideFlags: 0
@@ -3725,7 +3801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5dbc5a5b013bf24ab691d29ebf76f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carStatus: {fileID: 2437762825188245974, guid: 9efcfa8881d49214d8d12ab277f428b3,
+  carStatus: {fileID: 453227396827786430, guid: 9efcfa8881d49214d8d12ab277f428b3,
     type: 3}
 --- !u!1 &862100121
 GameObject:
@@ -3778,7 +3854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5dbc5a5b013bf24ab691d29ebf76f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carStatus: {fileID: 2451081522069550954, guid: 434cab39e6263a54c941576ea0c597cc,
+  carStatus: {fileID: 404618205657569794, guid: 434cab39e6263a54c941576ea0c597cc,
     type: 3}
 --- !u!114 &862100124
 MonoBehaviour:
@@ -5943,7 +6019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5dbc5a5b013bf24ab691d29ebf76f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carStatus: {fileID: 3198279078245430836, guid: 502e1928d19f5414fb74342c485d2ee9,
+  carStatus: {fileID: 863585386725333852, guid: 502e1928d19f5414fb74342c485d2ee9,
     type: 3}
 --- !u!114 &1588025385
 MonoBehaviour:
@@ -6380,13 +6456,14 @@ RectTransform:
   - {fileID: 301835185}
   - {fileID: 1026176102}
   - {fileID: 1197708045}
+  - {fileID: 808739738}
   m_Father: {fileID: 1975197524}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 252.513, y: -20}
-  m_SizeDelta: {x: 423.6316, y: 288.564}
+  m_AnchoredPosition: {x: 252.513, y: -22.0067}
+  m_SizeDelta: {x: 423.6316, y: 335.2775}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!156049354 &1800890399
 Grid:
@@ -6420,7 +6497,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 125, y: 125}
+  m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 17, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -6498,6 +6575,166 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1809835667}
+  m_CullTransparentMesh: 1
+--- !u!1 &1838983012
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1838983013}
+  - component: {fileID: 1838983017}
+  - component: {fileID: 1838983016}
+  - component: {fileID: 1838983015}
+  - component: {fileID: 1838983014}
+  m_Layer: 5
+  m_Name: Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1838983013
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838983012}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 808739738}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1838983014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838983012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5dbc5a5b013bf24ab691d29ebf76f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carStatus: {fileID: 3519901850135088584, guid: 1bbb3eea55a2e9e48927d5fbdd8830f2,
+    type: 3}
+--- !u!114 &1838983015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838983012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 2
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1838983016}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1602242404}
+        m_TargetAssemblyTypeName: SelectionScreen, Assembly-CSharp
+        m_MethodName: SetPlayerCar
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8599312361066354065, guid: 1bbb3eea55a2e9e48927d5fbdd8830f2,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1602242404}
+        m_TargetAssemblyTypeName: SelectionScreen, Assembly-CSharp
+        m_MethodName: ChangeScreen
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 114017955}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.CanvasGroup, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1838983016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838983012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 882e3ca2bb3529448aec210e81329af3, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1838983017
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838983012}
   m_CullTransparentMesh: 1
 --- !u!1 &1872108153
 GameObject:
@@ -7341,7 +7578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5dbc5a5b013bf24ab691d29ebf76f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carStatus: {fileID: 7624562075820144975, guid: dbe3f8514d8b3ed48bf9580dd32ec7e7,
+  carStatus: {fileID: 5643398987348579367, guid: dbe3f8514d8b3ed48bf9580dd32ec7e7,
     type: 3}
 --- !u!114 &2075876674
 MonoBehaviour:

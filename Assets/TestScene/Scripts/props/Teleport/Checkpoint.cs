@@ -19,12 +19,12 @@ public class Checkpoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && !playerPassedCheckpoint[other.GetComponent<PlayerData>().CarID])
+        if (other.CompareTag("Player") && !playerPassedCheckpoint[other.GetComponent<ObjectDetectionData>().playerData.CarID])
         {
-            int playerID = other.GetComponent<PlayerData>().CarID;
+            int playerID = other.GetComponent<ObjectDetectionData>().playerData.CarID;
             playerPassedCheckpoint[playerID] = true;
             TeleportManager.Instance.curentPoint[playerID] = teleportPoint;
-            LapsManager.Instance.UpdateScore(other.gameObject.GetComponent<PlayerData>());
+            LapsManager.Instance.UpdateScore(other.GetComponent<ObjectDetectionData>().playerData);
         }
     }
 }

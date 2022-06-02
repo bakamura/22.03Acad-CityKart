@@ -11,6 +11,7 @@ public class PlayerData : MonoBehaviour
     [Tooltip("The panel inside the canvas")]public RectTransform screenSize;
     [Min(1), Tooltip("the amount of wheels that will turn, needs to be the firts elements of the WheelsScript array")]
     public int turningWheels;
+    public Rigidbody rb;
     public WheelSinc[] WheelsScript;
 
     [Header("CarStatus")]
@@ -25,7 +26,6 @@ public class PlayerData : MonoBehaviour
     [HideInInspector] public InputCar inputManager = null;
     [HideInInspector] public int CarID;
     [HideInInspector] public int PlayerScore;
-    [HideInInspector] public Rigidbody rb;
     [HideInInspector] public bool isGrounded;
     private ControlCarWheel carWheeels;
     private ControlCarSphere carSphere;
@@ -33,6 +33,7 @@ public class PlayerData : MonoBehaviour
     private void Awake() {
         carSphere = GetComponent<ControlCarSphere>();
         carWheeels = GetComponent<ControlCarWheel>();
+        inputManager = GetComponent<InputCar>();
         GameManager.CheckCarStatus(this);
     }
 
