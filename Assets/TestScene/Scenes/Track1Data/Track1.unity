@@ -2831,7 +2831,7 @@ PrefabInstance:
     - target: {fileID: 6869674502953433579, guid: ea720c16515689d48b42a8311ba5f1e8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6869674502953433579, guid: ea720c16515689d48b42a8311ba5f1e8,
         type: 3}
@@ -6915,8 +6915,8 @@ Transform:
   m_Children:
   - {fileID: 1242579483}
   - {fileID: 1357464713}
-  - {fileID: 1544913269}
   - {fileID: 1082584891}
+  - {fileID: 1544913269}
   - {fileID: 1057969926}
   - {fileID: 1325816126}
   - {fileID: 521612767}
@@ -7702,7 +7702,7 @@ PrefabInstance:
     - target: {fileID: 6869674502953433579, guid: ea720c16515689d48b42a8311ba5f1e8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6869674502953433579, guid: ea720c16515689d48b42a8311ba5f1e8,
         type: 3}
@@ -8416,7 +8416,7 @@ PrefabInstance:
     - target: {fileID: 6869674502953433579, guid: ea720c16515689d48b42a8311ba5f1e8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -101.3
+      value: -108.3
       objectReference: {fileID: 0}
     - target: {fileID: 6869674502953433579, guid: ea720c16515689d48b42a8311ba5f1e8,
         type: 3}
@@ -11155,7 +11155,7 @@ PrefabInstance:
     - target: {fileID: 6869674502953433579, guid: ea720c16515689d48b42a8311ba5f1e8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7
+      value: 9.5
       objectReference: {fileID: 0}
     - target: {fileID: 6869674502953433579, guid: ea720c16515689d48b42a8311ba5f1e8,
         type: 3}
@@ -14614,6 +14614,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5793335792092739853, guid: d475ce78bfecfa9479e985cc39d34763, type: 3}
+    - {fileID: 6460575886134417373, guid: d475ce78bfecfa9479e985cc39d34763, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d475ce78bfecfa9479e985cc39d34763, type: 3}
 --- !u!4 &1608596108 stripped
 Transform:

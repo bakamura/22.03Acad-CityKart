@@ -15,26 +15,26 @@ public class TrackSetUP : MonoBehaviour
             PlayerData Data = Instantiate(GameManager.playerCars[i], playerPositions[i].position, Quaternion.identity, null).GetComponent<PlayerData>();
             Data.inputManager.inputData = GameManager.playerInputs[i];
             Data.CarID = i;
-            SetCameraLensAndUISize(Data.cameras, Data.screenSize, Data.cm.gameObject, i);
+            SetCameraLensAndUISize(Data.cameras, /*Data.screenSize,*/ Data.cm.gameObject, i);
         }
     }
-    private void SetCameraLensAndUISize(Camera[] camera, RectTransform screenSize, GameObject cinemachine, int currentPlayer)
+    private void SetCameraLensAndUISize(Camera[] camera, /*RectTransform screenSize,*/ GameObject cinemachine, int currentPlayer)
     {
         switch (GameManager.playerCars.Count)
         {
             default:
-                screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height * 2);
+                //screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height * 2);
                 return;
             case 2:
                 switch (currentPlayer)
                 {
                     case 0:
                         foreach(var cam in camera) cam.rect = new Rect(0, .5f, 1, .5f);
-                        screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height);
+                        //screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height);
                         break;
                     case 1:
                         foreach (var cam in camera) cam.rect = new Rect(0, -.5f, 1, 1);
-                        screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height);
+                        //screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height);
                         break;
                 }
                 break;
@@ -44,22 +44,22 @@ public class TrackSetUP : MonoBehaviour
                     case 0:
                         //upper left
                         foreach (var cam in camera) cam.rect = new Rect(0, .5f, .5f, .5f);
-                        screenSize.sizeDelta = new Vector2(Screen.currentResolution.width *2, Screen.currentResolution.height * 2);
+                        //screenSize.sizeDelta = new Vector2(Screen.currentResolution.width *2, Screen.currentResolution.height * 2);
                         break;
                     case 1:
                         //upper right
                         foreach (var cam in camera) cam.rect = new Rect(.5f, .5f, .5f, .5f);
-                        screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height * 2);
+                        //screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height * 2);
                         break;
                     case 2:
                         //bottom left
                         foreach (var cam in camera) cam.rect = new Rect(0, 0, .5f, .5f);
-                        screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height * 2);
+                        //screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height * 2);
                         break;
                     case 3:
                         //bottom right
                         foreach (var cam in camera) cam.rect = new Rect(.5f, 0, .5f, .5f);
-                        screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height * 2);
+                        //screenSize.sizeDelta = new Vector2(Screen.currentResolution.width * 2, Screen.currentResolution.height * 2);
                         break;
                 }
                 break;

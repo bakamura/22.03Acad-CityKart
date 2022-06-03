@@ -8,7 +8,7 @@ public class PlayerData : MonoBehaviour
     public CinemachineVirtualCamera cm;
     [Tooltip("first the cinemachine camera, then the UI camera")]public Camera[] cameras = new Camera[2];
     public CanvasGroup UI;
-    [Tooltip("The panel inside the canvas")]public RectTransform screenSize;
+    //[Tooltip("The panel inside the canvas")]public RectTransform screenSize;
     [Min(1), Tooltip("the amount of wheels that will turn, needs to be the firts elements of the WheelsScript array")]
     public int turningWheels;
     public Rigidbody rb;
