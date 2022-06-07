@@ -20,7 +20,7 @@ public class RandomItemBox : MonoBehaviour {
         mesh.enabled = false;
         objCollider.enabled = false;
 
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(GameManager.itemBoxResawnTime);
 
         mesh.enabled = true;
         objCollider.enabled = true;

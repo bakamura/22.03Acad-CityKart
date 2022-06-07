@@ -8,14 +8,14 @@ public class DrillPowerup : MonoBehaviour, IObjectPollingManager {
     private Collider objCollider;
     public bool IsActive { get { return isActive; } set { IsActive = isActive; } }
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Player")) StartCoroutine(Spin(other.GetComponent<ObjectDetectionData>()));
+        if (other.CompareTag("Player")) StartCoroutine(SpinCar(other.GetComponent<ObjectDetectionData>()));
     }
     private void Awake() {
         meshRenderer = GetComponent<MeshRenderer>();
         objCollider = GetComponent<Collider>();
     }
 
-    IEnumerator Spin(ObjectDetectionData kart) {
+    IEnumerator SpinCar(ObjectDetectionData kart) {
         if (kart.itemData.isShielded) yield break;
         float height = kart.kartTransform.position.y;
         float initRotation = kart.kartTransform.rotation.y;
@@ -26,29 +26,29 @@ public class DrillPowerup : MonoBehaviour, IObjectPollingManager {
 
             yield return new WaitForSeconds(0.05f);
         }
-        StartCoroutine(Activate(false, 0));
+        Activate(false);
     }
-    private void StartMovment()
-    {
-        InvokeRepeating(nameof(Movment), 0f, .05f);
-        StartCoroutine(Activate(false, GameManager.drillDuration));
-    }
-    private void Movment()
-    {
-        transform.position += GameManager.drillSpeed * transform.forward;
-    }
-
-    public IEnumerator Activate(bool state, float delay, float[] initialLocation = null, Transform playerTransform = null) {
-        if (!state && !IsActive) {
-            yield return null;
-        }
+    public void Activate(bool state, float[] initialLocation = null, Transform playerTransform = null) {
+        if (!state && !IsActive) return;        
         else {
-            yield return new WaitForSeconds(delay);
             if (initialLocation !=null) transform.SetPositionAndRotation(new Vector3(initialLocation[0], initialLocation[1], initialLocation[2]), playerTransform.transform.rotation);
             meshRenderer.enabled = state;
             objCollider.enabled = state;
-            if (state) StartMovment();
             isActive = state;
+            if (state) {
+                StartCoroutine(StartMovment());
+                Invoke(nameof(Deactivate), GameManager.drillDuration);
+            }
+            else StopCoroutine(nameof(StartMovment));
         }
+    }
+    IEnumerator StartMovment() {
+        while (isActive) {
+            transform.position += GameManager.drillSpeed * transform.forward;
+            yield return new WaitForSeconds(.05f);
+        }
+    }
+    private void Deactivate() {
+        Activate(false);
     }
 }

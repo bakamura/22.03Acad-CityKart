@@ -22,7 +22,10 @@ public class TeleportManager : MonoBehaviour
         if (other.CompareTag("Player") && curentPoint[other.GetComponent<ObjectDetectionData>().playerData.CarID] != null)
         {
             PlayerData plData = other.GetComponent<ObjectDetectionData>().playerData;
-            other.transform.SetPositionAndRotation(curentPoint[plData.CarID].position, Quaternion.Euler(0f, curentPoint[plData.CarID].eulerAngles.y, 0f));
+            other.transform.SetPositionAndRotation(curentPoint[plData.CarID].position, curentPoint[plData.CarID].rotation); //Quaternion.Euler(0f, curentPoint[plData.CarID].eulerAngles.y, 0f)
+            plData.CurrentMovment = 0;
+            other.attachedRigidbody.velocity = Vector3.zero;
+            Debug.Log(other.transform.rotation);
         }
     }
 }

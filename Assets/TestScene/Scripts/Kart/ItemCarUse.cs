@@ -22,8 +22,6 @@ public class ItemCarUse : MonoBehaviour {
     private MeshRenderer[] shieldMesh = new MeshRenderer[4];
     [HideInInspector] public bool isShielded = false;
     [HideInInspector] public int currentItem = -1; // -1 = nothing
-    private List<IObjectPollingManager> oilPoolsList = new List<IObjectPollingManager>();
-    private List<IObjectPollingManager> DrillList = new List<IObjectPollingManager>();
 
     //NOTE: to see stats for each PowerUp Go To GameManager
 
@@ -31,13 +29,17 @@ public class ItemCarUse : MonoBehaviour {
         shieldMesh = shieldParent.GetComponentsInChildren<MeshRenderer>();
         invertControlsParticles.gameObject.transform.localScale = new Vector3(GameManager.invertControlsDistance, 1, GameManager.invertControlsDistance);
         if (!data) Debug.LogError("the ItemCarUse Script in" + this.gameObject.name + "needs the PlayerData in the inspector");
+        if (GameManager.OilPoolsList == null) {
+            GameManager.OilPoolsList = new List<IObjectPollingManager>();
+            GameManager.DrillList = new List<IObjectPollingManager>();
+        }
     }
     private void Update() {
         if (data) if (data.inputManager.UseItem() && currentItem != -1) UseItem();
     }
 
     public void GenerateNewItem() {
-        currentItem = Random.Range(0, powerUpImages.Length);
+        currentItem = Random.Range(6, 7/*powerUpImages.Length*/);
         ChangeUi();
     }
     void UseItem() {
@@ -59,21 +61,20 @@ public class ItemCarUse : MonoBehaviour {
                     teleportParticles.Play();
                 }
                 break;
-            case 4://missle
-                ItemPrefabObjPolling(drillPrefab, DrillList, drillParent.position, kartPivot.rotation);
+            case 4:// Break oponent
+                GameObject targetPlayer = LapsManager.Instance.GetMySuccessorPlayer(data);
+                if (targetPlayer != null) StartCoroutine(targetPlayer.GetComponent<ItemCarUse>().BreakWheels());                
                 break;
             case 5://shield
                 isShielded = true;
                 for (int i = 0; i < 4; i++) shieldMesh[i].enabled = isShielded;
                 StartCoroutine(ShieldAnimation());
                 break;
-            case 6://break
-                // Break oponent
-                GameObject targetPlayer = LapsManager.Instance.GetMySuccessorPlayer(data);
-                if (targetPlayer != null) StartCoroutine(targetPlayer.GetComponent<ItemCarUse>().BreakWheels());
+            case 6://missle
+                ItemPrefabObjPolling(drillPrefab, GameManager.DrillList, drillParent.position, kartPivot.rotation);
                 break;
             case 7://oil
-                ItemPrefabObjPolling(oilPrefab, oilPoolsList, oilParent.position, kartPivot.rotation);
+                ItemPrefabObjPolling(oilPrefab, GameManager.OilPoolsList, oilParent.position, kartPivot.rotation);
                 break;
             default:
                 Debug.Log("Error generating item");
@@ -90,12 +91,14 @@ public class ItemCarUse : MonoBehaviour {
         pos.SetValue(positionToPlace.z, 2);
         foreach (IObjectPollingManager obj in listToSearch) if (!obj.IsActive) objDeactivated = obj;
         if (objDeactivated != null) {
-            objDeactivated.Activate(true, 0, pos, kartPivot);
+            objDeactivated.Activate(true, pos, kartPivot);
+            Debug.Log("recicla");
         }
-        else if (DrillList.Count == GameManager.maxPropsPerPlayer) {
+        else if (listToSearch.Count < GameManager.MaxPowerUpInScene(currentItem)) {
+            Debug.Log("cria");
             GameObject item = Instantiate(itemPrefab, positionToPlace, rotationToInhert);
             listToSearch.Add(item.GetComponent<IObjectPollingManager>());
-            item.GetComponent<IObjectPollingManager>().Activate(true, 0, pos, kartPivot);
+            item.GetComponent<IObjectPollingManager>().Activate(true, pos, kartPivot);
         }
         else Debug.Log("max items in scene for" + kartPivot.gameObject.name + "reached");
     }

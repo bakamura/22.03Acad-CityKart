@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public static class GameManager
-{
+public static class GameManager {
     [Header("Players Info")]
     [NonSerialized] public const int MaxPlayers = 4;
     [NonSerialized] public static List<GameObject> playerCars = new List<GameObject>();
@@ -33,8 +32,21 @@ public static class GameManager
     public const float breakEffectDuration = 2f;//The amount of time the effect lasts
     public const float drillSpeed = 5f;
     public const float drillDuration = 4f;//The amount of time the drill stays in scene
-    public const short maxPropsPerPlayer = 2;//the maximum amount of item prefabs a player can instantiate, for each category that is a prefab
+    public const float itemBoxResawnTime = 10f;
+    public static List<IObjectPollingManager> OilPoolsList;
+    public static List<IObjectPollingManager> DrillList;
 
+    public static int MaxPowerUpInScene(int itemType) {//the max amount of items prefabs for each prefab item that exist
+        switch (itemType) {
+            case 6:
+                return 4 * playerCars.Count;
+            case 7:
+                return 6 * playerCars.Count;
+            default:
+                Debug.Log("the item" + itemType + "doesnt exist");
+                return 0;
+        }
+    }
     public static void CheckCarStatus(PlayerData status) {
         status.Velocity = Mathf.Clamp(status.Velocity, MinVelocity, MaxVelocity);
         status.ReverseVelocity = Mathf.Clamp(status.ReverseVelocity, MinVelocity, MaxVelocity);
@@ -42,4 +54,5 @@ public static class GameManager
         status.DriftAngle = Mathf.Clamp(status.DriftAngle, MinDrift, MaxDrift);
         status.rb.mass = Mathf.Clamp(status.rb.mass, MinWeight, MaxWeight);
     }
+
 }

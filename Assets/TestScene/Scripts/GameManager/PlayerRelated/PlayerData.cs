@@ -27,6 +27,7 @@ public class PlayerData : MonoBehaviour
     [HideInInspector] public int CarID;
     [HideInInspector] public int PlayerScore;
     [HideInInspector] public bool isGrounded;
+    [HideInInspector] public float CurrentMovment;
     private ControlCarWheel carWheeels;
     private ControlCarSphere carSphere;
 

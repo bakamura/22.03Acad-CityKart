@@ -174,6 +174,19 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2088050074045425150}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &7073176403043141701
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1169624921739466927}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.435568, y: 0.17067137, z: 0.16272369}
+  m_Center: {x: 0, y: 0.00000008568166, z: 0.15}
 --- !u!65 &8665012531535913378
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -203,4 +216,4 @@ MonoBehaviour:
   - {fileID: 8354043349263744050}
   - {fileID: 8354043349112417496}
   displacement: 1
-  movmentSpeed: 0.2
+  movmentSpeed: 0.03

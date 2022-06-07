@@ -31,6 +31,7 @@ public class ControlCarWheel : MonoBehaviour
             data.WheelsScript[i].wheelCollider.steerAngle = data.inputManager.HorzMov() * data.TurningDegrees;//turning the vehicle
             data.WheelsScript[i].WheelMovmentVisual();
         }
+        data.CurrentMovment = data.rb.velocity.magnitude;
     }
 
     public bool CheckGround()

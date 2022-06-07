@@ -18,7 +18,6 @@ public class ControlCarSphere : MonoBehaviour
     [SerializeField] private SphereCollider sphereCollider;
     //[SerializeField] private Transform[] turningWheels;
     private float baseDragValue;
-    private float currentMovment;
     private PlayerData data;
     private void Awake()
     {
@@ -53,7 +52,7 @@ public class ControlCarSphere : MonoBehaviour
     {
         if (data.isGrounded) {
             data.rb.drag = baseDragValue;
-            if (Mathf.Abs(currentMovment) > 0) data.rb.AddForce(transform.forward * currentMovment, ForceMode.Force);
+            if (Mathf.Abs(data.CurrentMovment) > 0) data.rb.AddForce(transform.forward * data.CurrentMovment, ForceMode.Force);
         }
         else
         {
@@ -67,8 +66,8 @@ public class ControlCarSphere : MonoBehaviour
         float vertcMov = data.inputManager.VertMov();
         if (data.isGrounded) {
             if (horzMov != 0 && vertcMov != 0) transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, horzMov * data.TurningDegrees * Time.deltaTime, 0f));
-            if (vertcMov > 0) currentMovment = data.Velocity * vertcMov;
-            else if (vertcMov < 0) currentMovment = data.ReverseVelocity * vertcMov;
+            if (vertcMov > 0) data.CurrentMovment = data.Velocity * vertcMov;
+            else if (vertcMov < 0) data.CurrentMovment = data.ReverseVelocity * vertcMov;
         }
     }
 }

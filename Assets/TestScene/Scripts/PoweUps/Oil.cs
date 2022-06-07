@@ -12,10 +12,10 @@ public class Oil : MonoBehaviour, IObjectPollingManager {
         objCollider = GetComponent<Collider>();
     }
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Player")) StartCoroutine(Spin(other.GetComponent<ObjectDetectionData>()));
+        if (other.CompareTag("Player")) StartCoroutine(SpinCar(other.GetComponent<ObjectDetectionData>()));
     }
 
-    IEnumerator Spin(ObjectDetectionData kart) {
+    IEnumerator SpinCar(ObjectDetectionData kart) {
         if (kart.itemData.isShielded) yield break;
         float height = kart.kartTransform.position.y;
         float initRotation = kart.kartTransform.rotation.y;
@@ -26,10 +26,9 @@ public class Oil : MonoBehaviour, IObjectPollingManager {
             
             yield return new WaitForSeconds(0.05f);
         }
-        StartCoroutine(Activate(false, 0));
+       Activate(false);
     }
-    public IEnumerator Activate(bool state, float delay, float[] initialLocation = null, Transform playerTransform = null) {
-        yield return new WaitForSeconds(delay);
+    public void Activate(bool state, float[] initialLocation = null, Transform playerTransform = null) {
         if (initialLocation != null) transform.SetPositionAndRotation(new Vector3(initialLocation[0], initialLocation[1], initialLocation[2]), playerTransform.transform.rotation);
         meshRenderer.enabled = state;
         objCollider.enabled = state;

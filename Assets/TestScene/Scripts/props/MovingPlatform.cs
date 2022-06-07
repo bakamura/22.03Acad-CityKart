@@ -10,7 +10,13 @@ public class MovingPlatform : MonoBehaviour
     int i = 0;
     private void Awake()
     {
-        InvokeRepeating("MovePlatform", 0f, movmentSpeed);
+        InvokeRepeating(nameof(MovePlatform), 0f, movmentSpeed);
+    }
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Player") && other.GetComponent<ObjectDetectionData>() != null) other.transform.SetParent(transform, true);
+    }
+    private void OnTriggerExit(Collider other) {
+        if (other.CompareTag("Player") && other.GetComponent<ObjectDetectionData>() != null) other.transform.SetParent(null, true);
     }
     private void MovePlatform()
     {

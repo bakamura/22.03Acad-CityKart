@@ -23,7 +23,7 @@ public class InputCar : MonoBehaviour
             case InputData.inputTypes.Keyboard:
                 return Input.GetButton(inputData.Drift);
             case InputData.inputTypes.Controller:
-               return Input.GetAxis(inputData.Drift) > 0 ? true: false;
+               return Input.GetAxis(inputData.Drift) > 0;
             default:
                 return false;
         }
@@ -35,7 +35,7 @@ public class InputCar : MonoBehaviour
             case InputData.inputTypes.Keyboard:
                 return Input.GetButton(inputData.UseItem);
             case InputData.inputTypes.Controller:
-                return Input.GetAxis(inputData.UseItem) > 0 ? true : false;
+                return Input.GetAxis(inputData.UseItem) > 0;
             default:
                 return false;
         }

@@ -653,7 +653,6 @@ MonoBehaviour:
   - {fileID: 6776277848737866090}
   - {fileID: 8219895698682449278}
   UI: {fileID: 6232611902175480849}
-  screenSize: {fileID: 1300505729677466147}
   turningWheels: 2
   rb: {fileID: 981680752264916378}
   WheelsScript:
@@ -669,6 +668,7 @@ MonoBehaviour:
   CarID: 0
   PlayerScore: 0
   isGrounded: 0
+  CurrentMovment: 0
 --- !u!114 &7642258660884623335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -688,9 +688,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 04595cbe7b2b60d468b3042c2c9bb59e, type: 3}
   - {fileID: 21300000, guid: 27c1ff98ba446fe42938d3af9e305c15, type: 3}
   - {fileID: 21300000, guid: 30d16e69e4cb2bd45bd52364047fe5f9, type: 3}
-  - {fileID: 21300000, guid: b66ad6fd05e6fd0448a73ad4146b05d7, type: 3}
-  - {fileID: 21300000, guid: fae75882a5217c34f9a441506dae1a49, type: 3}
   - {fileID: 21300000, guid: 03192bb52347d004092064ff36cb223d, type: 3}
+  - {fileID: 21300000, guid: fae75882a5217c34f9a441506dae1a49, type: 3}
+  - {fileID: 21300000, guid: b66ad6fd05e6fd0448a73ad4146b05d7, type: 3}
   - {fileID: 21300000, guid: 710dcda5753e9094e810afd4e408d4d8, type: 3}
   teleportParticles: {fileID: 1044916280053487860}
   invertControlsParticles: {fileID: 5031898642290312537}

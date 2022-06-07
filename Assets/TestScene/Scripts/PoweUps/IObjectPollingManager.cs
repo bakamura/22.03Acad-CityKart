@@ -3,5 +3,5 @@ using UnityEngine;
 
 public interface IObjectPollingManager {
     public bool IsActive { get; set; }
-    public IEnumerator Activate(bool state, float delay, float[] initialLocation = null, Transform playerRef = null);
+    public void Activate(bool state, /*float delay,*/ float[] initialLocation = null, Transform playerRef = null);
 }
