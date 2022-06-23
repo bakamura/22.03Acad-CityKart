@@ -1148,7 +1148,7 @@ Rigidbody:
   m_GameObject: {fileID: 6702480326352856588}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0.5
+  m_Drag: 2
   m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -1523,6 +1523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vehicleTransform: {fileID: 8132476686591381474}
   cm: {fileID: 4294735594281695694}
+  baseModel: {fileID: 15191035227129691, guid: 14c983ae2a3cece4a9be34ef3a25d33b, type: 3}
   cameras:
   - {fileID: 7192321079208915824}
   - {fileID: 3858166390437801955}
@@ -1534,8 +1535,8 @@ MonoBehaviour:
   - {fileID: 3155373109032828306}
   Velocity: 100
   ReverseVelocity: 50
-  TurningDegrees: 90
-  DriftAngle: 45
+  TurningDegrees: 75
+  DriftAngle: 30
   inputManager: {fileID: 0}
   CarID: 0
   PlayerScore: 0

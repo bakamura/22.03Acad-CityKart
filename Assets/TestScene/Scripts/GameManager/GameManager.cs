@@ -55,4 +55,10 @@ public static class GameManager {
         status.rb.mass = Mathf.Clamp(status.rb.mass, MinWeight, MaxWeight);
     }
 
+    public static void ClearMatchInfo() {
+        playerCars.Clear();
+        playerInputs.Clear();
+        finalResults = new GameObject[0];
+    }
+
 }

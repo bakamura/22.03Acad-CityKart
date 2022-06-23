@@ -6,6 +6,7 @@ public class PlayerData : MonoBehaviour
     [Header("CarComponents")]
     public Transform vehicleTransform;
     public CinemachineVirtualCamera cm;
+    [Tooltip("used in the podium")] public GameObject baseModel;
     [Tooltip("first the cinemachine camera, then the UI camera")]public Camera[] cameras = new Camera[2];
     public CanvasGroup UI;
     //[Tooltip("The panel inside the canvas")]public RectTransform screenSize;

@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ControlCarSphere : MonoBehaviour
-{
+public class ControlCarSphere : MonoBehaviour {
     [Header("Vehicle Handling")]
     [Min(0f), Tooltip("The force multiplier pushing down the car.")]
     [SerializeField] private float gravityForce;
@@ -19,27 +18,22 @@ public class ControlCarSphere : MonoBehaviour
     //[SerializeField] private Transform[] turningWheels;
     private float baseDragValue;
     private PlayerData data;
-    private void Awake()
-    {
+    private void Awake() {
         data = GetComponent<PlayerData>();
         data.rb.gameObject.transform.parent = null;
         baseDragValue = data.rb.drag;
     }
-    private void Update()
-    {        
-        InputCheck();        
-        transform.position = data.rb.position;//keeps the model with the sphere
+    private void Update() {
+        InputCheck();
+        transform.position = data.rb.position;//keeps the model with the sphere        
     }
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() {
         data.isGrounded = false;
         RotateVehicle();
         MovmentCar();
     }
-    void RotateVehicle()
-    {
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit currentSurface, sphereCollider.radius + .5f))
-        {
+    void RotateVehicle() {
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit currentSurface, sphereCollider.radius + .5f)) {
             data.isGrounded = true;
             Quaternion rot = Quaternion.FromToRotation(transform.up, currentSurface.normal) * transform.rotation;
             if (rot.x < -maxXMeshTurn || rot.x > maxXMeshTurn) rot.x = maxXMeshTurn * Mathf.Sign(rot.x);
@@ -48,20 +42,17 @@ public class ControlCarSphere : MonoBehaviour
         }
         for (int i = 0; i < data.turningWheels; i++) data.WheelsScript[i].WheelMovmentVisual();
     }
-    void MovmentCar()
-    {
+    void MovmentCar() {
         if (data.isGrounded) {
             data.rb.drag = baseDragValue;
             if (Mathf.Abs(data.CurrentMovment) > 0) data.rb.AddForce(transform.forward * data.CurrentMovment, ForceMode.Force);
         }
-        else
-        {
+        else {
             data.rb.drag = airDrag;
             data.rb.AddForce(Vector3.up * -gravityForce);//pulls the car back to ground
         }
     }
-    void InputCheck()
-    {
+    void InputCheck() {
         float horzMov = data.inputManager.HorzMov();
         float vertcMov = data.inputManager.VertMov();
         if (data.isGrounded) {

@@ -25,6 +25,23 @@ public class LapsManager : MonoBehaviour
         players = GameObject.FindGameObjectsWithTag("Player");
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (other.GetComponentInChildren<ObjectDetectionData>().playerData.PlayerScore >= chekpointsList.Count * NumberOfLaps)
+            {
+                FinishGame();
+                return;
+            }
+            else
+            {
+                int playerID = other.GetComponentInChildren<ObjectDetectionData>().playerData.CarID;
+                foreach (Checkpoint checkpoint in chekpointsList) checkpoint.playerPassedCheckpoint[playerID] = false;
+            }
+        }
+    }
+
     public void UpdateScore(PlayerData data)
     {
         data.PlayerScore++;
@@ -35,7 +52,7 @@ public class LapsManager : MonoBehaviour
         int[] currentPlayerPodiumPossition = new int[players.Length];
         for (int i = 0; i < currentPlayerPodiumPossition.Length; i++)
         {
-            currentPlayerPodiumPossition[i] = players[i].GetComponent<ObjectDetectionData>().playerData.PlayerScore;
+            currentPlayerPodiumPossition[i] = players[i].GetComponentInChildren<ObjectDetectionData>().playerData.PlayerScore;
         }
         Array.Reverse(currentPlayerPodiumPossition);
         return currentPlayerPodiumPossition;
@@ -53,7 +70,7 @@ public class LapsManager : MonoBehaviour
                 {
                     foreach (GameObject player in players)
                     {
-                        if (player.GetComponent<PlayerData>().PlayerScore == temp[i - 1])
+                        if (player.GetComponentInChildren<ObjectDetectionData>().playerData.PlayerScore == temp[i - 1])
                         {
                             return player;
                         }
@@ -71,7 +88,7 @@ public class LapsManager : MonoBehaviour
         if (myData.PlayerScore == score) return null;
         foreach (GameObject player in players)
         {
-            if (player.GetComponent<PlayerData>().PlayerScore == score)
+            if (player.GetComponentInChildren<ObjectDetectionData>().playerData.PlayerScore == score)
             {
                 return player;
             }
@@ -83,22 +100,6 @@ public class LapsManager : MonoBehaviour
     {
         chekpointsList.Add(script);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            if (other.GetComponent<ObjectDetectionData>().playerData.PlayerScore >= chekpointsList.Count * NumberOfLaps)
-            {
-                FinishGame();
-                return;
-            }
-            else
-            {
-                int playerID = other.GetComponent<ObjectDetectionData>().playerData.CarID;
-                foreach (Checkpoint checkpoint in chekpointsList) checkpoint.playerPassedCheckpoint[playerID] = false;
-            }
-        }
-    }
     private void FinishGame()
     {
         GameObject[] podiumPositions = new GameObject[players.Length];
@@ -107,7 +108,7 @@ public class LapsManager : MonoBehaviour
         {
             for (int a = 0; a < players.Length; a++)
             {
-                if (finalScore[i] == players[a].GetComponent<PlayerData>().PlayerScore)
+                if (finalScore[i] == players[a].GetComponentInChildren<ObjectDetectionData>().playerData.PlayerScore)
                 {
                     podiumPositions[i] = GameManager.playerCars[a];
                     break;

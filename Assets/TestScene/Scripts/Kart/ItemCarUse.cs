@@ -39,7 +39,7 @@ public class ItemCarUse : MonoBehaviour {
     }
 
     public void GenerateNewItem() {
-        currentItem = Random.Range(6, 7/*powerUpImages.Length*/);
+        currentItem = Random.Range(0, powerUpImages.Length);
         ChangeUi();
     }
     void UseItem() {
@@ -63,7 +63,7 @@ public class ItemCarUse : MonoBehaviour {
                 break;
             case 4:// Break oponent
                 GameObject targetPlayer = LapsManager.Instance.GetMySuccessorPlayer(data);
-                if (targetPlayer != null) StartCoroutine(targetPlayer.GetComponent<ItemCarUse>().BreakWheels());                
+                if (targetPlayer != null) StartCoroutine(targetPlayer.GetComponent<ItemCarUse>().BreakWheels());
                 break;
             case 5://shield
                 isShielded = true;

@@ -9,14 +9,14 @@ public class JumpPad : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
 
-        if (other.tag == "Player") {
+        if (other.CompareTag("Player")) {
             //other.GetComponent<Rigidbody>().AddForce(Vector3.up * JumpForce, ForceMode.VelocityChange);
             StartCoroutine(MoveObject(other.gameObject));
         }
     }
     IEnumerator MoveObject(GameObject obj)
     {
-        Rigidbody playerRb = obj.gameObject.GetComponent<Rigidbody>();
+        Rigidbody playerRb = obj.GetComponent<Rigidbody>();
         float drag = playerRb.drag;
         playerRb.useGravity = false;
         playerRb.drag = 0;
