@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1484865449}
-  m_IndirectSpecularColor: {r: 0.43668583, g: 0.48428148, b: 0.5645337, a: 1}
+  m_IndirectSpecularColor: {r: 0.44300285, g: 0.49219584, b: 0.5719256, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2062,7 +2062,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: ce2704dd6f7104b46a93a138c6ce4a63,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: ce2704dd6f7104b46a93a138c6ce4a63,
         type: 3}
@@ -5888,7 +5888,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: ce2704dd6f7104b46a93a138c6ce4a63,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: ce2704dd6f7104b46a93a138c6ce4a63,
         type: 3}
@@ -13196,13 +13196,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1484865448}
-  m_LocalRotation: {x: 0.7132504, y: 0, z: 0, w: 0.7009094}
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 91, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
 --- !u!1001 &1495086042
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15768,7 +15768,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f0c9c4f3487b9a04b95171ba02e28503,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f0c9c4f3487b9a04b95171ba02e28503,
         type: 3}
@@ -16255,7 +16255,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: ce2704dd6f7104b46a93a138c6ce4a63,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: ce2704dd6f7104b46a93a138c6ce4a63,
         type: 3}
